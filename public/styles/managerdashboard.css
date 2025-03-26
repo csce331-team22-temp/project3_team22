@@ -1,0 +1,14 @@
+#content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#ordersBtn, #inventoryBtn, #staffBtn {
+    background-color: white;
+    color: black;
+    border: solid black 2px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
