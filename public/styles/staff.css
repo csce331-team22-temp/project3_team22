@@ -1,0 +1,136 @@
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #145da0;
+    font-size: 30px;
+    color: white;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+tr:hover {
+    background-color: lightgray;
+}
+
+#content table button {
+    background-color: darkgray;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#content table input {
+    width: 100%;
+}
+
+#editcontent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#editcontent button {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#goBackBtn {
+    background-color: black;
+}
+
+#addMemberBtn {
+    background-color: green;
+}
+
+#editStaffBtn {
+    background-color: orange;
+}
+
+#cancelEditBtn {
+    background-color: darkgray;
+}
+
+#newMemberPopup {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#newMemberPopupContent {
+    width: fit-content;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FAEBD7;
+    position: sticky;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#newMemberName, #newMemberPosition, #setPassword, #submit {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+#nameLabel, #positionLabel, #passwordLabel {
+    margin-right: 5px;
+}
+
+#addNewEmpBtn, #cancelAddBtn {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 10px;
+    font-size: larger;
+    padding: 5px;
+}
+
+#addNewEmpBtn {
+    background-color: green;
+}
+
+#cancelAddBtn {
+    background-color: red;
+}
+
+#submit {
+    justify-content: center;
+}
+
