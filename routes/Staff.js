@@ -4,16 +4,29 @@ const express = require('express');
 const router = express.Router();
 
 // gets every staff member's details
-router.get('/info', async (req, res) => {
+router.get('/page', async (req, res) => {
     try {
-        const query = `SELECT * FROM staffmembers;`;
+        const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
         const staffInfo = await db.query(query);
 
         const staffMembers = staffInfo.rows;
 
         res.render('staffview', { staffMembers }); 
 
-        return staffMembers;
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.get('/info', async (req, res) => {
+    try {
+        const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
+        const staffInfo = await db.query(query);
+
+        const staffMembers = staffInfo.rows;
+
+        res.status(200).json(staffMembers);
 
     } catch (error) {
         console.error('Database query failed:', error);
@@ -70,6 +83,26 @@ router.post('/add', async (req, res) => {
     } catch (error) {
         console.error('Database query failed:', error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+router.put('/update', async (req, res) => {
+    try {
+
+        const {
+            staffid,
+            position,
+            password
+        } = req.body;
+
+        const query = `UPDATE staffmembers SET position = $2, password = $3 WHERE staffid = $1;`;
+
+        await db.query(query, [staffid, position, password]);
+
+        res.status(200).json({ message: 'Staff details updated.'});
+
+    } catch (error) {
+        console.error('Failed to load manager dashboard', error);
     }
 });
 
