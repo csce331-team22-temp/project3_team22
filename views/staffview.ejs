@@ -33,16 +33,20 @@
 
             <div id="editcontent">
                 <button id="goBackBtn">Go Back</button>
-                <button id="addMemberBtn" onclick="addNewMember()">Add New Employee</button>
+                <button id="addMemberBtn" onclick="newMemberInput()">Add New Employee</button>
                 <button id="editStaffBtn" onclick="editStaff('<%= JSON.stringify(staffMembers) %>')">Modify</button>
                 <button id="cancelEditBtn" onclick="cancelEditing('<%= JSON.stringify(staffMembers) %>')" disabled>Cancel Editing</button>
             </div>
 
             
         </div>
-        
+
         <div id="newMemberPopup">
+
             <div id="newMemberPopupContent">
+
+                <h1 id="newMemberTitle">New Staff Member</h1>
+
                 <div id="newMemberName">
                     <label id="nameLabel">Name:</label>
                     <input id="nameInput" type="text">
@@ -66,10 +70,12 @@
                 </div>
 
                 <div id="submit">
-                    <button id="addNewEmpBtn">Add</button>
-                    <button id="cancelAddBtn">Cancel</button>
+                    <button id="addNewEmpBtn" onclick="submitNewMember()">Add</button>
+                    <button id="cancelAddBtn" onclick="closeNewMemberPopup()">Cancel</button>
                 </div>
+
             </div>
+
         </div>
 
         <script src="/scripts/staff.js"></script>

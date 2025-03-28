@@ -87,7 +87,7 @@ button:hover {
     height: 100%;
     position: absolute;
     top: 0;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -103,7 +103,12 @@ button:hover {
     margin-right: auto;
 }
 
-#newMemberName, #newMemberPosition, #setPassword, #submit {
+#newMemberTitle {
+    text-align: center;
+    margin-top: 0;
+}
+
+#newMemberName, #newMemberPosition, #setPassword {
     display: flex;
     flex-wrap: nowrap;
     margin-bottom: 10px;
@@ -113,11 +118,15 @@ button:hover {
     margin-right: 5px;
 }
 
+#nameInput, #passwordInput {
+    border-color: black;
+}
+
 #addNewEmpBtn, #cancelAddBtn {
     border: none;
     border-radius: 5px;
     color: white;
-    margin: 10px;
+    margin: 5px;
     font-size: larger;
     padding: 5px;
 }
@@ -131,6 +140,8 @@ button:hover {
 }
 
 #submit {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
