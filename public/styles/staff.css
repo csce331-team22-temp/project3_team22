@@ -81,6 +81,8 @@ button:hover {
     background-color: darkgray;
 }
 
+/*-------------------------------------New staff member form-------------------------------------*/
+
 #newMemberPopup {
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
@@ -120,6 +122,7 @@ button:hover {
 
 #nameInput, #passwordInput {
     border-color: black;
+    border-radius: 5px;
 }
 
 #addNewEmpBtn, #cancelAddBtn {

@@ -193,3 +193,8 @@ async function cancelEditing(staffMembers) {
     goBackBtn.disabled = false;
     goBackBtn.style.backgroundColor = "black";
 }
+
+// redirects to manager dashboard
+async function goToDashboard() {
+    window.location.href = "/staff/manager-dashboard";
+}
