@@ -3,7 +3,7 @@ const express = require('express');
 
 const router = express.Router();
 
-// gets every staff member's details
+// redirects page to staff page with staff details
 router.get('/page', async (req, res) => {
     try {
         const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
@@ -19,6 +19,7 @@ router.get('/page', async (req, res) => {
     }
 });
 
+// gets staff details
 router.get('/info', async (req, res) => {
     try {
         const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
@@ -103,6 +104,87 @@ router.put('/update', async (req, res) => {
 
     } catch (error) {
         console.error('Failed to load manager dashboard', error);
+    }
+});
+
+// redirects page to inventory page with inventory details
+router.get('/inventory/page', async (req, res) => {
+    try {
+        const query = `SELECT * FROM inventory ORDER BY itemid;`;
+        const inventoryInfo = await db.query(query);
+
+        const inventoryItems = inventoryInfo.rows;
+
+        res.render('inventoryview', { inventoryItems }); 
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// gets inventory details
+router.get('/inventory/info', async (req, res) => {
+    try {
+        const query = `SELECT * FROM inventory ORDER BY itemid;`;
+        const inventoryInfo = await db.query(query);
+
+        const inventoryItems = inventoryInfo.rows;
+
+        res.status(200).json(inventoryItems);
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// updates inventory details
+router.put('/inventory/update', async (req, res) => {
+    try {
+
+        const {
+            itemid,
+            itemname,
+            quantity,
+            usingitem
+        } = req.body;
+
+        const query = `UPDATE inventory SET itemname = $2, quantity = $3, usingitem = $4 WHERE itemid = $1;`;
+
+        await db.query(query, [itemid, itemname, quantity, usingitem]);
+
+        res.status(200).json({ message: 'Inventory details updated.'});
+
+    } catch (error) {
+        console.error('Failed to load manager dashboard', error);
+    }
+});
+
+// add a new inventory item
+router.post('/inventory/add', async (req, res) => {
+    try {
+
+        // parameters passed using JSON format
+        const {
+            itemname,
+            quantity,
+            usingitem
+        } = req.body;
+
+        const query = `INSERT INTO inventory VALUES ($1, $2, $3, $4);`;
+
+        const getMaxItemID = await db.query(`SELECT MAX(itemid) AS maxid FROM inventory;`);
+
+        const newItemID = (getMaxItemID.rows[0].maxid || 0) + 1; // if no rows exist, then starting value is 0
+
+        await db.query(query, [newItemID, itemname, quantity, usingitem]);
+
+        res.status(200).json({ message: 'New inventory item successfully added.'});
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
