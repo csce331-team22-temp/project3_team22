@@ -5,10 +5,32 @@
     align-items: center;
 }
 
-#ordersBtn, #inventoryBtn, #staffBtn {
+#ordersBtn, #inventoryBtn, #staffBtn, #logoutBtn {
     background-color: white;
     color: black;
     border: solid black 2px;
     border-radius: 5px;
     margin-top: 10px;
+    padding: 10px;
+    width: 25%;
+    font-size: large;
+}
+
+#logoutBtn {
+    color: red;
+    border-color: red;
+}
+
+#ordersBtn:hover, #inventoryBtn:hover, #staffBtn:hover {
+    background-color: black;
+    color: white;
+}
+
+#logoutBtn:hover {
+    background-color: red;
+    color: white;
+}
+
+button:hover {
+    cursor: pointer;
 }

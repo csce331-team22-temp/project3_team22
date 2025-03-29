@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="/styles/inventory.css">
+</head>
+<body>
+
+    <table>
+        <tr id="headerRow" align="center">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Using Item</th>
+        </tr>
+
+        <% for (var i in inventoryItems) {%>
+            <tr align="center">
+                <td><%= inventoryItems[i].itemid %></td>
+                <td><input id="itemname-<%= inventoryItems[i].itemid %>" type="text" value='<%= inventoryItems[i].itemname %>' disabled></td>
+                <td><input id="itemquantity-<%= inventoryItems[i].itemid %>" type="number" value='<%= inventoryItems[i].quantity %>' disabled></td>
+                <td><button id="usingitem-<%= inventoryItems[i].itemid %>" onclick="changeUsingItem('<%= inventoryItems[i].itemid %>')" disabled><%= inventoryItems[i].usingitem %></button></td>
+            </tr>
+        <% } %>
+    </table>
+
+    <div id="buttons">
+        <button id="goBackBtn" onclick="goToDashboard()">Go Back</button>
+        <button id="addItemBtn" onclick="newItemInput()">Add Item</button>
+        <button id="editItemsBtn" onclick="editInventory('<%= JSON.stringify(inventoryItems) %>')">Modify</button>
+        <button id="cancelEditBtn" onclick="cancelEditing('<%= JSON.stringify(inventoryItems) %>')" disabled>Cancel Editing</button>
+    </div>
+
+    <div id="newItemPopup">
+
+        <div id="newItemPopupContent">
+
+            <h1 id="newItemTitle">New Item</h1>
+
+            <div id="newItemName">
+                <label id="nameLabel">Name:</label>
+                <input id="nameInput" type="text">
+            </div>
+
+            <div id="newItemQuantity">
+                <label id="quantityLabel">Quantity:</label>
+                <input id="quantityInput" type="number">
+            </div>
+
+            <div id="newItemUsing">
+
+                <label id="usingItemLabel">Using Item?:</label>
+
+                <input type="radio" id="yesoption" name="usingItemOptions" value="Yes" checked>
+                <label for="yesoption">Yes</label>
+
+                <input type="radio" id="nooption" name="usingItemOptions" value="No">
+                <label for="nooption">No</label>
+
+            </div>
+
+            <div id="submit">
+                <button id="addNewItemBtn" onclick="submitNewItem()">Add</button>
+                <button id="cancelAddBtn" onclick="closeNewItemPopup()">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="/scripts/inventory.js"></script>
+</body>
+</html>

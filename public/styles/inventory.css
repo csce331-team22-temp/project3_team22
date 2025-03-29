@@ -1,61 +1,48 @@
 body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
     overflow: auto;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
 }
 
 table {
+    width: 80%;
     border-collapse: collapse;
-    width: 100%;
+    margin: auto;
+}
+
+#headerRow {
+    background-color: #145da0;
 }
 
 th {
-    background-color: #145da0;
-    font-size: 30px;
+    padding: 5px;
     color: white;
-    margin-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 
-td {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+th input {
+    width: 100%;
 }
 
 tr:hover {
     background-color: lightgray;
 }
 
-#content table button {
+table button {
     background-color: darkgray;
     color: white;
+    width: 100%;
     border: none;
     border-radius: 5px;
     padding: 5px;
-    width: 100%;
 }
 
-button:hover {
-    cursor: pointer;
-}
-
-#content table input {
-    width: 100%;
-}
-
-#editcontent {
+#buttons {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 10px;
 }
 
-#editcontent button {
+#buttons button {
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -65,15 +52,21 @@ button:hover {
     border-radius: 5px;
 }
 
+#buttons {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}
+
 #goBackBtn {
     background-color: black;
 }
 
-#addMemberBtn {
+#addItemBtn {
     background-color: green;
 }
 
-#editStaffBtn {
+#editItemsBtn {
     background-color: orange;
 }
 
@@ -81,9 +74,17 @@ button:hover {
     background-color: darkgray;
 }
 
-/*-------------------------------------New staff member form-------------------------------------*/
+button:hover {
+    cursor: pointer;
+}
 
-#newMemberPopup {
+table input {
+    width: 75%;
+}
+
+/*-------------------------------------New item form-------------------------------------*/
+
+#newItemPopup {
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
@@ -94,7 +95,7 @@ button:hover {
     align-items: center;
 }
 
-#newMemberPopupContent {
+#newItemPopupContent {
     width: fit-content;
     padding: 15px;
     border: none;
@@ -105,27 +106,31 @@ button:hover {
     margin-right: auto;
 }
 
-#newMemberTitle {
+#newItemTitle {
     text-align: center;
     margin-top: 0;
 }
 
-#newMemberName, #newMemberPosition, #setPassword {
+#newItemName, #newItemQuantity, #newItemUsing {
     display: flex;
     flex-wrap: nowrap;
     margin-bottom: 10px;
 }
 
-#nameLabel, #positionLabel, #passwordLabel {
+#newItemUsing {
+    flex-direction: row;
+}
+
+#nameLabel, #quantityLabel, #usingItemLabel {
     margin-right: 5px;
 }
 
-#nameInput, #passwordInput {
+#nameInput, #quantityInput {
     border-color: black;
     border-radius: 5px;
 }
 
-#addNewEmpBtn, #cancelAddBtn {
+#addNewItemBtn, #cancelAddBtn {
     border: none;
     border-radius: 5px;
     color: white;
@@ -134,7 +139,7 @@ button:hover {
     padding: 5px;
 }
 
-#addNewEmpBtn {
+#addNewItemBtn {
     background-color: green;
 }
 
@@ -147,4 +152,3 @@ button:hover {
     flex-direction: column;
     justify-content: center;
 }
-
