@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f3e7;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #d4a373;
+    color: white;
+    padding: 15px;
+}
+
+.categories {
+    margin-top: 50px;
+}
+
+.category {
+    display: block;
+    margin: 20px auto;
+    padding: 15px;
+    width: 200px;
+    background-color: #ffbf69;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.category:hover {
+    background-color: #f77f00;
+}
