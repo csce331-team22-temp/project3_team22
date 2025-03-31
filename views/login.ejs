@@ -64,7 +64,7 @@
     <div class="total-container">
         <div class="container" id="form-container">
             <h2 id="form-title">Login</h2>
-            <input type="text" id="username" placeholder="Username">
+            <input type="number" id="username" placeholder="User ID">
             <input type="password" id="password" placeholder="Password">
             <button class="login-btn" id="action-button" onclick="login()">Login</button>
             <p id="message"></p>
@@ -75,14 +75,24 @@
     <script>
         let isLogin = true;
 
-        function login() {
+        async function login() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
             const message = document.getElementById("message");
-            
-            if (username === "admin" && password === "password") {
-                message.textContent = "Login successful!";
-                message.style.color = "green";
+
+            const response = await fetch("/staff/login/" + username);
+            const memberData = await response.json();
+
+            if (memberData) {
+
+                if (password == memberData.password && memberData.position == "Manager") {
+                    message.textContent = "Login successful!";
+                    message.style.color = "green";
+                    window.location.href = "/staff/manager-dashboard";
+                } else {
+                    message.textContent = "Invalid credentials!";
+                    message.style.color = "red";
+                }
             } else {
                 message.textContent = "Invalid credentials!";
                 message.style.color = "red";
