@@ -85,18 +85,29 @@
 
             if (memberData) {
 
-                if (password == memberData.password && memberData.position == "Manager") {
-                    message.textContent = "Login successful!";
-                    message.style.color = "green";
-                    window.location.href = "/staff/manager-dashboard";
-                } else {
+                if (password == memberData.password) {
+
+                    //message.textContent = "Login successful!";
+                    //message.style.color = "green";
+
+                    username.value = "";
+                    password.value = "";
+
+                    if (memberData.position == "Manager") {
+                        window.location.href = "/staff/manager-dashboard";
+                    }
+                    else if (memberData.position == "Employee") {
+                        window.location.href = "/menu";
+                    }
+
+                } /*else {
                     message.textContent = "Invalid credentials!";
                     message.style.color = "red";
-                }
-            } else {
+                }*/
+            }/* else {
                 message.textContent = "Invalid credentials!";
                 message.style.color = "red";
-            }
+            }*/
         }
 
         function signup() {
