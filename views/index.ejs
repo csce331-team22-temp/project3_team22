@@ -1,7 +1,25 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= category %> | Bubble Tea</title>
+    <link rel="stylesheet" href="/menu.css">
 </head>
 <body>
-    <p>This is <%=name%>'s homepage.</p>
+    <header>
+        <h1><%= category %></h1>
+        <a href="/menu" class="back-button">← Back to Categories</a>
+    </header>
+
+    <main class="drinks-container">
+        <% drinks.forEach(drink => { %>
+            <div class="drink-item">
+                <img src="<%= drink.image_url %>" alt="<%= drink.name %>">
+                <h3><%= drink.name %></h3>
+                <p>$<%= drink.price %></p>
+            </div>
+        <% }); %>
+    </main>
 </body>
+</html>
