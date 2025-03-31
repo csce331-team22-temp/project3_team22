@@ -25,7 +25,7 @@
             <div class="drinks-container">
                 <% drinks.forEach(drink => { %>
                     <div class="drink-item">
-                        <img src="<%= drink.image_url || '/images/test.webp' %>" alt="<%= drink.drinkname %>">
+                        <img src="/images/<%= drink.image_url %>" alt="<%= drink.drinkname %>">
                         <h3><%= drink.drinkname %></h3>
                         <p class="price">$<%= drink.price %></p>
                     </div>
