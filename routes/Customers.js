@@ -59,6 +59,7 @@ router.post('/checkout/payment', async (req, res) => {
             console.log("Subtracted ingredients of drinkid:", drinkid);
         }
 
+        orderItems = [];
         res.json({ success: true, message: "Order successfully inserted into the database!" });
 
     } catch (error) {
