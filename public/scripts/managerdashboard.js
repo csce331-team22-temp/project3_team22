@@ -5,3 +5,7 @@ document.getElementById("staffBtn").addEventListener("click", async function () 
 document.getElementById("inventoryBtn").addEventListener("click", async function () {
     window.location.href = "/staff/inventory/page";
 });
+
+function goToMain() {
+    window.location.href = "/staff/login";
+}
