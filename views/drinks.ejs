@@ -18,6 +18,7 @@
 
     <main>
         <h2><%= category %></h2>
+        <!---since this is an array, I added a new column in the db that will have the path to the image for the specific drink-->
         <% if (drinks.length === 0) { %>
             <p class="no-drinks">No drinks available in this category yet!</p>
         <% } else { %>
