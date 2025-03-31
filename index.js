@@ -33,11 +33,14 @@ app.set("view engine", "ejs");
 const staffRoute = require('./routes/Staff');
 const customersRoute = require('./routes/Customers');
 const ordersRoute = require('./routes/Orders');
+const menuRoute = require('./routes/menu');
+
 
 // routes
 app.use('/staff', staffRoute);
 app.use('/customers', customersRoute);
 app.use('/orders', ordersRoute);
+app.use('/menu', menuRoute);
 
 
 app.listen(port, () => {
