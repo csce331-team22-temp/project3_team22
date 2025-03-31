@@ -1,0 +1,14 @@
+<%- include("layout") %>
+
+<a href="/menu">← Back to Menu</a>
+<h2><%= category %></h2>
+
+<div class="drinks-container">
+    <% drinks.forEach(drink => { %>
+        <div class="drink-item">
+            <img src="<%= drink.image_url %>" alt="<%= drink.name %>">
+            <h3><%= drink.name %></h3>
+            <p>$<%= drink.price %></p>
+        </div>
+    <% }); %>
+</div>

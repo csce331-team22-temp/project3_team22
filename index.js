@@ -38,6 +38,8 @@ const ordersRoute = require('./routes/Orders');
 app.use('/staff', staffRoute);
 app.use('/customers', customersRoute);
 app.use('/orders', ordersRoute);
+const menuRoute = require('./routes/menu');
+app.use('/menu', menuRoute);
 
 
 app.listen(port, () => {
