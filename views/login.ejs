@@ -76,27 +76,38 @@
         let isLogin = true;
 
         async function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+            const username = document.getElementById("username");
+            const password = document.getElementById("password");
             const message = document.getElementById("message");
 
-            const response = await fetch("/staff/login/" + username);
+            const response = await fetch("/staff/login/" + username.value);
             const memberData = await response.json();
 
             if (memberData) {
 
-                if (password == memberData.password && memberData.position == "Manager") {
-                    message.textContent = "Login successful!";
-                    message.style.color = "green";
-                    window.location.href = "/staff/manager-dashboard";
-                } else {
+                if (password.value == memberData.password) {
+
+                    //message.textContent = "Login successful!";
+                    //message.style.color = "green";
+
+                    username.value = "";
+                    password.value = "";
+
+                    if (memberData.position == "Manager") {
+                        window.location.href = "/staff/manager-dashboard";
+                    }
+                    else if (memberData.position == "Employee") {
+                        window.location.href = "/menu";
+                    }
+
+                } /*else {
                     message.textContent = "Invalid credentials!";
                     message.style.color = "red";
-                }
-            } else {
+                }*/
+            }/* else {
                 message.textContent = "Invalid credentials!";
                 message.style.color = "red";
-            }
+            }*/
         }
 
         function signup() {

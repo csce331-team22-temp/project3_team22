@@ -200,7 +200,7 @@ router.get('/login', async (req, res) => {
     }
 });
 
-// get manager's details
+// get staff member's details
 router.get('/login/:staffid', async (req, res) => {
     try {
 
@@ -208,7 +208,6 @@ router.get('/login/:staffid', async (req, res) => {
 
         const staffmember = await db.query(query, [req.params.staffid]);
 
-        //return staffmember.rows[0];
         res.status(200).json(staffmember.rows[0]);
 
     } catch (error) {
