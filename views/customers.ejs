@@ -10,10 +10,28 @@
     
     <div>
         <!-- Example items to add to the cart -->
-        <button onclick="addItemToCart('Ginger Tea', 3.99)">Add Ginger Tea</button>
-        <button onclick="addItemToCart('Mango Ice Blended Tea', 4.99)">Add Mango Tea</button>
-        <button onclick="addItemToCart('Taro Milk Tea', 5.99)">Add Taro Milk Tea</button>
-        <button onclick="addItemToCart('Lemon Lavender Tea', 6.99)">Add Lemon Lavender Tea</button>
+        <button onclick="addItemToCart('Taro Milk Tea', 5.99)">Taro Milk Tea</button>
+        <button onclick="addItemToCart('Oreo Milk Tea', 5.99)">Oreo Milk Tea</button>
+        <button onclick="addItemToCart('Thai Milk Tea', 5.99)">Thai Milk Tea</button>
+        <button onclick="addItemToCart('Brown Sugar Milk Tea', 5.99)">Brown Sugar Milk Tea</button>
+        <button onclick="addItemToCart('Mango Tea', 4.99)">Mango Tea</button>
+        <button onclick="addItemToCart('Honeydew Tea', 4.99)">Honeydew Tea</button>
+        <button onclick="addItemToCart('Peach Tea', 4.99)">Peach Tea</button>
+        <button onclick="addItemToCart('Raspberry Tea', 4.99)">Raspberry Tea</button>
+        <button onclick="addItemToCart('Passionfruit Tea', 4.99)">Passionfruit Tea</button>
+        <button onclick="addItemToCart('Oolong Tea', 3.99)">Oolong Tea</button>
+        <button onclick="addItemToCart('Black Tea', 3.99)">Black Tea</button>
+        <button onclick="addItemToCart('Green Tea', 3.99)">Green Tea</button>
+        <button onclick="addItemToCart('Jasmine Tea', 3.99)">Jasmine Tea</button>
+        <button onclick="addItemToCart('Ginger Tea', 3.99)">Ginger Tea</button>
+        <button onclick="addItemToCart('Taro Ice Blended Tea', 5.99)">Taro Ice Blended Tea</button>
+        <button onclick="addItemToCart('Oreo Ice Blended Tea', 5.99)">Oreo Ice Blended Tea</button>
+        <button onclick="addItemToCart('Thai Ice Blended Tea', 5.99)">Thai Ice Blended Tea</button>
+        <button onclick="addItemToCart('Peach Ice Blended Tea', 5.99)">Peach Ice Blended Tea</button>
+        <button onclick="addItemToCart('Mango Ice Blended Tea', 5.99)">Mango Ice Blended Tea</button>
+        <button onclick="addItemToCart('Lemon Lavender Tea', 6.99)">Lemon Lavender Tea</button>
+        <button onclick="addItemToCart('Apple Fruit Tea', 4.99)">Apple Fruit Tea</button>
+        <button onclick="addItemToCart('Dragon Fruit Tea', 5.99)">Dragon Fruit Tea</button>
     </div>
 
     <h2>Your Cart</h2>
@@ -35,30 +53,14 @@
             .then(data => {
                 if (data.success) {
                     alert('Item added to the cart!');
-                    updateCart();  // Update the cart UI with new items
                 } else {
                     alert('Error adding item.');
                 }
             })
             .catch(error => console.error('Error:', error));
 
-            updateCart();
         }
 
-        // Function to update the cart UI
-        function updateCart() {
-            fetch('/customers/checkout')  // Fetch the cart from the checkout page (for rendering)
-                .then(response => response.json())
-                .then(data => {
-                    const cartItemsList = document.getElementById('cart-items');
-                    cartItemsList.innerHTML = '';  // Clear the current list
-                    data.orderItems.forEach(item => {
-                        const li = document.createElement('li');
-                        li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
-                        cartItemsList.appendChild(li);
-                    });
-                });
-        }
 
         // Function to proceed to the checkout page
         function proceedToCheckout() {

@@ -13,13 +13,12 @@ function clearOrder() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({})  // Empty body to clear the items
+        body: JSON.stringify({})
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Redirect back to the customers page or another page after clearing
-            window.location.href = '/customers';  // Adjust this route as necessary
+            window.location.href = '/customers';
         } else {
             alert('Error clearing order.');
         }
@@ -44,6 +43,8 @@ function pay(method) {
     .then(data => {
         if (data.success) {
             alert('Order successfully inserted into the database!');
+            togglePaymentOptions(); // Close the payment options div after selection
+            window.location.href = '/customers';
         } else {
             alert('Error inserting order.');
         }
@@ -52,5 +53,5 @@ function pay(method) {
         console.error('Error:', error);
         alert('Error inserting order.');
     });
-    togglePaymentOptions(); // Close the payment options div after selection
+    
 }
