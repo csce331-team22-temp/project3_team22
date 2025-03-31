@@ -188,4 +188,33 @@ router.post('/inventory/add', async (req, res) => {
     }
 });
 
+// get manager's details
+router.get('/login', async (req, res) => {
+    try {
+
+        res.render('login');
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// get manager's details
+router.get('/login/:staffid', async (req, res) => {
+    try {
+
+        const query = `SELECT * FROM staffmembers WHERE staffid = $1;`;
+
+        const staffmember = await db.query(query, [req.params.staffid]);
+
+        //return staffmember.rows[0];
+        res.status(200).json(staffmember.rows[0]);
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 module.exports = router;
