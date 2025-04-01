@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Back!</title>
+    <link rel="stylesheet" href="/styles/login.css">
+    <script src="/scripts/rewards.js"></script>
+    <script>var pearls = '<%-currentCustomer.pearls %>';</script>
+
+</head>
+<body>
+    <!--Title block-->
+    <div style="display: grid; grid-template-columns: 15% 70% 15%">
+        <div></div>
+        <h1 id="title" style="text-align: center;">Welcome back, <%=currentCustomer.name %>!</h1>
+        <button id="cart-btn">CART (0)</button>
+    </div>
+
+    <!--Display pearls balance-->
+    <div style="display: grid; grid-template-columns: 30% 70%;">
+        <h2>Pearls Balance (&#128992)</h2>
+        <input id='pearls-balance' type="text" value="<%=currentCustomer.pearls %> &#128992" disabled="disabled">
+    </div>
+
+    <div style="margin-top: 15vh;">
+        <h2><center>Select Item to redeem points:</center></h2>
+    </div>
+
+    <!--Drink selection options-->
+    <div style="display: flex; justify-content: center; margin-top: 5vh;">
+        <select id="drinks">
+         
+        </select>
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <button id="redeem-btn">Redeem</button>
+    </div>
+    <!--TODO: Push to bottom of page -->
+    <div>
+        <img alt="Acessibility Options Logo">
+    </div>
+
+</body>
+</html>

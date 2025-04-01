@@ -1,0 +1,59 @@
+h1 { font-size: 3em; }
+body {
+    font-family: Georgia;
+}
+
+#cart-btn {
+    width: 15vw;
+    height: 7vh;
+    margin-left: auto;
+    border: 0.2em solid black;
+    border-radius: 0.5em;
+}
+
+#phone-input { border-right : none; flex: 1;}
+#name-input {border-right: none; flex: 1;}
+#customer-login {row-gap: 10vh;}
+
+#customer-signup {
+    grid-template-columns: 30% 70%;
+    row-gap: 1vh;
+}
+.signup-login {
+    display: grid; 
+    grid-template-columns: 30% 70%;
+    font-size: 1.5em;
+    margin-top: 10vh;
+    align-items: center;
+
+}
+.signup-login h2 {
+    margin: 0;
+    align-self: center;
+}
+.signup-login input {
+    padding: 1rem 1rem;
+    font-size: 1.5em;
+    border: 0.2rem solid gray;
+}
+.signup-login button {
+    font-size: 1.5em;
+    padding: 1rem 1rem;
+    border: 0.2rem solid black;
+}
+#make-account-button {
+    flex-grow: 1;
+    align-self: center;
+}
+
+
+#redeem-btn {
+    width: 60%;
+    height: 5vh;
+    font-size: 1.5em;
+}
+#drinks {
+    width: 60%;
+    font-size: 1.5em;
+    font-weight: bold;
+}
