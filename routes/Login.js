@@ -4,7 +4,7 @@ const router = express.Router();
 const rewards = require('./Rewards');
 
 router.get('/', (req, res) => {
-    res.render('login'); 
+    res.render('customerlogin'); 
 })
 
 router.post('/login-request', (req, res) => {

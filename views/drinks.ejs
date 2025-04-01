@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= category %> | Bubble Tea</title>
+    <link rel="stylesheet" href="/styles/menu.css">
+</head>
+<body>
+    <header>
+        <h1>🧋 ShareTea</h1>
+        <nav>
+            <ul class="category-header">
+                <li><a href="/menu">← Back to Categories</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2><%= category %></h2>
+        <!---since this is an array, I added a new column in the db that will have the path to the image for the specific drink-->
+        <% if (drinks.length === 0) { %>
+            <p class="no-drinks">No drinks available in this category yet!</p>
+        <% } else { %>
+            <div class="drinks-container">
+                <% drinks.forEach(drink => { %>
+                    <div class="drink-item">
+                        <img src="/images/<%= drink.image_url %>" alt="<%= drink.drinkname %>">
+                        <h3><%= drink.drinkname %></h3>
+                        <p class="price">$<%= drink.price %></p>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </main>
+</body>
+</html>

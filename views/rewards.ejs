@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome Back!</title>
-    <link rel="stylesheet" href="/styles/login.css">
+    <link rel="stylesheet" href="/styles/customerlogin.css">
     <script src="/scripts/rewards.js"></script>
     <script>var pearls = '<%-currentCustomer.pearls %>';</script>
 
@@ -14,7 +14,7 @@
     <div style="display: grid; grid-template-columns: 15% 70% 15%">
         <div></div>
         <h1 id="title" style="text-align: center;">Welcome back, <%=currentCustomer.name %>!</h1>
-        <button id="cart-btn">CART (0)</button>
+        <button id="cart-btn">CART</button>
     </div>
 
     <!--Display pearls balance-->
