@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightblue;
+        }
+        .total-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            padding: 20px;
+            width: 350px;
+        }
+        .container {
+            width: 100%;
+        }
+        input {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .login-btn {
+            background: #0056b3;
+            color: white;
+        }
+        .signup-btn {
+            background: blue;
+            color: white;
+        }
+        .switch-btn {
+            background: lightgray;
+            color: black;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="total-container">
+        <div class="container" id="form-container">
+            <h2 id="form-title">Login</h2>
+            <input type="number" id="username" placeholder="User ID">
+            <input type="password" id="password" placeholder="Password">
+            <button class="login-btn" id="action-button" onclick="login()">Login</button>
+            <p id="message"></p>
+            <button class="switch-btn" onclick="switch_style()">Go to Sign-Up</button>
+        </div>
+    </div>
+
+    <script>
+        let isLogin = true;
+
+        async function login() {
+            const username = document.getElementById("username");
+            const password = document.getElementById("password");
+            const message = document.getElementById("message");
+
+            const response = await fetch("/staff/login/" + username.value);
+            const memberData = await response.json();
+
+            if (memberData) {
+
+                if (password.value == memberData.password) {
+
+                    //message.textContent = "Login successful!";
+                    //message.style.color = "green";
+
+                    username.value = "";
+                    password.value = "";
+
+                    if (memberData.position == "Manager") {
+                        window.location.href = "/staff/manager-dashboard";
+                    }
+                    else if (memberData.position == "Employee") {
+                        window.location.href = "/menu";
+                    }
+
+                } /*else {
+                    message.textContent = "Invalid credentials!";
+                    message.style.color = "red";
+                }*/
+            }/* else {
+                message.textContent = "Invalid credentials!";
+                message.style.color = "red";
+            }*/
+        }
+
+        function signup() {
+            const username = document.getElementById("new-username").value;
+            const password = document.getElementById("new-password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            const message = document.getElementById("message");
+
+            if (password !== confirmPassword) {
+                message.textContent = "Passwords do not match!";
+                message.style.color = "red";
+                return;
+            }
+
+            message.textContent = "Account created successfully!";
+            message.style.color = "green";
+        }
+
+        function switch_style() {
+            const container = document.getElementById("form-container");
+
+            if (isLogin) {
+                container.innerHTML = `
+                    <h2 id="form-title">Sign-Up</h2>
+                    <input type="text" id="new-username" placeholder="New Username">
+                    <input type="password" id="new-password" placeholder="New Password">
+                    <input type="password" id="confirm-password" placeholder="Confirm Password">
+                    <button class="signup-btn" id="action-button" onclick="signup()">Sign Up</button>
+                    <p id="message"></p>
+                    <button class="switch-btn" onclick="switch_style()">Back to Login</button>
+                `;
+            } else {
+                container.innerHTML = `
+                    <h2 id="form-title">Login</h2>
+                    <input type="text" id="username" placeholder="Username">
+                    <input type="password" id="password" placeholder="Password">
+                    <button class="login-btn" id="action-button" onclick="login()">Login</button>
+                    <p id="message"></p>
+                    <button class="switch-btn" onclick="switch_style()">Go to Sign-Up</button>
+                `;
+            }
+            isLogin = !isLogin;
+        }
+    </script>
+</body>
+</html>
