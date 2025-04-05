@@ -1,0 +1,94 @@
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#filterorders {
+    width: 20%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    background-color: cornsilk;
+}
+
+#ordernumfilter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#ordernumfilter p {
+    padding: 0;
+    margin: 0;
+    margin-right: 5px;
+}
+
+#searchBtn {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+    background-color: orange;
+    color: white;
+}
+
+#ordersdata {
+    width: 80%;
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #145da0;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#nonregisteredcustomer {
+    background-color: lightgray;
+}
+
+tr:hover {
+    background-color: lightgray;
+}
+
+table button {
+    background-color: #145da0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#goBackBtn {
+    background-color: black;
+}
+

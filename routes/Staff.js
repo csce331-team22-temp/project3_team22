@@ -1,5 +1,6 @@
 const db = require('../database');
 const express = require('express');
+//const { requiresAuth } = require('express-openid-connect');
 
 const router = express.Router();
 
@@ -52,8 +53,12 @@ router.get('/manager', async (req, res) => {
 // displays the manager's dashboard page
 router.get('/manager-dashboard', async (req, res) => {
     try {
+        /*const {
+            staffid,
+            password
+        } = req.body*/
 
-        res.render('managerdashboard')
+        res.render('managerdashboard');
 
     } catch (error) {
         console.error('Failed to load manager dashboard', error);
@@ -207,6 +212,12 @@ router.get('/login/:staffid', async (req, res) => {
         const query = `SELECT * FROM staffmembers WHERE staffid = $1;`;
 
         const staffmember = await db.query(query, [req.params.staffid]);
+
+        if (req.body.userinput) {
+            if (req.body.userinput == staffmember.rows[0].password) {
+                console.log("Wtf?");
+            }
+        }
 
         res.status(200).json(staffmember.rows[0]);
 

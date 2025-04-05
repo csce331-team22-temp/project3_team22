@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Orders</title>
+    <link rel="stylesheet" href="/styles/previousorders.css">
+</head>
+<body>
+    <div id="filterorders">
+
+        <h1>Filter</h1>
+
+        <div id="ordernumfilter">
+            <p><b>Order ID:</b></p>
+            <input type="number" id="ordernuminput" name="ordernum">
+        </div>
+
+        <button id="searchBtn" onclick="filterOrders()">Search</button>
+
+    </div>
+    <div id="ordersdata">
+        <table>
+            <tr align="center">
+                <th>Customer Name</th>
+                <th>Cashier Name</th>
+                <th>Order ID</th>
+                <th>Order Bill</th>
+                <th>Amount Paid</th>
+                <th>Date & Time Ordered</th>
+            </tr>
+
+            <% for (var i in previousOrdersList) {%>
+                <tr align="center">
+                    <% if (previousOrdersList[i].custname == "") {%>
+                        <td id="nonregisteredcustomer">N/A</td>
+                    <% } else {%>
+                        <td><%= previousOrdersList[i].custname %></td>
+                    <% } %>
+                    <td><%= previousOrdersList[i].cashiername %></td>
+                    <td><%= previousOrdersList[i].ordernum %></td>
+                    <td><button onclick="showBill('<%= previousOrdersList[i].ordernum %>')">View</button></td>
+                    <td><%= previousOrdersList[i].paidamount %></td>
+                    <td><%= previousOrdersList[i].orderdate %></td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
+
+    <script src="/scripts/previousorders.js"></script>
+</body>
+</html>

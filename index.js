@@ -30,6 +30,8 @@ app.use(express.json());
 	 	 	 	
 app.set("view engine", "ejs");
 
+app.use(express.urlencoded({ extended: false }));
+
 const staffRoute = require('./routes/Staff');
 const customersRoute = require('./routes/Customers');
 const ordersRoute = require('./routes/Orders');
