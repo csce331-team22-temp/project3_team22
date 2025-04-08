@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/get-drinks', (req, res) => {
-    db.query("select drinkname from menu;")
+    db.query("select drinkname, image_url from menu;")
     .then(drinks => {
         res.json(drinks.rows);
     });
