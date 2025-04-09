@@ -216,4 +216,18 @@ router.get('/login/:staffid', async (req, res) => {
     }
 });
 
+
+// generate x-report for staff members
+router.get('/x-report', async (req, res) => {
+    try {
+      
+        res.render('x-report');
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 module.exports = router;
