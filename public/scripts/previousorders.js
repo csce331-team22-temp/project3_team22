@@ -12,3 +12,7 @@ async function showBill(orderNum) {
 
     console.log(mydata);
 }
+
+function goToDashboard() {
+    window.location.href = "/staff/manager-dashboard";
+}

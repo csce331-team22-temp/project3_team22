@@ -1,5 +1,5 @@
 function viewPreviousOrders() {
-    
+    window.location.href = "/orders/recent";
 }
 
 function goToInventory() {
@@ -11,5 +11,5 @@ function goToStaff() {
 }
 
 function goToMain() {
-    window.location.href = "/staff/login";
+    window.location.href = "/logout";
 }

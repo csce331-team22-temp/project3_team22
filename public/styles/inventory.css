@@ -24,6 +24,10 @@ th input {
     width: 100%;
 }
 
+tr {
+    border-bottom: solid darkgray 1px;
+}
+
 tr:hover {
     background-color: lightgray;
 }

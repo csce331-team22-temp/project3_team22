@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles/home.css">
+</head>
+<body>
+
+    <button type="button" id="google-sign-in-button" onclick="signIn()">Staff Sign In</button>
+
+    <div id="center-content">
+        <h1>ShareTea Plus</h1>
+        <button id="startOrderingBtn">Start Ordering</button>
+    </div>
+
+    <script>
+
+        let signInBtn = document.getElementById('google-sign-in-button');
+
+        function signIn() {
+            window.location.href = "/auth/google";
+        }
+    </script>
+</body>
+</html>

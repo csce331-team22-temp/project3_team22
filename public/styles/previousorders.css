@@ -30,13 +30,21 @@ body {
     margin-right: 5px;
 }
 
-#searchBtn {
+#searchBtn, #goBackBtn {
     border: none;
     border-radius: 5px;
     padding: 5px;
-    margin: 10px;
-    background-color: orange;
+    margin: 0;
+    margin-top: 10px;
     color: white;
+}
+
+#searchBtn {
+    background-color: orange;
+}
+
+#goBackBtn {
+    background-color: black;
 }
 
 #ordersdata {
@@ -58,6 +66,10 @@ th {
     padding-right: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+tr {
+    border-bottom: solid darkgray 1px;
 }
 
 td {
@@ -86,9 +98,5 @@ table button {
 
 button:hover {
     cursor: pointer;
-}
-
-#goBackBtn {
-    background-color: black;
 }
 
