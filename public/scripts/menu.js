@@ -68,5 +68,29 @@ backButton.addEventListener("click", () => {
     categoriesDiv.style.display = "block";
 });
 
+// Function to add items to the cart
+function addItemToCart(name, price) {
+    fetch('/customers/add-item', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, price })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Item added to the cart!');
+        } else {
+            alert('Error adding item.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+
+}
+
+// Function to proceed to the checkout page
+function proceedToCheckout() {
+    window.location.href = '/customers/checkout';  // Redirect to checkout page
+}
+
 // Initialize categories on page load
 displayCategories();

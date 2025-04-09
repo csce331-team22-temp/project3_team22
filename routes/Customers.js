@@ -18,6 +18,21 @@ router.post('/add-item', (req, res) => {
     res.json({ success: true, message: 'Item added to the cart!' });
 });
 
+// Route to remove item from the list
+router.post('/remove-item', (req, res) => {
+    let { name, price } = req.body;
+    price = parseFloat(price);
+    console.log('Attempting to remove:', req.body);
+    const spliceIndex = orderItems.findIndex(item => item.name === name && item.price === price);
+    if (spliceIndex != -1){
+        orderItems.splice(spliceIndex, 1);
+        res.json({ success: true, message: 'Item removed from the cart!' });
+    }
+    else {
+        res.json({ success: false, message: 'Item not found in the cart :(' });
+    }
+});
+
 // Route for proceeding to checkout and passing orderItems to checkout.ejs
 router.get('/checkout', (req, res) => {
     res.render('checkout', { orderItems });

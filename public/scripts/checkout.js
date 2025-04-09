@@ -1,32 +1,66 @@
 function togglePaymentOptions() {
-    var paymentDiv = document.getElementById('payment-options');
-    if (paymentDiv.style.display === 'none') {
-        paymentDiv.style.display = 'block'; // Show the div
+    const paymentOptionsDiv = document.getElementById('paymentOptions');
+    const checkoutOptionsDiv = document.getElementById('checkoutButtons');
+
+    if (paymentOptionsDiv.style.visibility === 'hidden' || paymentOptionsDiv.style.visibility === '') {
+        paymentOptionsDiv.style.visibility = 'visible';
+        checkoutOptionsDiv.style.visibility = 'hidden';
     } else {
-        paymentDiv.style.display = 'none'; // Hide the div
+        paymentOptionsDiv.style.visibility = 'hidden';
+        checkoutOptionsDiv.style.visibility = 'visible';
     }
 }
 
-function clearOrder() {
-    fetch('/checkout/clear', {
+// function clearOrder() {
+//     fetch('/checkout/clear', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({})
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (data.success) {
+//             window.location.href = '/customers';
+//         } else {
+//             alert('Error clearing order.');
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         alert('Error clearing order.');
+//     });
+// }
+
+// Function to remove an item from the cart by sending a POST request to the server
+function removeFromCart(name, price, index) {
+    fetch('/customers/remove-item', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, price })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            window.location.href = '/customers';
+            const itemElement = document.getElementById(`item-${index}`);
+            if (itemElement) {
+                itemElement.remove();
+            }
+
+            const totalElement = document.getElementById('cartTotal');
+            const currentTotal = parseFloat(totalElement.textContent);
+            const newTotal = (currentTotal - parseFloat(price)).toFixed(2);
+            totalElement.textContent = newTotal;
+            
+            console.log('Updated cart:', data.cart);
+
+            alert('Item removed from the cart!');
         } else {
-            alert('Error clearing order.');
+            alert('Error removing item.');
         }
     })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error clearing order.');
-    });
+    .catch(error => console.error('Error:', error));
 }
 
 // Function to handle payment selection
