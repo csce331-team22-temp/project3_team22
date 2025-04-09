@@ -68,5 +68,10 @@ backButton.addEventListener("click", () => {
     categoriesDiv.style.display = "block";
 });
 
+// Function to proceed to the checkout page
+function proceedToCheckout() {
+    window.location.href = '/customers/checkout';  // Redirect to checkout page
+}
+
 // Initialize categories on page load
 displayCategories();

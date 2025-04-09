@@ -3,7 +3,17 @@ body {
     color: white;
     font-family: Arial, sans-serif;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
 }
+
+h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,7 +21,18 @@ body {
     justify-content: center;
     height: 100vh;
 }
-.button {
+
+.textBesideButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.coloredText {
+    color:#145DA0
+}
+
+.button, .cartButton {
     background-color: #145DA0;
     color: white;
     border: 1px solid white;
@@ -20,18 +41,42 @@ body {
     font-size: 18px;
     cursor: pointer;
 }
+
 .button:hover {
     background-color: #1D72C2;
 }
-.cart-items {
+
+#cartItems {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
     width: 50%;
     text-align: left;
+    
 }
-.total {
+
+#cartTotal {
     font-size: 24px;
     margin-top: 10px;
+}
+
+#checkoutButtons, #paymentOptions {
+    position: absolute;
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#checkoutButtons {
+    visibility: visible;
+}
+  
+#paymentOptions {
+    visibility: hidden;
 }
