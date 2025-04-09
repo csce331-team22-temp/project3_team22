@@ -11,5 +11,5 @@ function goToStaff() {
 }
 
 function goToMain() {
-    window.location.href = "/logout";
+    window.location.href = "/logout?loginMessage=";
 }

@@ -99,7 +99,7 @@ app.get('/auth/google/callback', passport.authenticate('google', {failureRedirec
 
     const staffMemberInfo = await db.query(query, [user_email]);
 
-    if (staffMemberInfo) {
+    if (staffMemberInfo.rowCount > 0) {
 
         if(staffMemberInfo.rows[0].position == 'Manager') {
             res.redirect('/staff/manager-dashboard');
@@ -109,12 +109,22 @@ app.get('/auth/google/callback', passport.authenticate('google', {failureRedirec
         }
         
     }
+    else {
+        res.redirect('/logout?loginMessage=User access denied!');
+    }
 });
 
 app.get('/logout', (req, res) => {
-    req.logout(() => {
-        res.redirect('/');
-    });
+    if (req.user) {
+        req.logout(() => {
+            const loginMessage = req.query.loginMessage;
+            res.redirect(`/?loginMessage=${loginMessage}`);
+        });
+    }
+    else {
+        const loginMessage = req.query.loginMessage;
+        res.redirect(`/?loginMessage=${loginMessage}`);
+    }
     
 })
 

@@ -4,7 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render('home'); 
+    const loginMessage = req.query.loginMessage || "";
+    res.render('home', { loginMessage }); 
 })
 
 module.exports = router;

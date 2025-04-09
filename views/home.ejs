@@ -8,6 +8,14 @@
 </head>
 <body>
 
+    <% if (loginMessage.length > 0) { %>
+        <script>
+            window.location.reload();
+            alert('<%= loginMessage %>');
+            window.location.href = "/";
+        </script>
+    <% } %>
+
     <button type="button" id="google-sign-in-button" onclick="signIn()">Staff Sign In</button>
 
     <div id="center-content">
