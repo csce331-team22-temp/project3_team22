@@ -54,8 +54,17 @@ function removeFromCart(name, price, index) {
             totalElement.textContent = newTotal;
             
             console.log('Updated cart:', data.cart);
-
             alert('Item removed from the cart!');
+            
+            // check if item removed was a reward item and send some garbage to rewards to notify that pearls need to be refunded
+            if(price == 0.0) {
+                fetch('customers/rewards/refund-pearls', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, price })
+                })
+            }
+
         } else {
             alert('Error removing item.');
         }
@@ -65,20 +74,28 @@ function removeFromCart(name, price, index) {
 
 // Function to handle payment selection
 function pay(method) {
-    // Send the data to the server
     fetch('/customers/checkout/payment', {
-        method: 'POST',  // Specify the HTTP method
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json'  // Indicate the type of content being sent
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ paymentMethod: method })  // Send the 'credit' string as the body
+        body: JSON.stringify({ paymentMethod: method })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             alert('Order successfully inserted into the database!');
-            togglePaymentOptions(); // Close the payment options div after selection
-            window.location.href = '/customers';
+            togglePaymentOptions();
+            window.location.href = '/customers'; // TODO: change location to menu once connected
+
+            // send some garbage to rewards so that it can handle resetting the customer
+            fetch('customers/rewards/reset-customer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ paymentMethod: method })
+            })
         } else {
             alert('Error inserting order.');
         }

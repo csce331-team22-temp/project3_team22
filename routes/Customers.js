@@ -6,6 +6,7 @@ const router = express.Router();
 // add routes here
 // Route to render the customer page
 let orderItems = [];
+let customerID = 0;
 router.get('/', (req, res) => {
     res.render('customers', { orderItems });
 });
@@ -31,6 +32,13 @@ router.post('/remove-item', (req, res) => {
     else {
         res.json({ success: false, message: 'Item not found in the cart :(' });
     }
+});
+
+// TODO: router.post('/id') that gets customer id as the body and stores it for use in checkout
+router.post('/id', (req, res) => {
+    let currentCustomer = req.body["customerInfo"];
+    customerID = parseInt(currentCustomer.customerid);
+    console.log('Item received:', customerID);
 });
 
 // Route for proceeding to checkout and passing orderItems to checkout.ejs
