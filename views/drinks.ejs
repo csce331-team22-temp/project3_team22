@@ -78,21 +78,43 @@
     const closeButton = document.querySelector(".close-button");
     const drinkNameDisplay = document.getElementById("selected-drink-name");
 
+    // Show modal on drink image click
     document.querySelectorAll(".drink-click").forEach(item => {
-      item.addEventListener("click", () => {
-        drinkNameDisplay.textContent = "Customize: " + item.dataset.drink;
-        modal.classList.remove("hidden");
-      });
+        item.addEventListener("click", () => {
+            drinkNameDisplay.textContent = "Customize: " + item.dataset.drink;
+
+            // Clear all previous selections
+            document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
+
+            modal.classList.remove("hidden");
+        });
     });
 
+    // Close modal
     closeButton.addEventListener("click", () => {
-      modal.classList.add("hidden");
+        modal.classList.add("hidden");
     });
 
     window.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        modal.classList.add("hidden");
-      }
+        if (event.target === modal) {
+            modal.classList.add("hidden");
+        }
+    });
+
+    // need to make sure only one customuzation of ice and sugar is selected
+    document.querySelectorAll(".sugar-btn, .ice-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const group = button.classList.contains("sugar-btn") ? ".sugar-btn" : ".ice-btn";
+            document.querySelectorAll(group).forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
+
+    // customers can however have as many toppings as they want
+    document.querySelectorAll(".topping-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            button.classList.toggle("selected");
+        });
     });
   </script>
 </body>
