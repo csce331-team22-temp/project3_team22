@@ -18,13 +18,20 @@ router.get('/', async (req, res) => {
 router.get('/:category', async (req, res) => {
     try {
         const category = req.params.category;
-        const result = await db.query("SELECT * FROM menu WHERE category = $1", [category]);
 
-        if (result.rows.length === 0) {
+        const drinkQuery = await db.query("SELECT * FROM menu WHERE category = $1", [category]);
+        if (drinkQuery.rows.length === 0) {
             return res.status(404).send("Category not found");
         }
 
-        res.render("drinks", { category, drinks: result.rows });
+        const toppingsQuery = await db.query("SELECT unnest(string_to_array(toppings, ',')) AS topping FROM toppings;");
+        const toppings = toppingsQuery.rows.map(row => row.topping);
+
+        res.render("drinks", {
+            category,
+            drinks: drinkQuery.rows,
+            toppings
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send("Error fetching drinks");
