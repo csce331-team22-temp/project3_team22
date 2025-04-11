@@ -39,7 +39,7 @@ app.use(session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
-}))
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -91,6 +91,7 @@ app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
+// redirects to manager or cashier view based on the user role, otherwise user is logged out
 app.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/'}), async (req, res) => {
     
     const user_email = req.user.emails[0].value;
@@ -117,13 +118,11 @@ app.get('/auth/google/callback', passport.authenticate('google', {failureRedirec
 app.get('/logout', (req, res) => {
     if (req.user) {
         req.logout(() => {
-            const loginMessage = req.query.loginMessage;
-            res.redirect(`/?loginMessage=${loginMessage}`);
+            res.redirect('/');
         });
     }
     else {
-        const loginMessage = req.query.loginMessage;
-        res.redirect(`/?loginMessage=${loginMessage}`);
+        res.redirect('/');
     }
     
 })

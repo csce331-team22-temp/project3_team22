@@ -26,7 +26,7 @@
                         <td><%= staffMembers[i].name %></td>
                         <td><button id="positionBtn-<%= staffMembers[i].staffid %>" onclick="changePosition('<%= staffMembers[i].staffid %>')" disabled><%= staffMembers[i].position %></button></td>
                         <td><input id="emailInput-<%= staffMembers[i].staffid %>" type="text" value="<%= staffMembers[i].email %>" disabled></td>
-                        <td><%= staffMembers[i].datejoined %></td>
+                        <td><%= staffMembers[i].datejoined.toLocaleString() %></td>
                     </tr>
                 <% } %>
             </table>
