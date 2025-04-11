@@ -6,20 +6,51 @@
     <title>Previous Orders</title>
     <link rel="stylesheet" href="/styles/previousorders.css">
 </head>
+
 <body>
     <div id="filterorders">
+        <h1>Filter Orders</h1>
+        <p><i>Select a filter option below</i></p>
 
-        <h1>Filter</h1>
+        <button id="recentOrdersBtn" onclick="getRecentOrders()">Recent Orders</button>
+    
+        <!-- Order ID -->
+        <div class="filter-option">
+            <input type="radio" name="filterType" id="filterOrderId" value="orderid" checked>
+            <label for="filterOrderId"><b>Order ID</b></label>
+            <input type="number" id="orderid" name="orderid">
+        </div>
 
-        <div id="ordernumfilter">
-            <p><b>Order ID:</b></p>
-            <input type="number" id="ordernuminput" name="ordernum">
+        <!-- Date Range -->
+        <div class="filter-option">
+            <input type="radio" name="filterType" id="filterDateRange" value="daterange">
+            <label for="filterDateRange"><b>Order Date Range</b></label>
+            <div class="date-range-inputs">
+                <label for="startDate">Start:</label>
+                <input type="date" id="startDate" name="startDate">
+                <label for="endDate">End:</label>
+                <input type="date" id="endDate" name="endDate">
+            </div>
+        </div>
+
+        <!-- Customer Phone Number -->
+        <div class="filter-option">
+            <input type="radio" name="filterType" id="filterPhone" value="phone">
+            <label for="filterPhone"><b>Customer Phone Number</b></label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="e.g., 1234567890">
+        </div>
+
+        <!-- Cashier ID -->
+        <div class="filter-option">
+            <input type="radio" name="filterType" id="filterCashier" value="cashier">
+            <label for="filterCashier"><b>Cashier ID</b></label>
+            <input type="text" id="cashierid" name="cashierid">
         </div>
 
         <button id="searchBtn" onclick="filterOrders()">Search</button>
-        <button id="goBackBtn" onclick="goToDashboard()">Go Back</button>
-
+        <button id="goBackBtn" onclick="goToDashboard()">Exit</button>
     </div>
+
     <div id="ordersdata">
         <table>
             <tr align="center">
@@ -27,14 +58,14 @@
                 <th>Cashier Name</th>
                 <th>Order ID</th>
                 <th>Order Bill</th>
-                <th>Amount Paid</th>
+                <th>Amount Paid ($)</th>
                 <th>Date & Time Ordered</th>
             </tr>
 
             <% for (var i in previousOrdersList) {%>
                 <tr align="center">
                     <% if (previousOrdersList[i].custname == "") {%>
-                        <td id="nonregisteredcustomer">N/A</td>
+                        <td>----</td>
                     <% } else {%>
                         <td><%= previousOrdersList[i].custname %></td>
                     <% } %>
@@ -42,10 +73,16 @@
                     <td><%= previousOrdersList[i].ordernum %></td>
                     <td><button onclick="showBill('<%= previousOrdersList[i].ordernum %>')">View</button></td>
                     <td><%= previousOrdersList[i].paidamount %></td>
-                    <td><%= previousOrdersList[i].orderdate %></td>
+                    <td><%= previousOrdersList[i].orderdate.toLocaleString() %></td>
                 </tr>
             <% } %>
         </table>
+    </div>
+
+    <div id="orderView">
+        <div id="orderDetails">
+            <h1 id="orderTitle"></h1>
+        </div>
     </div>
 
     <script src="/scripts/previousorders.js"></script>

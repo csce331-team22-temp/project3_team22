@@ -33,7 +33,7 @@ async function isEmployeeLoggedIn(req, res, next) {
             next(); // user is a staff member
         } 
         else {
-            res.redirect('/logout?loginMessage=User access denied'); // user not found as a staff member
+            res.redirect('/logout?loginMessage=User access denied!'); // user not found as a staff member
         }
         
     } else {
