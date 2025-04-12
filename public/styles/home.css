@@ -57,7 +57,8 @@ h1 {
     color: #A0522D;
 }
 
-#startOrderingBtn {
+
+#startOrderingBtn, #menuBoardBtn {
     padding-left: 25px;
     padding-right: 25px;
     padding-top: 5px;
@@ -69,8 +70,30 @@ h1 {
     border: solid #A0522D 2px;
 }
 
-#startOrderingBtn:hover {
+#menuBoardBtn {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+#startOrderingBtn:hover, #menuBoardBtn:hover {
     cursor: pointer;
     background-color: #A0522D;
     color: white;
 }
+
+#weatherDisplay {
+    background-color: #fff8dc;
+    margin: 40px;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 300px;
+    font-size: 17px;
+    color: #4b3621;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  #weatherDisplay p {
+    margin: 5px 0;
+  }

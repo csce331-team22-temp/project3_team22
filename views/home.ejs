@@ -29,8 +29,19 @@
     <button type="button" id="google-sign-in-button" onclick="signIn()">Staff Sign In</button>
 
     <div id="center-content">
+
         <h1>ShareTea Plus</h1>
         <button id="startOrderingBtn" onclick="startOrdering()">Start Ordering</button>
+        <button id="menuBoardBtn" onclick="viewMenu()">Menu Board</button>
+
+        <div id="weatherDisplay">
+            <h2 id="weatherLocation">Loading weather...</h2>
+            <img id="weatherIcon" src="" alt="" style="display: none; width: 60px;" />
+            <p id="weatherDescription"></p>
+            <p id="weatherTemp"></p>
+            <p id="weatherDetails"></p>
+        </div>
+        
     </div>
 
     <script>
@@ -44,6 +55,53 @@
         function startOrdering() {
             window.location.href = "/menu";
         }
+
+        function viewMenu() {
+            window.location.href = "/menu";
+        }
+
+
+        async function getCurrentWeather() {
+            if (!navigator.geolocation) {
+                document.getElementById("weatherLocation").innerText = "Geolocation not supported.";
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(async position => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                try {
+                    const weatherAPIKeyResponse = await fetch('/weather-api-key');
+                    const keyData = await weatherAPIKeyResponse.json();
+                    const weatherAPIKey = keyData.key;
+
+                    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherAPIKey}`);
+                    const data = await res.json();
+
+                    const tempF = ((data.main.temp - 273.15) * 9/5 + 32).toFixed(1);
+                    const feelsLikeF = ((data.main.feels_like - 273.15) * 9/5 + 32).toFixed(1);
+
+                    // Populate weather info
+                    const iconCode = data.weather[0].icon;
+                    document.getElementById("weatherLocation").innerText = `📍 ${data.name}`;
+                    document.getElementById("weatherDescription").innerText = `🌤️ ${data.weather[0].description}`;
+                    document.getElementById("weatherTemp").innerText = `🌡️ ${tempF}°F (Feels like ${feelsLikeF}°F)`;
+                    document.getElementById("weatherDetails").innerText = `💧 Humidity: ${data.main.humidity}%    💨 Wind: ${data.wind.speed} mph`;
+
+                    const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                    const iconImg = document.getElementById("weatherIcon");
+                    iconImg.src = iconUrl;
+                    iconImg.style.display = "inline-block";
+
+                } catch (err) {
+                    console.error("Weather fetch failed:", err);
+                    document.getElementById("weatherLocation").innerText = "Unable to load weather.";
+                }
+            });
+        }
+        
+        getCurrentWeather();
     </script>
 </body>
 </html>
