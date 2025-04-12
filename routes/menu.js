@@ -1,3 +1,4 @@
+const { isEmployeeLoggedIn } = require('../authMiddleware');
 const db = require('../database');
 const express = require('express');
 const router = express.Router();
