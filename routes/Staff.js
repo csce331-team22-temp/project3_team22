@@ -218,10 +218,10 @@ router.get('/login/:staffid', async (req, res) => {
 
 
 // generate x-report for staff members
-router.get('/x-report', async (req, res) => {
+router.get('/reports', async (req, res) => {
     try {
       
-        res.render('x-report');
+        res.render('reports');
 
     } catch (error) {
         console.error('Database query failed:', error);

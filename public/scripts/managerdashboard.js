@@ -7,7 +7,7 @@ document.getElementById("inventoryBtn").addEventListener("click", async function
 });
 
 document.getElementById("reportsBtn").addEventListener("click", async function () {
-    window.location.href = "/staff/x-report";
+    window.location.href = "/staff/reports";
 });
 
 function goToMain() {
