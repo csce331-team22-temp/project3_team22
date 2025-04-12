@@ -127,6 +127,10 @@ app.get('/logout', (req, res) => {
     
 })
 
+app.get('/weather-api-key', (req, res) => {
+    res.json({ key: process.env.WEATHER_API_KEY });
+});
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`); // http://localhost:3000/
