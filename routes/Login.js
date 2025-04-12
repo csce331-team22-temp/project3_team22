@@ -22,8 +22,16 @@ router.post('/login-request', (req, res) => {
             return;
         }
         rewards.currentCustomer = query_res.rows[0];
+        // fetch('/customers/id', {
+        //     method : 'POST', 
+        //     body : {customerInfo : rewards.currentCustomer}
+        // });
         res.status(200).json("Sucessful Login");
     });
+});
+
+router.post("/refund-pearls", (req, res) => {
+    db.query("UPDATE customers SET pearls = pearls + 10 WHERE customerid = $1", [rewards.currentCustomer.customerid]);
 });
 
 router.post("/signup-request", (req, res) => {

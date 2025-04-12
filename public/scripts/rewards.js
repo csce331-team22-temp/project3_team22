@@ -100,17 +100,46 @@ function selectPage(page_num) { // Zero-index page_num
 }
 
 
+async function redeem_drinks() {
+    var response = await fetch("/customers/rewards/redeem-drinks", {
+        method : 'POST', 
+        body : {drinks : redeemed_items}
+    });
 
+    if (response.status() == 200) {
+        alert(`Redeemed Item(s) (${redeemed_items})!`);
+    }
+    else {
+        alert("Issue redeeming drinks. Please verify you have enough pearls for purchase and try again.");
+    }
+    resetDrinks(currentPage);
+}
+function resetDrinks() {
 
-
+    allDrinks.flat().forEach((item) => {
+        let selected = item.getAttribute("selected");
+        if (selected === "true") {
+            updatePearls(-10);
+            item.click();
+        }
+    })
+    redeemed_items = [];
+    selectPage(currentPage);
+}
 function setupPage() {
     pearls = parseInt(pearls);
 
     d.getElementById('redeem-btn').addEventListener('click', () => {
-
-        alert(`Redeemed Item(s) (${redeemed_items})!`);
-        
+      
+        redeem_drinks();
     });
+
+
+    d.getElementById('cart-btn').addEventListener('click', () => { 
+        window.location.href = '/customers/checkout';
+    });
+
+
     d.getElementById('left-panel').addEventListener('click', () => {
         let p = currentPage - 1;
         if (p >= 0 && p < pageCount) {
