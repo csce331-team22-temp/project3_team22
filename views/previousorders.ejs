@@ -69,7 +69,13 @@
                     <% } else {%>
                         <td><%= previousOrdersList[i].custname %></td>
                     <% } %>
-                    <td><%= previousOrdersList[i].cashiername %></td>
+
+                    <% if (previousOrdersList[i].cashiername == "") {%>
+                        <td>----</td>
+                    <% } else {%>
+                        <td><%= previousOrdersList[i].cashiername %></td>
+                    <% } %>
+                    
                     <td><%= previousOrdersList[i].ordernum %></td>
                     <td><button onclick="showBill('<%= previousOrdersList[i].ordernum %>')">View</button></td>
                     <td><%= previousOrdersList[i].paidamount %></td>

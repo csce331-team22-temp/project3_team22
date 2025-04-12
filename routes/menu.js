@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // Route to display menu categories
-router.get('/', isEmployeeLoggedIn, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const result = await db.query("SELECT DISTINCT category FROM menu");
         const categories = result.rows.map(row => row.category);
@@ -16,7 +16,7 @@ router.get('/', isEmployeeLoggedIn, async (req, res) => {
 });
 
 // Route to display drinks in a category
-router.get('/:category', isEmployeeLoggedIn, async (req, res) => {
+router.get('/:category', async (req, res) => {
     try {
         const category = req.params.category;
         const result = await db.query("SELECT * FROM menu WHERE category = $1", [category]);
