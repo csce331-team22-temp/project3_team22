@@ -1,0 +1,213 @@
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#filterorders {
+    width: 15%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+}
+
+#filterorders h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#filterorders p {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.filter-option {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.filter-option label {
+    margin-left: 5px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.filter-option input[type="number"],
+.filter-option input[type="date"],
+.filter-option input[type="tel"],
+.filter-option input[type="text"] {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.filter-option.selected {
+    background-color: lightgray;
+}
+
+.date-range-inputs label {
+    display: block;
+    margin-top: 5px;
+}
+
+#recentOrdersBtn,
+#searchBtn,
+#goBackBtn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
+
+#recentOrdersBtn {
+    background-color: #145da0;
+    margin-bottom: 20px;
+}
+
+#searchBtn {
+    background-color: #4CAF50;
+}
+
+#goBackBtn {
+    background-color: #f44336;
+}
+
+#ordersdata {
+    width: 85%;
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #145da0;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+tr {
+    border-bottom: solid darkgray 1px;
+}
+
+td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+tr:hover {
+    background-color: lightgray;
+}
+
+table button {
+    background-color: #145da0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+/*-------------------------------------New staff member form-------------------------------------*/
+
+#orderView {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#orderDetails {
+    width: fit-content;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FAEBD7;
+    position: sticky;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+}
+
+#orderTitle {
+    text-align: center;
+    margin-top: 0;
+}
+
+#orderTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#orderTable th, #orderTable td {
+    border: 1px solid #333;
+    padding: 8px 12px;
+    text-align: center;
+}
+
+#orderTable th {
+    background-color: #f4b860;
+    color: #000;
+}
+
+#closeBtn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 8px 16px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#closeBtn:hover {
+    background-color: #c9302c;
+}
+
+#orderSummary {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #fcebd4;
+    padding: 10px;
+    border-radius: 5px;
+}

@@ -10,7 +10,7 @@ const goBackBtn = document.getElementById("goBackBtn");
 // elements of the new member form
 const addMemberPopup = document.getElementById("newMemberPopup");
 const inputName = document.getElementById("nameInput");
-const inputPassword = document.getElementById("passwordInput");
+const inputEmail = document.getElementById("emailInput");
 
 // allows the user to change position of a specified staff member
 async function changePosition(staffid) {
@@ -32,7 +32,7 @@ async function newMemberInput() {
 async function submitNewMember() {
 
     // requires the user to fill in his/her necessary information before being added to the database
-    if (inputName.value.length > 0 && inputPassword.value.length > 0) {
+    if (inputName.value.length > 0 && inputEmail.value.length > 0) {
 
         const selectedPosition = document.querySelector('input[name="position"]:checked');
 
@@ -44,7 +44,7 @@ async function submitNewMember() {
             body: JSON.stringify({
                 name: inputName.value,
                 position: selectedPosition.value,
-                password: inputPassword.value
+                email: inputEmail.value
             })
         });
 
@@ -58,8 +58,8 @@ async function submitNewMember() {
             inputName.style.borderColor = "red";
         }
 
-        if (inputPassword.value.length == 0) {
-            inputPassword.style.borderColor = "red";
+        if (inputEmail.value.length == 0) {
+            inputEmail.style.borderColor = "red";
         }
     }
 }
@@ -69,8 +69,8 @@ async function closeNewMemberPopup() {
     inputName.value = "";
     inputName.style.borderColor = "black";
 
-    inputPassword.value = "";
-    inputPassword.style.borderColor = "black";
+    inputEmail.value = "";
+    inputEmail.style.borderColor = "black";
 
     addMemberPopup.style.display = "none";
 }
@@ -104,7 +104,7 @@ async function editStaff(staffMembers) {
             empPositionBtn.disabled = false;
             empPositionBtn.style.backgroundColor = '#145da0';
 
-            document.getElementById(`passwordInput-${obj['staffid']}`).disabled = false;
+            document.getElementById(`emailInput-${obj['staffid']}`).disabled = false;
         });
     }
     else {
@@ -131,9 +131,9 @@ async function editStaff(staffMembers) {
             empPositionBtn.style.backgroundColor = 'darkgray';
             empPositionBtn.disabled = true;
             
-            const empPasswordInput = document.getElementById(`passwordInput-${obj['staffid']}`);
-            const empNewPassword = empPasswordInput.value;
-            empPasswordInput.disabled = true;
+            const empEmailInput = document.getElementById(`emailInput-${obj['staffid']}`);
+            const empNewEmail = empEmailInput.value;
+            empEmailInput.disabled = true;
 
 
             fetch('/staff/update', {
@@ -144,7 +144,7 @@ async function editStaff(staffMembers) {
                 body: JSON.stringify({
                     staffid: obj['staffid'],
                     position: empNewPosition,
-                    password: empNewPassword
+                    email: empNewEmail
                 })
             });
         });
@@ -169,14 +169,14 @@ async function cancelEditing(staffMembers) {
         empPositionBtn.style.backgroundColor = 'darkgray';
         empPositionBtn.disabled = true;
         
-        const empPasswordInput = document.getElementById(`passwordInput-${obj['staffid']}`);
-        empPasswordInput.disabled = true;
+        const empEmailInput = document.getElementById(`emailInput-${obj['staffid']}`);
+        empEmailInput.disabled = true;
 
         const staffMember = staffData.find(member => member.staffid == obj.staffid);
 
         if (staffMember) {
             empPositionBtn.innerText = staffMember.position;
-            empPasswordInput.value = staffMember.password;
+            empEmailInput.value = staffMember.email;
         }
 
     });

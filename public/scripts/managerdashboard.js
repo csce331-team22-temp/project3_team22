@@ -1,11 +1,15 @@
-document.getElementById("staffBtn").addEventListener("click", async function () {
-    window.location.href = "/staff/page";
-});
+function viewPreviousOrders() {
+    window.location.href = "/orders/recent";
+}
 
-document.getElementById("inventoryBtn").addEventListener("click", async function () {
+function goToInventory() {
     window.location.href = "/staff/inventory/page";
-});
+}
+
+function goToStaff() {
+    window.location.href = "/staff/page";
+}
 
 function goToMain() {
-    window.location.href = "/staff/login";
+    window.location.href = "/logout?loginMessage=";
 }

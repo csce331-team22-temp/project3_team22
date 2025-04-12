@@ -16,7 +16,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Position</th>
-                    <th>Password</th>
+                    <th>Email</th>
                     <th>Date Joined</th>
                 </tr>
 
@@ -24,15 +24,15 @@
                     <tr align="center">
                         <td><%= staffMembers[i].staffid %></td>
                         <td><%= staffMembers[i].name %></td>
-                        <td><button id="positionBtn-<%= staffMembers[i].staffid %>" onclick="changePosition('<%= staffMembers[i].staffid %>', '<%= staffMembers[i].password %>')" disabled><%= staffMembers[i].position %></button></td>
-                        <td><input id="passwordInput-<%= staffMembers[i].staffid %>" type="password" value="<%= staffMembers[i].password %>" disabled></td>
-                        <td><%= staffMembers[i].datejoined %></td>
+                        <td><button id="positionBtn-<%= staffMembers[i].staffid %>" onclick="changePosition('<%= staffMembers[i].staffid %>')" disabled><%= staffMembers[i].position %></button></td>
+                        <td><input id="emailInput-<%= staffMembers[i].staffid %>" type="text" value="<%= staffMembers[i].email %>" disabled></td>
+                        <td><%= staffMembers[i].datejoined.toLocaleString() %></td>
                     </tr>
                 <% } %>
             </table>
 
             <div id="editcontent">
-                <button id="goBackBtn" onclick="goToDashboard()">Go Back</button>
+                <button id="goBackBtn" onclick="goToDashboard()">Exit</button>
                 <button id="addMemberBtn" onclick="newMemberInput()">Add New Employee</button>
                 <button id="editStaffBtn" onclick="editStaff('<%= JSON.stringify(staffMembers) %>')">Modify</button>
                 <button id="cancelEditBtn" onclick="cancelEditing('<%= JSON.stringify(staffMembers) %>')" disabled>Cancel Editing</button>
@@ -64,9 +64,9 @@
 
                 </div>
 
-                <div id="setPassword">
-                    <label id="passwordLabel">Create Password:</label>
-                    <input type="text" id="passwordInput">
+                <div id="setEmail">
+                    <label id="emailLabel">Google Email:</label>
+                    <input type="text" id="emailInput">
                 </div>
 
                 <div id="submit">
