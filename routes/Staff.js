@@ -236,10 +236,9 @@ router.get('/reports/add', async (req, res) => {
                 SUM(CASE WHEN paymentmethod ILIKE 'Cash' THEN amountpaid ELSE 0 END)::NUMERIC AS cash,
                 SUM(CASE WHEN paymentmethod ILIKE 'Credit' THEN amountpaid ELSE 0 END)::NUMERIC AS credit,
                 SUM(CASE WHEN paymentmethod ILIKE 'Debit' THEN amountpaid ELSE 0 END)::NUMERIC AS debit,
-                SUM(CASE WHEN paymentmethod ILIKE 'Gift Card' THEN amountpaid ELSE 0 END)::NUMERIC AS giftCard
-
+                SUM(CASE WHEN paymentmethod ILIKE 'Gift Card' THEN amountpaid ELSE 0 END)::NUMERIC AS giftcard
             FROM orders
-            WHERE DATE(dateordered) = '2025-03-04';
+            WHERE DATE(dateordered) = CURRENT_DATE;
         `;
 
         const result = await db.query(query);

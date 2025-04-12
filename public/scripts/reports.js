@@ -68,7 +68,7 @@ document.getElementById("z-reportBtn").addEventListener("click", async function 
                 <p><strong>Cash:</strong> $${parseFloat(data.cash || 0).toFixed(2)}</p>
                 <p><strong>Credit:</strong> $${parseFloat(data.credit || 0).toFixed(2)}</p>
                 <p><strong>Debit:</strong> $${parseFloat(data.debit || 0).toFixed(2)}</p>
-                <p><strong>Gift Card:</strong> $${parseFloat(data.giftCard || 0).toFixed(2)}</p>
+                <p><strong>Gift Card:</strong> $${parseFloat(data.giftcard || 0).toFixed(2)}</p>
             </div>
         </div>
         `;
