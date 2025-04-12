@@ -55,7 +55,10 @@ d.getElementById("register-btn").addEventListener("click", (event) => {
 
 
 
-
+d.getElementById('cart-btn').addEventListener('click', () => { 
+    window.location.href = '/customers/checkout';
+    console.log("I was clicked")
+});
 
 
 

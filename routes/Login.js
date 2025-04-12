@@ -1,7 +1,9 @@
 const db = require('../database');
 const express = require('express');
 const router = express.Router();
-const rewards = require('./Rewards');
+
+
+var {setCurrentCustomer} = require('./SharedVariables');
 
 router.get('/', (req, res) => {
     res.render('customerlogin'); 
@@ -21,17 +23,9 @@ router.post('/login-request', (req, res) => {
             res.status(404).json("Phone Number Not Found");
             return;
         }
-        rewards.currentCustomer = query_res.rows[0];
-        // fetch('/customers/id', {
-        //     method : 'POST', 
-        //     body : {customerInfo : rewards.currentCustomer}
-        // });
+        setCurrentCustomer(query_res.rows[0]);
         res.status(200).json("Sucessful Login");
     });
-});
-
-router.post("/refund-pearls", (req, res) => {
-    db.query("UPDATE customers SET pearls = pearls + 10 WHERE customerid = $1", [rewards.currentCustomer.customerid]);
 });
 
 router.post("/signup-request", (req, res) => {

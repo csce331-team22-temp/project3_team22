@@ -103,16 +103,17 @@ function selectPage(page_num) { // Zero-index page_num
 async function redeem_drinks() {
     var response = await fetch("/customers/rewards/redeem-drinks", {
         method : 'POST', 
-        body : {drinks : redeemed_items}
+        headers : {'Content-Type' : 'application/json'},
+        body : JSON.stringify({drinks : redeemed_items})
     });
-
-    if (response.status() == 200) {
+    if (response.status === 200) {
+  
         alert(`Redeemed Item(s) (${redeemed_items})!`);
+        resetDrinks(currentPage);
     }
     else {
-        alert("Issue redeeming drinks. Please verify you have enough pearls for purchase and try again.");
+        alert(`Issue redeeming drinks\nStatus: ${response.status}\nDescription:${0}`);
     }
-    resetDrinks(currentPage);
 }
 function resetDrinks() {
 
@@ -128,7 +129,7 @@ function resetDrinks() {
 }
 function setupPage() {
     pearls = parseInt(pearls);
-
+    updatePearls(0);
     d.getElementById('redeem-btn').addEventListener('click', () => {
       
         redeem_drinks();
@@ -137,6 +138,7 @@ function setupPage() {
 
     d.getElementById('cart-btn').addEventListener('click', () => { 
         window.location.href = '/customers/checkout';
+        console.log("I was clicked")
     });
 
 
