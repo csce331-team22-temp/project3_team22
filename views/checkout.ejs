@@ -11,30 +11,38 @@
         <h1>Finalize the Bill</h1>
 
         <!-- Cart items display -->
-        <div id="cart-items">
+        <div id="cartItems">
             <% let total = 0; %>
-            <% orderItems.forEach(item => { %>
-                <p><%= item.name %> - $<%= item.price.toFixed(2) %></p>
+            <% orderItems.forEach((item, index) => { %>
+                <div id="item-<%= index %>" class = "textBesideButton">
+                    <p class = "coloredText"><%= item.name %> - $<%= item.price.toFixed(2) %></p>
+                    <button onclick="removeFromCart('<%= item.name %>', '<%= item.price %>', '<%= index %>')">Remove</button>
+                </div>
                 <% total += item.price; %>
             <% }) %>
         </div>
-        <h3>Total: <span id="total">$<%= total.toFixed(2) %></span></h3>
-        <button id="cardCheckout" onclick="togglePaymentOptions()">Card Checkout</button>
-        <button id="cashCheckout" onclick="pay('cash')">Cash Checkout</button>
-        <button id="backToOrder" onclick="goBack()">Previous Page</button>
+
+        <h3>Total: $<span id="cartTotal"><%= total.toFixed(2) %></span></h3>
     </div>
 
-    <!-- Payment Options (hidden until cardCheckout button pressed) -->
-    <div id="payment-options" style="display: none;">
-        <h2>Select Payment Method</h2>
-        <button id="creditButton" onclick="pay('credit')">Credit Card</button>
-        <button id="debitButton" onclick="pay('debit')">Debit Card</button>
-        <button id="giftCardButton" onclick="pay('gift card')">Gift Card</button>
-        <button onclick="togglePaymentOptions()">Close</button>
-    </div>
+    <div class = "container">
+        <!-- Checkout and back buttons (Shown by default, hidden when cardCheckout button pressed) -->
+        <div id = checkoutButtons>
+            <button id="cardCheckout" class = "button" onclick="togglePaymentOptions()">Card Checkout</button>
+            <button id="cashCheckout" class = "button" onclick="pay('cash')">Cash Checkout</button>
+            <button id="backToOrder" class = "button" onclick="goBack()">Previous Page</button>
+        </div>
 
-    <!-- Button to clear the order items -->
-    <button id="clearOrder" onclick="clearOrder()">Clear Order</button>
+        <!-- Payment Options (hidden until cardCheckout button pressed) -->
+        <div id="paymentOptions">
+            <h2>Select Payment Method</h2>
+            <button id="creditButton" class = "button" onclick="pay('credit')">Credit Card</button>
+            <button id="debitButton" class = "button" onclick="pay('debit')">Debit Card</button>
+            <button id="giftCardButton" class = "button" onclick="pay('gift card')">Gift Card</button>
+            <button class = "button" onclick="togglePaymentOptions()">Close</button>
+        </div>
+    </div>
+    
 
     <script>
         function goBack() {

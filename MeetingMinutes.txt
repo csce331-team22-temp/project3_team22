@@ -1,0 +1,11 @@
+Date: 3/25/2025
+
+The overall code structure was discussed so that every team member gets familiarized with the project’s codebase. It was decided, as a team, to keep the different file types separated from each other to keep the project directory organized and understandable. Also, we went over the overall design of each page (such as manager dashboard, cashier view, staff login page, and customer kiosk interface) and applied minor changes to some of them by majority vote. This way, every team member knows what the overall design should look like for the features they’re implementing.
+
+Date: 3/27/2025
+
+The team went over every part of the project directory to get familiar with how everything is connected. For example, we went over the steps to run the application locally using certain commands like “node index.js.” Also, we discussed the structuring of the API routes so every route is understandable by the team members during the implementation phase. We, then, listed the API routes that’ll be implemented by every team member in a shared google document so that every webpage can be redirected to another webpage when required using those API routes.
+
+Date: 3/29/2025
+
+Every team member shared their work progress of implementing their assigned application features. We helped each other with clearing the confusion of different API route names and how to use them to redirect a webpage. Also, we discussed to keep the code formatting similar so it’s easier for everyone to understand each other’s code. For example, naming conventions for variables and functions (camel case), spacing, and code commenting. Additionally, every team member showed their progress by running their code and got feedbacks on what to add or change.
