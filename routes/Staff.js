@@ -7,7 +7,7 @@ const router = express.Router();
 // redirects page to staff page with staff details
 router.get('/page', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
+        const query = `SELECT * FROM staffmembers WHERE staffid > 0 ORDER BY staffid;`;
         const staffInfo = await db.query(query);
 
         const staffMembers = staffInfo.rows;
@@ -23,7 +23,7 @@ router.get('/page', isManagerLoggedIn, async (req, res) => {
 // gets staff details
 router.get('/info', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
+        const query = `SELECT * FROM staffmembers WHERE staffid > 0 ORDER BY staffid;`;
         const staffInfo = await db.query(query);
 
         const staffMembers = staffInfo.rows;
