@@ -229,5 +229,33 @@ router.get('/reports', async (req, res) => {
     }
 });
 
+router.get('/reports/add', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                SUM(CASE WHEN paymentmethod ILIKE 'Cash' THEN amountpaid ELSE 0 END)::NUMERIC AS cash,
+                SUM(CASE WHEN paymentmethod ILIKE 'Credit' THEN amountpaid ELSE 0 END)::NUMERIC AS credit,
+                SUM(CASE WHEN paymentmethod ILIKE 'Debit' THEN amountpaid ELSE 0 END)::NUMERIC AS debit,
+                SUM(CASE WHEN paymentmethod ILIKE 'Gift Card' THEN amountpaid ELSE 0 END)::NUMERIC AS giftCard
+
+            FROM orders
+            WHERE DATE(dateordered) = '2025-03-04';
+        `;
+
+        const result = await db.query(query);
+        console.log(result.rows);
+        if (result.rows.length > 0) {
+            res.json(result.rows[0]);
+        } else {
+            res.json({ cash: 0, credit: 0, debit: 0, giftCard: 0 });
+        }
+    } catch (error) {
+        console.error('Error fetching report data:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
 
 module.exports = router;

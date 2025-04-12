@@ -39,40 +39,51 @@ document.getElementById("x-reportBtn").addEventListener("click", async function 
 });
 
 document.getElementById("z-reportBtn").addEventListener("click", async function () {
-    const text = `
-    <div id="report-body">
-        <div id="report-title">
-            <strong>Z-Out Reset Report</strong>
+    try {
+        const response = await fetch(`/staff/reports/add`);
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const text = `
+        <div id="report-body">
+            <div id="report-title"><strong>Z-Out Reset Report</strong></div>
+            <div id="report-address">
+                ShareTea<br>
+                123 Main Street<br>
+                Anytown, USA
+            </div>
+            <br>
+            <div id="report-time_subtitle">
+                Report was run on ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
+            </div>
         </div>
-        <div id="report-address">
-            ShareTea<br>
-            123 Main Street<br>
-            Anytown, USA
+        <br><br>
+        <div id="report-content">
+            <div id="report-content-title"><strong>Tender Summary</strong></div>
+            <div id="report-content-body">
+                <p><strong>Cash:</strong> $${parseFloat(data.cash || 0).toFixed(2)}</p>
+                <p><strong>Credit:</strong> $${parseFloat(data.credit || 0).toFixed(2)}</p>
+                <p><strong>Debit:</strong> $${parseFloat(data.debit || 0).toFixed(2)}</p>
+                <p><strong>Gift Card:</strong> $${parseFloat(data.giftCard || 0).toFixed(2)}</p>
+            </div>
         </div>
-        <br>
-        <div id="report-time_subtitle"> 
-            Report was run on ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
-        </div>
-    </div>
-    <br>
-    <br>
-    <div id="report-content">
-        <div id="report-content-title">
-            <strong>Tender Summary</strong>
-        </div>
-        <div id="report-content-body">
-            <p>All sales have been reset to zero. Please check the inventory and sales records.</p>
-        </div>
-    <\div>
-    
-    
-    
-    `;
-    
-    reportBox.innerHTML = text;
-    reportBox.style.display = "block";
-    localStorage.setItem("lastReportText", text);
+        `;
+
+        reportBox.innerHTML = text;
+        reportBox.style.display = "block";
+        localStorage.setItem("lastReportText", text);
+
+    } catch (error) {
+        console.error("Error fetching report data:", error);
+        reportBox.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        reportBox.style.display = "block";
+    }
 });
+
 
 function goToManagerDashboard() {
     window.location.href = "/staff/manager-dashboard";
