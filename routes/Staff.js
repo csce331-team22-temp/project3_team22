@@ -175,5 +175,23 @@ router.post('/inventory/add', isManagerLoggedIn, async (req, res) => {
     }
 });
 
+// product usage report
+router.get('/inventory/report/:startdate/:endate', isManagerLoggedIn, async (req, res) => {
+    try {
+
+        const query = `SELECT i.itemname AS iname, COUNT(*) AS amountused FROM orders o JOIN recipes r ON o.drinkid = r.drinkid JOIN inventory i ON i.itemid = r.itemid WHERE o.dateordered BETWEEN $1 AND $2 GROUP BY i.itemid ORDER BY i.itemid ASC;`;
+        
+        const inventoryItemUsage = await db.query(query, [req.params.startdate, req.params.endate]);
+
+        const inventoryItemUsageData = inventoryItemUsage.rows;
+
+        res.render('productusagereport', { inventoryItemUsageData });
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 module.exports = router;

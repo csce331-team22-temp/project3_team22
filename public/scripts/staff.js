@@ -102,7 +102,7 @@ async function editStaff(staffMembers) {
         jsonArray.forEach(obj => {
             const empPositionBtn = document.getElementById(`positionBtn-${obj['staffid']}`)
             empPositionBtn.disabled = false;
-            empPositionBtn.style.backgroundColor = '#145da0';
+            empPositionBtn.style.backgroundColor = '#a0522d';
 
             document.getElementById(`emailInput-${obj['staffid']}`).disabled = false;
         });
@@ -121,7 +121,7 @@ async function editStaff(staffMembers) {
         cancelEditBtn.style.backgroundColor = "darkgray";
 
         goBackBtn.disabled = false;
-        goBackBtn.style.backgroundColor = "black";
+        goBackBtn.style.backgroundColor = "#f44336";
 
         // API route is called for each staff member to update his/her details in the database also
         jsonArray.forEach(obj => {
@@ -191,7 +191,7 @@ async function cancelEditing(staffMembers) {
     addNewMemberBtn.style.backgroundColor = "green";
 
     goBackBtn.disabled = false;
-    goBackBtn.style.backgroundColor = "black";
+    goBackBtn.style.backgroundColor = "#f44336";
 }
 
 // redirects to manager dashboard

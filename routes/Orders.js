@@ -7,7 +7,7 @@ const router = express.Router();
 // redirects page to previous orders page with recent orders
 router.get('/recent', isEmployeeLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid GROUP BY ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC LIMIT 2000;`;
+        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.staffid AS employeeid, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid GROUP BY employeeid, ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC LIMIT 2000;`;
 
         const previousOrders = await db.query(query);
 
@@ -24,7 +24,7 @@ router.get('/recent', isEmployeeLoggedIn, async (req, res) => {
 // redirects page to previous orders page with specified order
 router.get('/filter/orderid/:orderid', isEmployeeLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE orders.orderid = $1 GROUP BY ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC;`;
+        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.staffid AS employeeid, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE orders.orderid = $1 GROUP BY employeeid, ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC;`;
 
         const previousOrders = await db.query(query, [req.params.orderid]);
 
@@ -44,7 +44,7 @@ router.get('/filter/daterange', isEmployeeLoggedIn, async (req, res) => {
         const startDate = req.query.start;
         const endDate = req.query.end;
 
-        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE date(orders.dateordered) BETWEEN $1 AND $2 GROUP BY ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC;`;
+        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.staffid AS employeeid, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE date(orders.dateordered) BETWEEN $1 AND $2 GROUP BY employeeid, ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC;`;
 
         const previousOrders = await db.query(query, [startDate, endDate]);
 
@@ -62,7 +62,7 @@ router.get('/filter/daterange', isEmployeeLoggedIn, async (req, res) => {
 router.get('/filter/phone/:phonenumber', isEmployeeLoggedIn, async (req, res) => {
     try {
 
-        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE customers.phonenumber = $1 GROUP BY ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC;`;
+        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.staffid AS employeeid, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE customers.phonenumber = $1 GROUP BY employeeid, ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC;`;
 
         const previousOrders = await db.query(query, [req.params.phonenumber]);
 
@@ -80,7 +80,7 @@ router.get('/filter/phone/:phonenumber', isEmployeeLoggedIn, async (req, res) =>
 router.get('/filter/cashier/:cashierid', isEmployeeLoggedIn, async (req, res) => {
     try {
 
-        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE orders.staffid = $1 GROUP BY ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC LIMIT 2000;`;
+        const query = `SELECT customers.name AS custname, customers.phonenumber AS custphonenum, staffmembers.staffid AS employeeid, staffmembers.name AS cashiername, orders.orderid AS ordernum, MAX(orders.dateordered) AS orderdate, SUM(orders.amountpaid) AS paidamount FROM orders JOIN customers ON orders.customerid = customers.customerid JOIN staffmembers ON orders.staffid = staffmembers.staffid WHERE orders.staffid = $1 GROUP BY employeeid, ordernum, cashiername, custname, custphonenum ORDER BY orders.orderid DESC LIMIT 2000;`;
 
         const previousOrders = await db.query(query, [req.params.cashierid]);
 

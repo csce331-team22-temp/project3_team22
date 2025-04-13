@@ -132,7 +132,7 @@ async function editInventory(inventoryItems) {
         cancelEditBtn.style.backgroundColor = "darkgray";
 
         goBackBtn.disabled = false;
-        goBackBtn.style.backgroundColor = "black";
+        goBackBtn.style.backgroundColor = "#f44336";
 
         // API route is called for each staff member to update his/her details in the database also
         jsonArray.forEach(obj => {
@@ -207,7 +207,7 @@ async function cancelEditing(inventoryItems) {
     addNewItemBtn.style.backgroundColor = "green";
 
     goBackBtn.disabled = false;
-    goBackBtn.style.backgroundColor = "black";
+    goBackBtn.style.backgroundColor = "#f44336";
 }
 
 // redirects to the manager dashboard
