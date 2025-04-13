@@ -10,6 +10,10 @@ function goToStaff() {
     window.location.href = "/staff/page";
 }
 
+document.getElementById("reportsBtn").addEventListener("click", async function () {
+    window.location.href = "/staff/reports";
+});
+
 function goToMain() {
     window.location.href = "/logout?loginMessage=";
 }
