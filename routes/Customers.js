@@ -1,11 +1,19 @@
 const db = require('../database');
 const express = require('express');
 
-const router = express.Router();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Export functions for usage in other files. Use the require function to gain access to these objects.
+// OTO ADDED: Needed so I can talk to you and you can talk to me
 
-// add routes here
-// Route to render the customer page
-let orderItems = [];
+const {modifyPearls, resetCustomer, getCustomerID} = require('./SharedVariables');
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const router = express.Router();
+var orderItems = [];
+
 router.get('/', (req, res) => {
     res.render('customers', { orderItems });
 });
@@ -18,6 +26,25 @@ router.post('/add-item', (req, res) => {
     res.json({ success: true, message: 'Item added to the cart!' });
 });
 
+// Route to remove item from the list
+router.post('/remove-item', (req, res) => {
+    let { name, price } = req.body;
+    price = parseFloat(price);
+    console.log('Attempting to remove:', req.body);
+    const spliceIndex = orderItems.findIndex(item => item.name === name && item.price === price);
+    if (spliceIndex != -1){
+        orderItems.splice(spliceIndex, 1);
+        res.json({ success: true, message: 'Item removed from the cart!' });
+        
+        // 🟡 OTO ADDED: Done so refunding can happen if person removes a rewards item from the cart
+        if (price == 0) modifyPearls(10);
+    }
+    else {
+        res.json({ success: false, message: 'Item not found in the cart :(' });
+    }
+});
+
+
 // Route for proceeding to checkout and passing orderItems to checkout.ejs
 router.get('/checkout', (req, res) => {
     res.render('checkout', { orderItems });
@@ -27,6 +54,9 @@ router.get('/checkout', (req, res) => {
 router.post('/checkout/payment', async (req, res) => {
     // Retrieve the paymentMethod sent from the fetch request
     const { paymentMethod } = req.body;
+
+    // 🟡 OTO ADDED: Will happen whenever customerID is needed for a purchase
+    customerID = getCustomerID();
 
     const orderData = orderItems.map(item => ({
         itemName: item.name,
@@ -61,6 +91,10 @@ router.post('/checkout/payment', async (req, res) => {
 
         orderItems = [];
         res.json({ success: true, message: "Order successfully inserted into the database!" });
+        
+        // 🟡 OTO ADDED: Done for adding pearls to the account and reseting the customer variable in my code
+        resetCustomer(orderData);
+
 
     } catch (error) {
         console.error('Database query failed:', error);
@@ -70,3 +104,7 @@ router.post('/checkout/payment', async (req, res) => {
 
 
 module.exports = router;
+// OTO ADDED: By nature of module.exports, if i dont put this after the previous line the function gets overriden
+// The other exports.[...] gets overriden by it too. The only other solution would be to move the cart over to shared variables,
+// But to make it easier for Justin to work how he did before gonna just add this here
+module.exports.addItem = async function (name, price) { orderItems.push({ name, price }); };

@@ -5,19 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Dashboard</title>
     <link rel="stylesheet" href="/styles/managerdashboard.css">
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
 
-    <div id="content">
+    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
 
+    <div id="content">
         <h1>Manager Dashboard</h1>
 
-        <button id="ordersBtn">Previous Orders</button>
-        <button id="inventoryBtn">Inventory</button>
-        <button id="staffBtn">Staff</button>
-        <button id="reportsBtn">Reports</button>
-        <button id="logoutBtn" onclick="goToMain()">Logout</button>
+        <div class="dashboard-actions">
+            <button id="ordersBtn" onclick="viewPreviousOrders()">Previous Orders</button>
+            <button id="inventoryBtn" onclick="goToInventory()">Inventory</button>
+            <button id="staffBtn" onclick="goToStaff()">Staff</button>
+            
+            <button id="logoutBtn" onclick="goToMain()">Logout</button>
+        </div>
 
+        <div class="report-section">
+            <h2>Reports</h2>
+            
+            <button id="reportsBtn">Reports</button>
+
+            <label for="startDateInput">Start Date & Time:</label>
+            <input type="datetime-local" id="startDateInput" name="startDateInput">
+
+            <label for="endDateInput">End Date & Time:</label>
+            <input type="datetime-local" id="endDateInput" name="endDateInput">
+
+            <button id="productUsageReportBtn" onclick="generateProductUsageReport()">Generate Product Usage Report</button>
+        </div>
     </div>
 
     <script src="/scripts/managerdashboard.js"></script>

@@ -1,12 +1,13 @@
 const db = require('../database');
 const express = require('express');
+const { isManagerLoggedIn } = require('../authMiddleware');
 
 const router = express.Router();
 
 // redirects page to staff page with staff details
-router.get('/page', async (req, res) => {
+router.get('/page', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
+        const query = `SELECT * FROM staffmembers WHERE staffid > 0 ORDER BY staffid;`;
         const staffInfo = await db.query(query);
 
         const staffMembers = staffInfo.rows;
@@ -20,9 +21,9 @@ router.get('/page', async (req, res) => {
 });
 
 // gets staff details
-router.get('/info', async (req, res) => {
+router.get('/info', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM staffmembers ORDER BY staffid;`;
+        const query = `SELECT * FROM staffmembers WHERE staffid > 0 ORDER BY staffid;`;
         const staffInfo = await db.query(query);
 
         const staffMembers = staffInfo.rows;
@@ -35,25 +36,11 @@ router.get('/info', async (req, res) => {
     }
 });
 
-// get manager's details
-router.get('/manager', async (req, res) => {
-    try {
-        const query = `SELECT * FROM staffmembers WHERE position = Manager;`;
-        const managerInfo = await db.query(query);
-
-        return managerInfo.rows;
-
-    } catch (error) {
-        console.error('Database query failed:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
-
 // displays the manager's dashboard page
-router.get('/manager-dashboard', async (req, res) => {
+router.get('/manager-dashboard', isManagerLoggedIn, (req, res) => {
     try {
 
-        res.render('managerdashboard')
+        res.render('managerdashboard');
 
     } catch (error) {
         console.error('Failed to load manager dashboard', error);
@@ -61,23 +48,23 @@ router.get('/manager-dashboard', async (req, res) => {
 });
 
 // add a new staff member
-router.post('/add', async (req, res) => {
+router.post('/add', isManagerLoggedIn, async (req, res) => {
     try {
 
         // parameters passed using JSON format
         const {
             name,
             position,
-            password
+            email
         } = req.body;
 
-        const query = `INSERT INTO staffmembers VALUES ($1, $2, $3, $4, NOW());`;
+        const query = `INSERT INTO staffmembers(staffid, name, position, email, datejoined) VALUES ($1, $2, $3, $4, NOW());`;
 
         const getMaxStaffID = await db.query(`SELECT MAX(staffid) AS maxid FROM staffmembers;`);
 
         const newStaffID = (getMaxStaffID.rows[0].maxid || 11819) + 1; // if no rows exist, then starting value is 11819
 
-        await db.query(query, [newStaffID, name, position, password]);
+        await db.query(query, [newStaffID, name, position, email]);
 
         res.status(200).json({ message: 'New staff member successfully added.'});
 
@@ -87,18 +74,18 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.put('/update', async (req, res) => {
+router.put('/update', isManagerLoggedIn, async (req, res) => {
     try {
 
         const {
             staffid,
             position,
-            password
+            email
         } = req.body;
 
-        const query = `UPDATE staffmembers SET position = $2, password = $3 WHERE staffid = $1;`;
+        const query = `UPDATE staffmembers SET position = $2, email = $3 WHERE staffid = $1;`;
 
-        await db.query(query, [staffid, position, password]);
+        await db.query(query, [staffid, position, email]);
 
         res.status(200).json({ message: 'Staff details updated.'});
 
@@ -108,7 +95,7 @@ router.put('/update', async (req, res) => {
 });
 
 // redirects page to inventory page with inventory details
-router.get('/inventory/page', async (req, res) => {
+router.get('/inventory/page', isManagerLoggedIn, async (req, res) => {
     try {
         const query = `SELECT * FROM inventory ORDER BY itemid;`;
         const inventoryInfo = await db.query(query);
@@ -124,7 +111,7 @@ router.get('/inventory/page', async (req, res) => {
 });
 
 // gets inventory details
-router.get('/inventory/info', async (req, res) => {
+router.get('/inventory/info', isManagerLoggedIn, async (req, res) => {
     try {
         const query = `SELECT * FROM inventory ORDER BY itemid;`;
         const inventoryInfo = await db.query(query);
@@ -140,7 +127,7 @@ router.get('/inventory/info', async (req, res) => {
 });
 
 // updates inventory details
-router.put('/inventory/update', async (req, res) => {
+router.put('/inventory/update', isManagerLoggedIn, async (req, res) => {
     try {
 
         const {
@@ -162,7 +149,7 @@ router.put('/inventory/update', async (req, res) => {
 });
 
 // add a new inventory item
-router.post('/inventory/add', async (req, res) => {
+router.post('/inventory/add', isManagerLoggedIn, async (req, res) => {
     try {
 
         // parameters passed using JSON format
@@ -188,11 +175,17 @@ router.post('/inventory/add', async (req, res) => {
     }
 });
 
-// get manager's details
-router.get('/login', async (req, res) => {
+// product usage report
+router.get('/inventory/report/:startdate/:endate', isManagerLoggedIn, async (req, res) => {
     try {
 
-        res.render('login');
+        const query = `SELECT i.itemname AS iname, COUNT(*) AS amountused FROM orders o JOIN recipes r ON o.drinkid = r.drinkid JOIN inventory i ON i.itemid = r.itemid WHERE o.dateordered BETWEEN $1 AND $2 GROUP BY i.itemid ORDER BY i.itemid ASC;`;
+        
+        const inventoryItemUsage = await db.query(query, [req.params.startdate, req.params.endate]);
+
+        const inventoryItemUsageData = inventoryItemUsage.rows;
+
+        res.render('productusagereport', { inventoryItemUsageData });
 
     } catch (error) {
         console.error('Database query failed:', error);
@@ -200,21 +193,6 @@ router.get('/login', async (req, res) => {
     }
 });
 
-// get staff member's details
-router.get('/login/:staffid', async (req, res) => {
-    try {
-
-        const query = `SELECT * FROM staffmembers WHERE staffid = $1;`;
-
-        const staffmember = await db.query(query, [req.params.staffid]);
-
-        res.status(200).json(staffmember.rows[0]);
-
-    } catch (error) {
-        console.error('Database query failed:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
 
 
 // generate reports for staff members

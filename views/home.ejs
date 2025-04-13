@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles/home.css">
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body>
+
+    <% if (loginMessage.length > 0) { %>
+        <script>
+            window.location.reload();
+            alert('<%= loginMessage %>');
+            window.location.href = "/";
+        </script>
+    <% } %>
+
+    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+
+    <button type="button" id="google-sign-in-button" onclick="signIn()">Staff Sign In</button>
+
+    <div id="center-content">
+
+        <h1>ShareTea Plus</h1>
+        <button id="startOrderingBtn" onclick="startOrdering()">Start Ordering</button>
+        <button id="menuBoardBtn" onclick="viewMenu()">Menu Board</button>
+
+        <div id="weatherDisplay">
+            <h2 id="weatherLocation">Loading weather...</h2>
+            <p id="weatherDescription"></p>
+            <p id="weatherTemp"></p>
+            <p id="weatherDetails"></p>
+        </div>
+
+    </div>
+
+    <script>
+
+        let signInBtn = document.getElementById('google-sign-in-button');
+
+        function signIn() {
+            window.location.href = "/auth/google";
+        }
+
+        function startOrdering() {
+            window.location.href = "/menu";
+        }
+
+        function viewMenu() {
+            window.location.href = "/menu";
+        }
+
+
+        async function getCurrentWeather() {
+            if (!navigator.geolocation) {
+                document.getElementById("weatherLocation").innerText = "Geolocation not supported.";
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(async position => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                try {
+                    const weatherAPIKeyResponse = await fetch('/weather-api-key');
+                    const keyData = await weatherAPIKeyResponse.json();
+                    const weatherAPIKey = keyData.key;
+
+                    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherAPIKey}`);
+                    const data = await res.json();
+
+                    const tempF = ((data.main.temp - 273.15) * 9/5 + 32).toFixed(1);
+                    const feelsLikeF = ((data.main.feels_like - 273.15) * 9/5 + 32).toFixed(1);
+
+                    // Populate weather info
+                    const iconCode = data.weather[0].icon;
+                    document.getElementById("weatherLocation").innerText = `📍 ${data.name}`;
+                    document.getElementById("weatherDescription").innerText = `🌤️ ${data.weather[0].description}`;
+                    document.getElementById("weatherTemp").innerText = `🌡️ ${tempF}°F (Feels like ${feelsLikeF}°F)`;
+                    document.getElementById("weatherDetails").innerText = `💧 Humidity: ${data.main.humidity}%    💨 Wind: ${data.wind.speed} mph`;
+
+                } catch (err) {
+                    console.error("Weather fetch failed:", err);
+                    document.getElementById("weatherLocation").innerText = "Unable to load weather.";
+                }
+            });
+        }
+        
+        getCurrentWeather();
+    </script>
+</body>
+</html>

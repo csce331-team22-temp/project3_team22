@@ -1,8 +1,18 @@
 body {
-    height: 100vh;
+    padding: 20px;
     margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
     overflow: auto;
+}
+
+#content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 75%;
+    height: fit-content;
 }
 
 table {
@@ -11,12 +21,20 @@ table {
 }
 
 th {
-    background-color: #145da0;
+    background-color: #a0522d;
     font-size: 30px;
     color: white;
     margin-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+tr {
+    border-bottom: solid darkgray 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 td {
@@ -66,7 +84,7 @@ button:hover {
 }
 
 #goBackBtn {
-    background-color: black;
+    background-color: #f44336;
 }
 
 #addMemberBtn {
@@ -110,17 +128,17 @@ button:hover {
     margin-top: 0;
 }
 
-#newMemberName, #newMemberPosition, #setPassword {
+#newMemberName, #newMemberPosition, #setEmail {
     display: flex;
     flex-wrap: nowrap;
     margin-bottom: 10px;
 }
 
-#nameLabel, #positionLabel, #passwordLabel {
+#nameLabel, #positionLabel, #emailLabel {
     margin-right: 5px;
 }
 
-#nameInput, #passwordInput {
+#nameInput, #emailInput {
     border-color: black;
     border-radius: 5px;
 }
