@@ -9,3 +9,15 @@ The team went over every part of the project directory to get familiar with how 
 Date: 3/29/2025
 
 Every team member shared their work progress of implementing their assigned application features. We helped each other with clearing the confusion of different API route names and how to use them to redirect a webpage. Also, we discussed to keep the code formatting similar so it’s easier for everyone to understand each other’s code. For example, naming conventions for variables and functions (camel case), spacing, and code commenting. Additionally, every team member showed their progress by running their code and got feedbacks on what to add or change.
+
+Date: 04/08/2025
+
+Every team member shared their work progress on the features they were working on by running their code and, then, they received feedbacks on what to change. In addition, we briefly discussed the overall goal of the week which is to finish the basic functionalities of the application, such as placing orders and generating reports. Near the end of the week, we will merge everyone's code so that the user can place an order without running into any problems. As a team, we also decided to work on the theme design of the application after completing all the functionalities of the application.
+
+Date: 04/10/2025
+
+Features that need to be connected during the ordering process, such as customer sign up/in and billing page, several issues on merging such code of some team members were raised. Different types of data (like order items) needs to be accessed in different API routes. Thus, we discussed and studied such API routes to see how they can be called and used to make the necessary features work. Since some of the team members were done with their current tasks, they started working on using the required external APIs and generating specific reports to analyze trends.
+
+Date: 04/12/2025
+
+We decided to push every team member's latest code to the main branch. Most of the team's code was pushed to the main without any merge conflicts. The main challenge for the team was to connect the API routes when the user places an order. The implementation of all the basic functionalities, several sales reports, and external APIs were completed by the team with decent frontend design. For the upcoming week, we planned to start working on the remaining accessibility features like changing the overall font size and finish remaining tasks.
