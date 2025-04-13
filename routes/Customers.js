@@ -13,6 +13,7 @@ const {modifyPearls, resetCustomer, getCustomerID} = require('./SharedVariables'
 
 const router = express.Router();
 var orderItems = [];
+var customerID = 0;
 
 router.get('/', (req, res) => {
     res.render('customers', { orderItems });
@@ -37,7 +38,9 @@ router.post('/remove-item', (req, res) => {
         res.json({ success: true, message: 'Item removed from the cart!' });
         
         // 🟡 OTO ADDED: Done so refunding can happen if person removes a rewards item from the cart
-        if (price == 0) modifyPearls(10);
+        if ((price == 0) && (customerID != 0)) {
+            modifyPearls(10, customerID);
+        }
     }
     else {
         res.json({ success: false, message: 'Item not found in the cart :(' });
@@ -68,7 +71,9 @@ router.post('/checkout/payment', async (req, res) => {
     }
 
     // 🟡 OTO ADDED: Will happen whenever customerID is needed for a purchase
-    customerID = getCustomerID();
+    if(getCustomerID() != null){
+        customerID = getCustomerID();
+    }
 
     const orderData = orderItems.map(item => ({
         itemName: item.name,
