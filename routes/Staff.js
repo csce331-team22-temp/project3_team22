@@ -217,7 +217,7 @@ router.get('/login/:staffid', async (req, res) => {
 });
 
 
-// generate x-report for staff members
+// generate reports for staff members
 router.get('/reports', async (req, res) => {
     try {
       
@@ -229,6 +229,7 @@ router.get('/reports', async (req, res) => {
     }
 });
 
+// gets data for the z report
 router.get('/reports/z', async (req, res) => {
     try {
         const paymentQuery = `
@@ -291,7 +292,7 @@ router.get('/reports/z', async (req, res) => {
     }
 });
 
-
+// gets data for the x report
 router.get('/reports/x', async (req, res) => {
     try {
         const paymentQuery = `
