@@ -16,31 +16,34 @@
 </head>
 <body>
 
-    <div id="google_translate_element" style="position: absolute; bottom: 10px; left: 10px;"></div>
+    <div id="google_translate_element" style="position: absolute; top: 10px; left: 10px;"></div>
 
-    <table>
-        <tr id="headerRow" align="center">
-            <th>ID</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Using Item</th>
-        </tr>
-
-        <% for (var i in inventoryItems) {%>
-            <tr align="center">
-                <td><%= inventoryItems[i].itemid %></td>
-                <td><input id="itemname-<%= inventoryItems[i].itemid %>" type="text" value='<%= inventoryItems[i].itemname %>' disabled></td>
-                <td><input id="itemquantity-<%= inventoryItems[i].itemid %>" type="number" value='<%= inventoryItems[i].quantity %>' disabled></td>
-                <td><button id="usingitem-<%= inventoryItems[i].itemid %>" onclick="changeUsingItem('<%= inventoryItems[i].itemid %>')" disabled><%= inventoryItems[i].usingitem %></button></td>
+    <div id="content">
+        <table>
+            <tr id="headerRow" align="center">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Using Item</th>
             </tr>
-        <% } %>
-    </table>
 
-    <div id="buttons">
-        <button id="goBackBtn" onclick="goToDashboard()">Exit</button>
-        <button id="addItemBtn" onclick="newItemInput()">Add Item</button>
-        <button id="editItemsBtn" onclick="editInventory('<%= JSON.stringify(inventoryItems) %>')">Modify</button>
-        <button id="cancelEditBtn" onclick="cancelEditing('<%= JSON.stringify(inventoryItems) %>')" disabled>Cancel Editing</button>
+            <% for (var i in inventoryItems) {%>
+                <tr align="center">
+                    <td><%= inventoryItems[i].itemid %></td>
+                    <td><input id="itemname-<%= inventoryItems[i].itemid %>" type="text" value='<%= inventoryItems[i].itemname %>' disabled></td>
+                    <td><input id="itemquantity-<%= inventoryItems[i].itemid %>" type="number" value='<%= inventoryItems[i].quantity %>' disabled></td>
+                    <td><button id="usingitem-<%= inventoryItems[i].itemid %>" onclick="changeUsingItem('<%= inventoryItems[i].itemid %>')" disabled><%= inventoryItems[i].usingitem %></button></td>
+                </tr>
+            <% } %>
+        </table>
+
+        <div id="buttons">
+            <button id="goBackBtn" onclick="goToDashboard()">Exit</button>
+            <button id="addItemBtn" onclick="newItemInput()">Add Item</button>
+            <button id="editItemsBtn" onclick="editInventory('<%= JSON.stringify(inventoryItems) %>')">Modify</button>
+            <button id="cancelEditBtn" onclick="cancelEditing('<%= JSON.stringify(inventoryItems) %>')" disabled>Cancel Editing</button>
+        </div>
+
     </div>
 
     <div id="newItemPopup">

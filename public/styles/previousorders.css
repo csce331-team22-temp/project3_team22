@@ -103,7 +103,7 @@ table {
 }
 
 th {
-    background-color: #145da0;
+    background-color: #a0522d;
     font-size: 20px;
     color: white;
     margin-bottom: 10px;
@@ -115,6 +115,10 @@ th {
 
 tr {
     border-bottom: solid darkgray 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 td {
@@ -129,12 +133,17 @@ tr:hover {
 }
 
 table button {
-    background-color: #145da0;
-    color: white;
-    border: none;
+    border: solid #a0522d 1px;
+    color: #a0522d;
+    background-color: white;
     border-radius: 5px;
     padding: 5px;
     width: 100%;
+}
+
+table button:hover {
+    background-color: #a0522d;
+    color: white;
 }
 
 button:hover {

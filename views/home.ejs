@@ -36,12 +36,11 @@
 
         <div id="weatherDisplay">
             <h2 id="weatherLocation">Loading weather...</h2>
-            <img id="weatherIcon" src="" alt="" style="display: none; width: 60px;" />
             <p id="weatherDescription"></p>
             <p id="weatherTemp"></p>
             <p id="weatherDetails"></p>
         </div>
-        
+
     </div>
 
     <script>
@@ -88,11 +87,6 @@
                     document.getElementById("weatherDescription").innerText = `🌤️ ${data.weather[0].description}`;
                     document.getElementById("weatherTemp").innerText = `🌡️ ${tempF}°F (Feels like ${feelsLikeF}°F)`;
                     document.getElementById("weatherDetails").innerText = `💧 Humidity: ${data.main.humidity}%    💨 Wind: ${data.wind.speed} mph`;
-
-                    const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
-                    const iconImg = document.getElementById("weatherIcon");
-                    iconImg.src = iconUrl;
-                    iconImg.style.display = "inline-block";
 
                 } catch (err) {
                     console.error("Weather fetch failed:", err);

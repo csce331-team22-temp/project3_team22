@@ -19,14 +19,26 @@
     <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
 
     <div id="content">
-
         <h1>Manager Dashboard</h1>
 
-        <button id="ordersBtn" onclick="viewPreviousOrders()">Previous Orders</button>
-        <button id="inventoryBtn" onclick="goToInventory()">Inventory</button>
-        <button id="staffBtn" onclick="goToStaff()">Staff</button>
-        <button id="logoutBtn" onclick="goToMain()">Logout</button>
+        <div class="dashboard-actions">
+            <button id="ordersBtn" onclick="viewPreviousOrders()">Previous Orders</button>
+            <button id="inventoryBtn" onclick="goToInventory()">Inventory</button>
+            <button id="staffBtn" onclick="goToStaff()">Staff</button>
+            <button id="logoutBtn" onclick="goToMain()">Logout</button>
+        </div>
 
+        <div class="report-section">
+            <h2>Reports</h2>
+
+            <label for="startDateInput">Start Date & Time:</label>
+            <input type="datetime-local" id="startDateInput" name="startDateInput">
+
+            <label for="endDateInput">End Date & Time:</label>
+            <input type="datetime-local" id="endDateInput" name="endDateInput">
+
+            <button id="productUsageReportBtn" onclick="generateProductUsageReport()">Generate Product Usage Report</button>
+        </div>
     </div>
 
     <script src="/scripts/managerdashboard.js"></script>

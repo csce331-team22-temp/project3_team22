@@ -133,5 +133,5 @@ async function showBill(orderNum) {
 }
 
 function goToDashboard() {
-    window.location.href = "/staff/manager-dashboard";
+    window.location.href = "/user-access-page";
 }

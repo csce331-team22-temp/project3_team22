@@ -81,7 +81,7 @@
                         <td><%= previousOrdersList[i].custname %></td>
                     <% } %>
 
-                    <% if (previousOrdersList[i].cashiername == "") {%>
+                    <% if (previousOrdersList[i].employeeid == 0) {%>
                         <td>----</td>
                     <% } else {%>
                         <td><%= previousOrdersList[i].cashiername %></td>
