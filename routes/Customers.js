@@ -13,9 +13,9 @@ router.get('/', (req, res) => {
 
 // Route to add items to the order list
 router.post('/add-item', (req, res) => {
-    const { name, price } = req.body;
-    console.log('Item received:', name, price);
-    orderItems.push({ name, price });
+    const {name, price, sugar = 5, ice = 5, toppings = []} = req.body;
+    console.log('Item received:', name, price, sugar, ice, toppings);
+    orderItems.push({ name, price, sugar, ice, toppings });
     res.json({ success: true, message: 'Item added to the cart!' });
 });
 
@@ -66,6 +66,9 @@ router.post('/checkout/payment', async (req, res) => {
     const orderData = orderItems.map(item => ({
         itemName: item.name,
         itemPrice: item.price,
+        itemSugarLevel: item.sugar,
+        itemIceLevel: item.ice,
+        itemToppings: item.toppings,
         paymentMethod: paymentMethod
     }));
 

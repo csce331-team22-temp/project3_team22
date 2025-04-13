@@ -1,123 +1,205 @@
-/* General Page Styling */
 body {
     margin: 0;
-    text-align: center;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background: #F4E3C1;
-    color: #5A4633; 
-}
+    background: #FAF3E0;
+    color: #5C4033;
+    text-align: center;
 
-/* Header Styling */
-header {
-    background: #D9B382; 
+  }
+  
+  header {
+    background: #D9A06C;
     padding: 20px 0;
     text-align: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-h1 {
+    box-shadow: 0px 4px 8px rgba(92, 64, 51, 0.2);
+  }
+  
+  h1 {
     margin: 0;
     font-size: 30px;
-    color: #FFF8E8;
+    color: white;
     font-weight: bold;
-}
-
-/* Category Navigation */
-.category-header {
+  }
+  
+  .category-header {
     display: flex;
     justify-content: center;
     list-style: none;
-    padding: 0;
-    margin: 15px 0 0;
-    background: rgba(217, 179, 130, 0.9); 
     padding: 12px 0;
+    margin: 15px 0 0;
+    background: rgba(217, 160, 108, 0.85);
     border-radius: 10px;
-}
-
-.category-header li {
+  }
+  
+  .category-header li {
     margin: 0 25px;
-}
-
-.category-header a {
+  }
+  
+  .category-header a {
     text-decoration: none;
-    color: #FFF8E8; 
+    color: white;
     font-size: 18px;
     font-weight: bold;
     padding: 10px 18px;
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
-}
-
-.category-header a:hover {
-    background: #A67C52; 
+  }
+  
+  .category-header a:hover {
+    background: #B36B4F;
     transform: scale(1.1);
-}
-
-/* Welcome Section */
-.welcome-section {
+  }
+  
+  .welcome-section {
     text-align: center;
     padding: 50px 20px;
-    color: #5A4633;
-}
-
-.welcome-section h2 {
+    color: #5C4033;
+  }
+  
+  .welcome-section h2 {
     font-size: 28px;
     margin-bottom: 15px;
-}
+  }
 
-/* Drinks Page */
-.drinks-container {
+  .checkout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 14px;
+    border: none;
+    background: #D9A06C;
+    color: white;
+    font-size: 24px;
+  }
+  
+  .drinks-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 30px;
-}
-
-/* Drink Card Styling */
-.drink-item {
-    background: #FFF8E8; 
+  }
+  
+  .drink-item {
+    background: #FFF8F0;
     border-radius: 12px;
     margin: 20px;
     padding: 20px;
     width: 260px;
-    box-shadow: 0px 4px 10px rgba(166, 124, 82, 0.3); 
+    box-shadow: 0px 4px 10px rgba(179, 107, 79, 0.2);
     text-align: center;
     transition: all 0.3s ease-in-out;
-}
-
-.drink-item:hover {
+  }
+  
+  .drink-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 6px 15px rgba(166, 124, 82, 0.5);
-}
-
-.drink-item img {
+    box-shadow: 0px 6px 15px rgba(179, 107, 79, 0.35);
+  }
+  
+  .drink-item img {
     width: 100%;
-    height: auto;  
-    max-height: 180px; 
+    height: auto;
+    max-height: 180px;
     border-radius: 10px;
     object-fit: contain;
-    background-color: #F2EFE7; 
-    padding: 5px; 
-}
-
-.drink-item h3 {
+    background-color: #FAF3E0;
+    padding: 5px;
+  }
+  
+  .drink-item h3 {
     margin: 15px 0;
     font-size: 20px;
-    color: #A67C52; 
-}
-
-.price {
+    color: #B36B4F;
+  }
+  
+  .price {
     font-size: 16px;
     font-weight: bold;
-    color: #D9B382;
-}
-
-/* No Drinks Message */
-.no-drinks {
+    color: #D9A06C;
+  }
+  
+  .no-drinks {
     text-align: center;
     font-size: 18px;
-    color: #A67C52; 
+    color: #B36B4F;
     margin-top: 40px;
     font-weight: bold;
-}
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal.hidden {
+    display: none;
+  }
+  
+  .modal-content {
+    background: #FFF8F0;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  
+  .close-button {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .custom-section {
+    margin: 20px 0;
+  }
+  
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .option-btn {
+    padding: 8px 14px;
+    border: none;
+    background: #D9A06C;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  
+  .option-btn:hover {
+    background: #B36B4F;
+  }
+  
+  .confirm-btn {
+    background-color: #B36B4F;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  .option-btn.selected {
+    background-color: #602406;
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  

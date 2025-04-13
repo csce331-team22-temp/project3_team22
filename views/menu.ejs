@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Tea Menu</title>
-    <link rel="stylesheet" href="/styles/menu.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bubble Tea Menu</title>
+  <link rel="stylesheet" href="/styles/menu.css" />
 </head>
 <body>
-    <header>
-        <h1>🧋 ShareTea</h1>
-        <nav>
-            <ul class="category-header">
-                <% categories.forEach(category => { %>
-                    <li><a href="/menu/<%= encodeURIComponent(category) %>"><%= category %></a></li>
-                <% }); %>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>🧋 ShareTea</h1>
+    <nav>
+      <ul class="category-header">
+        <% categories.forEach(category => { %>
+          <li><a href="/menu/<%= encodeURIComponent(category) %>"><%= category %></a></li>
+        <% }); %>
+      </ul>
+    </nav>
+  </header>
 
-    <main class="welcome-section">
-        <h2>Welcome to ShareTea!</h2>
-        <p>Select a category from the menu above to view our drinks.</p>
-    </main>
+  <main class="welcome-section">
+    <h2>Welcome to ShareTea!</h2>
+    <p>Select a category from the menu above to view our drinks.</p>
+    <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
+  </main>
 </body>
 </html>
