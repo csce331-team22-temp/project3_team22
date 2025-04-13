@@ -1,0 +1,50 @@
+#content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#x-reportBtn, #z-reportBtn, #logoutBtn {
+    background-color: white;
+    color: black;
+    border: solid black 2px;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    width: 25%;
+    font-size: large;
+}
+
+#logoutBtn {
+    color: red;
+    border-color: red;
+}
+
+#z-reportBtn:hover, #x-reportBtn:hover {
+    background-color: black;
+    color: white;
+}
+
+#logoutBtn:hover {
+    background-color: red;
+    color: white;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#report-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

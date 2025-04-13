@@ -1,8 +1,18 @@
 body {
-    height: 100vh;
+    padding: 20px;
     margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
     overflow: auto;
+}
+
+#content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 75%;
+    height: fit-content;
 }
 
 table {
@@ -11,7 +21,7 @@ table {
 }
 
 th {
-    background-color: #145da0;
+    background-color: #a0522d;
     font-size: 30px;
     color: white;
     margin-bottom: 10px;
@@ -21,6 +31,10 @@ th {
 
 tr {
     border-bottom: solid darkgray 1px;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
 td {

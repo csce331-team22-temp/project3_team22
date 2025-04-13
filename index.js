@@ -72,6 +72,7 @@ const loginRoute = require('./routes/Login');
 const rewardsRoute = require('./routes/Rewards');
 
 const menuRoute = require('./routes/menu');
+const { isEmployeeLoggedIn } = require('./authMiddleware');
 
 
 
@@ -125,7 +126,35 @@ app.get('/logout', (req, res) => {
         res.redirect('/');
     }
     
-})
+});
+
+app.get('/user-access-page', isEmployeeLoggedIn, async (req, res) => {
+    if (req.user) {
+        const user_email = req.user.emails[0].value;
+    
+        const query = `SELECT * FROM staffmembers WHERE email = $1;`;
+
+        const staffMemberInfo = await db.query(query, [user_email]);
+
+        if (staffMemberInfo.rowCount > 0) {
+
+            if(staffMemberInfo.rows[0].position == 'Manager') {
+                res.redirect('/staff/manager-dashboard');
+            } 
+            else {
+                res.redirect('/menu');
+            }
+            
+        }
+    } else {
+        res.redirect('/')
+    }
+    
+});
+
+app.get('/weather-api-key', (req, res) => {
+    res.json({ key: process.env.WEATHER_API_KEY });
+});
 
 
 app.listen(port, () => {

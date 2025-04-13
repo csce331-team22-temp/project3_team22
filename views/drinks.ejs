@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title><%= category %> | Bubble Tea</title>
   <link rel="stylesheet" href="/styles/menu.css"/>
+  
+  <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
+
+  <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+    
   <header>
     <h1>🧋 ShareTea</h1>
     <nav>
@@ -27,6 +38,7 @@
           <div class="drink-item">
             <div class="drink-click" data-drink="<%= drink.drinkname %>" data-price="<%= drink.price %>">
               <img src="/images/<%= drink.image_url %>" alt="<%= drink.drinkname %>"/>
+
             </div>
             <h3><%= drink.drinkname %></h3>
             <p class="price">$<%= drink.price %></p>
