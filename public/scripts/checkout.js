@@ -86,7 +86,7 @@ function pay(method) {
         if (data.success) {
             alert('Order successfully inserted into the database!');
             togglePaymentOptions();
-            window.location.href = '/customers'; // TODO: change location to menu once connected
+            window.location.href = '/menu';
 
             // send some garbage to rewards so that it can handle resetting the customer
             fetch('customers/rewards/reset-customer', {

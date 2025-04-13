@@ -20,9 +20,9 @@ router.get('/', (req, res) => {
 
 // Route to add items to the order list
 router.post('/add-item', (req, res) => {
-    const { name, price } = req.body;
-    console.log('Item received:', name, price);
-    orderItems.push({ name, price });
+    const {name, price, sugar = 5, ice = 5, toppings = []} = req.body;
+    console.log('Item received:', name, price, sugar, ice, toppings);
+    orderItems.push({ name, price, sugar, ice, toppings });
     res.json({ success: true, message: 'Item added to the cart!' });
 });
 
@@ -54,6 +54,18 @@ router.get('/checkout', (req, res) => {
 router.post('/checkout/payment', async (req, res) => {
     // Retrieve the paymentMethod sent from the fetch request
     const { paymentMethod } = req.body;
+    let staffID = 0;
+
+    if(req.user){
+        let staffEmail = req.user.emails[0].value;
+        const staffidQuery = `SELECT staffid FROM staffmembers WHERE email = $1`;
+        const result = await db.query(staffidQuery, [staffEmail]);
+        staffID = result.rows[0].staffid;
+        console.log("staffID:", staffID);
+    }
+    else{
+        console.log("email machine broke");
+    }
 
     // 🟡 OTO ADDED: Will happen whenever customerID is needed for a purchase
     customerID = getCustomerID();
@@ -61,11 +73,14 @@ router.post('/checkout/payment', async (req, res) => {
     const orderData = orderItems.map(item => ({
         itemName: item.name,
         itemPrice: item.price,
+        itemSugarLevel: item.sugar,
+        itemIceLevel: item.ice,
+        itemToppings: item.toppings,
         paymentMethod: paymentMethod
     }));
 
     try{
-        const orderidQuery = `SELECT MAX(orderid) FROM kioskorders`;
+        const orderidQuery = `SELECT MAX(orderid) FROM orders`;
         const resultOne = await db.query(orderidQuery);
         const orderid = resultOne.rows[0].max + 1;
 
@@ -78,8 +93,8 @@ router.post('/checkout/payment', async (req, res) => {
             const currentTime = new Date();
             const formattedTime = currentTime.toISOString().slice(0, 19).replace('T', ' ');
 
-            const orderQuery = `INSERT INTO kioskorders (orderid, drinkid, amountpaid, dateordered, paymentmethod) VALUES ($1, $2, $3, $4, $5);`;
-            const values = [orderid, drinkid, item.itemPrice, formattedTime, item.paymentMethod];
+            const orderQuery = `INSERT INTO orders (customerid, staffid, drinkid, orderid, amountpaid, dateordered, paymentmethod) VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+            const values = [0, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod];
 
             const resultThree = await db.query(orderQuery, values);
             console.log("Inserted order");

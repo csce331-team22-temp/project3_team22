@@ -80,3 +80,9 @@ h3 {
 #paymentOptions {
     visibility: hidden;
 }
+
+#loginButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
