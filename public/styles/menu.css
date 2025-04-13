@@ -61,6 +61,17 @@ body {
     font-size: 28px;
     margin-bottom: 15px;
   }
+
+  .checkout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 14px;
+    border: none;
+    background: #D9A06C;
+    color: white;
+    font-size: 24px;
+  }
   
   .drinks-container {
     display: flex;
@@ -189,6 +200,6 @@ body {
     background-color: #602406;
     color: #fff;
     transform: scale(1.05);
-}
+  }
 
   
