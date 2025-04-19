@@ -334,5 +334,24 @@ router.get('/reports/x', async (req, res) => {
 });
 
 
+router.get('/reports/sales-report/:startDate/:endDate', isManagerLoggedIn, async (req, res) => {
+    try {
+        let startDate = new Date(req.params.startDate);
+        let endDate = new Date(req.params.endDate);
+        if (isNaN(startDate.getTime())|| isNaN(endDate.getTime())) {
+            res.status(400).send("Bad start or end time for timestamp");
+        };
+
+        let query = "SELECT drinkname, COUNT(drinkname) as total_orders, SUM(price) as total_earned from Orders";
+        query += " LEFT JOIN Menu using(drinkid)";     
+        query += " WHERE dateordered >= $1 and dateordered <= $2 GROUP BY drinkname ORDER BY drinkname asc";  
+        let salesReportData = (await db.query(query, [req.params.startDate, req.params.endDate])).rows;
+        res.render('salesreport', {salesReportData});
+    }
+    catch {
+        res.status(400).send("Issue retrieving data or bad timestamp.");
+    }
+});
+
 
 module.exports = router;

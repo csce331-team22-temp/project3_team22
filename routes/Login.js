@@ -3,14 +3,13 @@ const express = require('express');
 const router = express.Router();
 
 
-var {setCurrentCustomer} = require('./SharedVariables');
+var {setCurrentCustomer} = require('./_SharedVariables');
 
 router.get('/', (req, res) => {
     res.render('customerlogin'); 
 })
 
-router.post('/login-request', (req, res) => {
-    
+router.post('/login-request', async (req, res) => {
     let phone = validPhoneNumber(req.body['phone']);
     if (phone === "-1") {
         res.status(400).json("Invalid Phone Number");

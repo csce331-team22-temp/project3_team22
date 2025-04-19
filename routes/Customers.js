@@ -5,7 +5,7 @@ const express = require('express');
 // Export functions for usage in other files. Use the require function to gain access to these objects.
 // OTO ADDED: Needed so I can talk to you and you can talk to me
 
-const {modifyPearls, resetCustomer, getCustomerID} = require('./SharedVariables');
+const {modifyPearls, resetCustomer, getCustomerID} = require('./_SharedVariables');
 
 
 
@@ -97,9 +97,8 @@ router.post('/checkout/payment', async (req, res) => {
 
             const currentTime = new Date();
             const formattedTime = currentTime.toISOString().slice(0, 19).replace('T', ' ');
-
             const orderQuery = `INSERT INTO orders (customerid, staffid, drinkid, orderid, amountpaid, dateordered, paymentmethod) VALUES ($1, $2, $3, $4, $5, $6, $7);`;
-            const values = [0, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod];
+            const values = [customerID, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod];
 
             const resultThree = await db.query(orderQuery, values);
             console.log("Inserted order");

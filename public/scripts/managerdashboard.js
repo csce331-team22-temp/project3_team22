@@ -26,3 +26,10 @@ function generateProductUsageReport() {
 
     window.location.href = `/staff/inventory/report/${startDateTime}/${endDateTime}`;
 }
+
+function generateSalesReport() {
+    const startDateTime = document.getElementById('srStartDate').value;
+    const endDateTime = document.getElementById('srEndDate').value;
+    
+    window.location.href = `/staff/reports/sales-report/${startDateTime}/${endDateTime}`
+}

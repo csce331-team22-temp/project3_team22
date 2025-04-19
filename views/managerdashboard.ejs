@@ -32,15 +32,22 @@
         <div class="report-section">
             <h2>Reports</h2>
             
+            <!--X/Z Report-->
             <button id="reportsBtn">X/Z Reports</button>
 
+            <!--Product Usage Report-->
             <label for="startDateInput">Start Date & Time:</label>
             <input type="datetime-local" id="startDateInput" name="startDateInput">
-
             <label for="endDateInput">End Date & Time:</label>
             <input type="datetime-local" id="endDateInput" name="endDateInput">
-
             <button id="productUsageReportBtn" onclick="generateProductUsageReport()">Generate Product Usage Report</button>
+
+            <!--Sales Report-->
+            <label for="startDateInput">Start Date & Time:</label>
+            <input type="datetime-local" id="srStartDate" name="srStartDate">
+            <label for="endDateInput">End Date & Time:</label>
+            <input type="datetime-local" id="srEndDate" name="srEndDate">
+            <button id="productUsageReportBtn" onclick="generateSalesReport()">Generate Sales Report</button>
         </div>
     </div>
 
