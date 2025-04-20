@@ -97,3 +97,27 @@ h1 {
   #weatherDisplay p {
     margin: 5px 0;
   }
+
+  #accessibilities {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 25px;
+  }
+
+  #speaktextBtn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #eee;
+    color: #333;
+    transition: all 0.3s ease;
+  }
+  
+  #speaktextBtn.active {
+    background-color: #4CAF50;
+    color: white;
+  }

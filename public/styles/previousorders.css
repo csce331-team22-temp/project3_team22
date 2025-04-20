@@ -9,7 +9,7 @@ body {
 }
 
 #filterorders {
-    width: 15%;
+    width: 20%;
     overflow: auto;
     display: flex;
     flex-direction: column;
