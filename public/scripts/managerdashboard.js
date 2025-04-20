@@ -15,6 +15,7 @@ document.getElementById("reportsBtn").addEventListener("click", async function (
 });
 
 function goToMain() {
+    localStorage.removeItem('reloadedOnce');
     window.location.href = "/logout?loginMessage=";
 }
 
@@ -25,4 +26,9 @@ function generateProductUsageReport() {
     console.log(startDateTime);
 
     window.location.href = `/staff/inventory/report/${startDateTime}/${endDateTime}`;
+}
+
+if (!localStorage.getItem('reloadedOnce')) {
+    localStorage.setItem('reloadedOnce', 'true');
+    location.reload();
 }
