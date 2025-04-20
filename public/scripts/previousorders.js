@@ -130,6 +130,14 @@ async function showBill(orderNum) {
     document.getElementById("closeBtn").onclick = () => {
         orderView.style.display = "none";
     };
+
+    if (localStorage.getItem('textspeech') === 'true') {
+        const elements = document.querySelectorAll('button, a, p, h1, h2, h3, label, span, th, td');
+
+        elements.forEach(el => {
+            el.addEventListener('mouseover', () => speakText(el.innerText || el.value));
+        });
+    }
 }
 
 function goToDashboard() {

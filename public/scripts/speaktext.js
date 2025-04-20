@@ -11,7 +11,7 @@ function updateToggleButtonUI() {
         btn.innerText = "Text Voice Off";
     }
 
-  }
+}
 
 function speakText(text) {
     if (!accessibilityEnabled) return;
@@ -21,7 +21,8 @@ function speakText(text) {
 }
 
 function applySpeechEvents() {
-    const elements = document.querySelectorAll('button, a, p, h1, h2, h3, label, span');
+    const elements = document.querySelectorAll('button, a, p, h1, h2, h3, label, span, th, td, input, li');
+
     elements.forEach(el => {
         el.addEventListener('mouseover', () => speakText(el.innerText || el.value));
     });

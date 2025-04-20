@@ -23,12 +23,9 @@ function generateProductUsageReport() {
     const startDateTime = document.getElementById('startDateInput').value;
     const endDateTime = document.getElementById('endDateInput').value;
 
-    console.log(startDateTime);
-
-    window.location.href = `/staff/inventory/report/${startDateTime}/${endDateTime}`;
-}
-
-if (!localStorage.getItem('reloadedOnce')) {
-    localStorage.setItem('reloadedOnce', 'true');
-    location.reload();
+    if (startDateTime && endDateTime) {
+        window.location.href = `/staff/inventory/report/${startDateTime}/${endDateTime}`;
+    } else {
+        alert('Invalid input date(s)!');
+    }
 }
