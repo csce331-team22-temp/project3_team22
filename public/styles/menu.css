@@ -202,4 +202,9 @@ body {
     transform: scale(1.05);
   }
 
+  .calories, .allergens {
+    font-size: 14px;
+    color: #B36B4F;
+    margin: 5px 0;
+  }
   
