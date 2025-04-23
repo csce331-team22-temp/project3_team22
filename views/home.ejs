@@ -24,7 +24,12 @@
         </script>
     <% } %>
 
-    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+    <div id="accessibilities" style="position: absolute; top: 10px; right: 10px;">
+
+        <button id="speaktextBtn" onclick="toggleSpeech()">Text Voice Off</button>
+
+        <div id="google_translate_element"></div>
+    </div>
 
     <button type="button" id="google-sign-in-button" onclick="signIn()">Staff Sign In</button>
 
@@ -44,8 +49,6 @@
     </div>
 
     <script>
-
-        let signInBtn = document.getElementById('google-sign-in-button');
 
         function signIn() {
             window.location.href = "/auth/google";
@@ -96,6 +99,9 @@
         }
         
         getCurrentWeather();
+        
     </script>
+
+    <script src="/scripts/speaktext.js"></script>
 </body>
 </html>
