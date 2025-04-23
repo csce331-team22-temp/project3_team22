@@ -72,6 +72,21 @@ body {
     color: white;
     font-size: 24px;
   }
+
+  .home-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 120px;
+    padding: 8px 14px;
+    border: none;
+    background: #D9A06C;
+    color: white;
+    font-size: 24px;
+  }
+
+  .checkout-btn:hover, .home-btn:hover {
+    background: #B36B4F;
+  }
   
   .drinks-container {
     display: flex;
