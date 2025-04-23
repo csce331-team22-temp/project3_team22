@@ -15,6 +15,7 @@ document.getElementById("reportsBtn").addEventListener("click", async function (
 });
 
 function goToMain() {
+    localStorage.removeItem('reloadedOnce');
     window.location.href = "/logout?loginMessage=";
 }
 
@@ -22,11 +23,12 @@ function generateProductUsageReport() {
     const startDateTime = document.getElementById('startDateInput').value;
     const endDateTime = document.getElementById('endDateInput').value;
 
-    console.log(startDateTime);
-
-    window.location.href = `/staff/inventory/report/${startDateTime}/${endDateTime}`;
+    if (startDateTime && endDateTime) {
+        window.location.href = `/staff/inventory/report/${startDateTime}/${endDateTime}`;
+    } else {
+        alert('Invalid input date(s)!');
+    }
 }
-
 function generateSalesReport() {
     const startDateTime = document.getElementById('srStartDate').value;
     const endDateTime = document.getElementById('srEndDate').value;

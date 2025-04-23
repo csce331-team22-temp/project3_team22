@@ -86,16 +86,7 @@ function pay(method) {
         if (data.success) {
             alert('Order successfully inserted into the database!');
             togglePaymentOptions();
-            window.location.href = '/menu';
-
-            // // send some garbage to rewards so that it can handle resetting the customer
-            // fetch('customers/rewards/reset-customer', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({ paymentMethod: method })
-            // })
+            window.location.href = '/';
         } else {
             alert('Error inserting order.');
         }

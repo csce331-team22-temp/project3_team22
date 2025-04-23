@@ -7,17 +7,16 @@
   <link rel="stylesheet" href="/styles/menu.css"/>
   
   <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-        }
-    </script>
-
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
 
   <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
-    
+
   <header>
     <h1>🧋 ShareTea</h1>
     <nav>
@@ -38,14 +37,19 @@
           <div class="drink-item">
             <div class="drink-click" data-drink="<%= drink.drinkname %>" data-price="<%= drink.price %>">
               <img src="/images/<%= drink.image_url %>" alt="<%= drink.drinkname %>"/>
-
             </div>
             <h3><%= drink.drinkname %></h3>
+            <p class="info">Calories: <%= drink.calories || 'N/A' %></p>
+            <p class="info">Allergens: <%= drink.allergens || 'None' %></p>
             <p class="price">$<%= drink.price %></p>
+            <a href="/menu/info/<%= drink.drinkid %>" class="info-icon" title="More Info">
+              <div class="info-circle">i</div>
+            </a>
           </div>
         <% }); %>
       </div>
     <% } %>
+
     <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
   </main>
 
@@ -92,103 +96,89 @@
     const drinkNameDisplay = document.getElementById("selected-drink-name");
     let selectedDrink = {};
 
-    // Show modal on drink image click
     document.querySelectorAll(".drink-click").forEach(item => {
-        item.addEventListener("click", () => {
-            const drinkName = item.dataset.drink;
-            const price = item.dataset.price;
-            selectedDrink = { drinkName, price };
+      item.addEventListener("click", () => {
+        const drinkName = item.dataset.drink;
+        const price = item.dataset.price;
+        selectedDrink = { drinkName, price };
 
-            drinkNameDisplay.textContent = "Customize: " + item.dataset.drink;
-
-            // Clear all previous selections
-            document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
-
-            modal.classList.remove("hidden");
-        });
+        drinkNameDisplay.textContent = "Customize: " + item.dataset.drink;
+        document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
+        modal.classList.remove("hidden");
+      });
     });
 
-    // Close modal
     closeButton.addEventListener("click", () => {
-        modal.classList.add("hidden");
+      modal.classList.add("hidden");
     });
 
     window.addEventListener("click", (event) => {
-        if (event.target === modal) {
-            modal.classList.add("hidden");
-        }
+      if (event.target === modal) {
+        modal.classList.add("hidden");
+      }
     });
 
-    // need to make sure only one customuzation of ice and sugar is selected
     document.querySelectorAll(".sugar-btn, .ice-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            const group = button.classList.contains("sugar-btn") ? ".sugar-btn" : ".ice-btn";
-            document.querySelectorAll(group).forEach(btn => btn.classList.remove("selected"));
-            button.classList.add("selected");
-        });
+      button.addEventListener("click", () => {
+        const group = button.classList.contains("sugar-btn") ? ".sugar-btn" : ".ice-btn";
+        document.querySelectorAll(group).forEach(btn => btn.classList.remove("selected"));
+        button.classList.add("selected");
+      });
     });
 
-    // customers can however have as many toppings as they want
     document.querySelectorAll(".topping-btn").forEach(button => {
-        button.addEventListener("click", () => {
-            button.classList.toggle("selected");
-        });
+      button.addEventListener("click", () => {
+        button.classList.toggle("selected");
+      });
     });
 
     document.querySelector(".confirm-btn").addEventListener("click", async () => {
-      console.log("Confirm button clicked!");
-      // Get sugar level as both a percentage and number 0-5
       const sugarBtn = document.querySelector(".sugar-btn.selected");
       const sugarPercent = sugarBtn && sugarBtn.textContent;
 
-      // Get ice level as both a percentage an number 0-5
       const iceBtn = document.querySelector(".ice-btn.selected");
       const icePercent = iceBtn && iceBtn.textContent;
 
-      // make sure both sugar and ice levels have been selected
       if (!sugarPercent || !icePercent) {
-          alert("You must select both a sugar level and an ice level");
-          return;
+        alert("You must select both a sugar level and an ice level");
+        return;
       }
 
-      // convert percentages to number that can be subtracted from inventory
       const sugarNum = parseInt(sugarPercent) / 20;
       const iceNum = parseInt(icePercent) / 20;
-
-      // Get toppings
       const toppings = Array.from(document.querySelectorAll(".topping-btn.selected")).map(btn => btn.textContent);
 
-      // Calculate total price
       const basePrice = parseFloat(selectedDrink.price);
       const toppingPrice = toppings.length * 0.75;
       const totalPrice = basePrice + toppingPrice;
 
       const orderData = {
-          name: selectedDrink.drinkName,
-          price: totalPrice,
-          sugar: sugarNum,
-          ice: iceNum, 
-          toppings
+        name: selectedDrink.drinkName,
+        price: totalPrice,
+        sugar: sugarNum,
+        ice: iceNum,
+        toppings
       };
 
       try {
-          const response = await fetch('/customers/add-item', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(orderData)
-          });
+        const response = await fetch('/customers/add-item', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData)
+        });
 
-          if (response.ok) {
-              const result = await response.json();
-              console.log('Order added:', result);
-              modal.classList.add("hidden"); // close modal
-          } else {
-              console.error('Failed to add to order');
-          }
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Order added:', result);
+          modal.classList.add("hidden");
+        } else {
+          console.error('Failed to add to order');
+        }
       } catch (err) {
-          console.error('Error:', err);
+        console.error('Error:', err);
       }
-  });
+    });
   </script>
+  <script src="/scripts/speaktext.js"></script>
 </body>
 </html>

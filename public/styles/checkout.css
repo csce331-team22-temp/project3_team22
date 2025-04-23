@@ -1,7 +1,9 @@
 body {
-    background-color: #061D40;
-    color: white;
-    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #FAF3E0;
+    color: #5C4033;
     text-align: center;
 
     display: flex;
@@ -12,6 +14,7 @@ body {
 h3 {
     font-size: 24px;
     margin-bottom: 10px;
+    color: #B36B4F;
 }
 
 .container {
@@ -26,39 +29,47 @@ h3 {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: #5C4033;
 }
 
 .coloredText {
-    color:#145DA0
+    color: #D9A06C;
+    font-weight: bold;
 }
 
 .button, .cartButton {
-    background-color: #145DA0;
+    background-color: #D9A06C;
     color: white;
-    border: 1px solid white;
+    border: none;
     padding: 15px 30px;
     margin: 10px;
     font-size: 18px;
     cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(179, 107, 79, 0.2);
 }
 
-.button:hover {
-    background-color: #1D72C2;
+.button:hover, .cartButton:hover {
+    background-color: #B36B4F;
+    transform: scale(1.05);
 }
 
 #cartItems {
-    background-color: #ffffff;
+    background-color: #FFF8F0;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 20px;
     width: 50%;
     text-align: left;
-    
+    box-shadow: 0px 4px 10px rgba(179, 107, 79, 0.2);
+    color: #5C4033;
 }
 
 #cartTotal {
     font-size: 24px;
     margin-top: 10px;
+    color: #B36B4F;
 }
 
 #checkoutButtons, #paymentOptions {
@@ -76,7 +87,7 @@ h3 {
 #checkoutButtons {
     visibility: visible;
 }
-  
+
 #paymentOptions {
     visibility: hidden;
 }
@@ -85,4 +96,16 @@ h3 {
     position: fixed;
     bottom: 20px;
     right: 20px;
+    padding: 10px 20px;
+    background: #D9A06C;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(92, 64, 51, 0.3);
+    transition: background 0.3s ease;
+}
+
+#loginButton:hover {
+    background: #B36B4F;
 }

@@ -72,6 +72,21 @@ body {
     color: white;
     font-size: 24px;
   }
+
+  .home-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 120px;
+    padding: 8px 14px;
+    border: none;
+    background: #D9A06C;
+    color: white;
+    font-size: 24px;
+  }
+
+  .checkout-btn:hover, .home-btn:hover {
+    background: #B36B4F;
+  }
   
   .drinks-container {
     display: flex;
@@ -202,4 +217,33 @@ body {
     transform: scale(1.05);
   }
 
+  .calories, .allergens {
+    font-size: 14px;
+    color: #B36B4F;
+    margin: 5px 0;
+  }
+  
+  .info-icon {
+    display: inline-block;
+    margin-top: 8px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .info-circle {
+    width: 22px;
+    height: 22px;
+    background-color: #48A6A7;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 22px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .info-circle:hover {
+    background-color: #2C3A3B;
+  }
   

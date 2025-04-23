@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     try {
         const result = await db.query("SELECT DISTINCT category FROM menu");
         const categories = result.rows.map(row => row.category);
-        res.render("menu", { categories });
+        res.render("menu", { user: req.user, isLoggedIn: !!req.user, categories });
     } catch (err) {
         console.error(err);
         res.status(500).send("Error fetching menu categories");
@@ -39,4 +39,21 @@ router.get('/:category', async (req, res) => {
     }
 });
 
+// Nutritional info page
+router.get('/info/:drinkid', async (req, res) => {
+    try {
+        const drinkid = req.params.drinkid;
+        const result = await db.query("SELECT * FROM menu WHERE drinkid = $1", [drinkid]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send("Drink not found");
+        }
+
+        const drink = result.rows[0];
+        res.render("drink-info", { drink });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error loading drink info");
+    }
+})
 module.exports = router;

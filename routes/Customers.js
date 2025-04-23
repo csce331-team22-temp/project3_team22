@@ -59,6 +59,7 @@ router.post('/checkout/payment', async (req, res) => {
     const { paymentMethod } = req.body;
     let staffID = 0;
 
+    // check if email is in database and store staffid if so
     if(req.user){
         let staffEmail = req.user.emails[0].value;
         const staffidQuery = `SELECT staffid FROM staffmembers WHERE email = $1`;
@@ -70,11 +71,12 @@ router.post('/checkout/payment', async (req, res) => {
         console.log("email machine broke");
     }
 
-    // 🟡 OTO ADDED: Will happen whenever customerID is needed for a purchase
+    // check if customer is logged in and save customerid if so
     if(getCustomerID() != null){
         customerID = getCustomerID();
     }
 
+    // add payment method to order data depending on button pressed
     const orderData = orderItems.map(item => ({
         itemName: item.name,
         itemPrice: item.price,
@@ -89,6 +91,7 @@ router.post('/checkout/payment', async (req, res) => {
         const resultOne = await db.query(orderidQuery);
         const orderid = resultOne.rows[0].max + 1;
 
+        // loop through items of order data, add items to orders table and ordertoppings table, subtract items used from inventory
         for (const item of orderData) {
             const drinkidQuery = `SELECT drinkid FROM menu WHERE drinkname = $1`;
             const resultTwo = await db.query(drinkidQuery, [item.itemName]);
@@ -97,14 +100,26 @@ router.post('/checkout/payment', async (req, res) => {
 
             const currentTime = new Date();
             const formattedTime = currentTime.toISOString().slice(0, 19).replace('T', ' ');
+
+            // query to insert order into orders table
             const orderQuery = `INSERT INTO orders (customerid, staffid, drinkid, orderid, amountpaid, dateordered, paymentmethod) VALUES ($1, $2, $3, $4, $5, $6, $7);`;
             const values = [customerID, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod];
-
-            const resultThree = await db.query(orderQuery, values);
+            await db.query(orderQuery, values);
             console.log("Inserted order");
 
-            const inventoryQuery = `UPDATE inventory SET quantity = quantity - 1 WHERE itemid IN (SELECT itemid FROM recipes WHERE drinkid = $1)`;
-            const resultFour = await db.query(inventoryQuery, [drinkid]);
+            // queries to update order toppings table and subtract toppings used from inventory
+            for (const topping of item.itemToppings) {
+                const toppingsQuery = `INSERT INTO ordertoppings ( orderid, topping, drinkid) VALUES ($1, $2, $3)`;
+                await db.query(toppingsQuery, [orderid, topping, drinkid]);
+
+                const inventoryQueryOne = `UPDATE inventory SET quantity = quantity - 1 WHERE itemname = $1`;
+                await db.query(inventoryQueryOne, [topping]);
+            }
+            console.log("Inserted order toppings");
+
+            // query to subtract ingredients used from inventory (but not toppings b/c they're handled earlier)
+            const inventoryQueryTwo = `UPDATE inventory SET quantity = quantity - 1 WHERE itemid IN (SELECT itemid FROM recipes WHERE drinkid = $1)`;
+            await db.query(inventoryQueryTwo, [drinkid]);
             console.log("Subtracted ingredients of drinkid:", drinkid);
         }
 
