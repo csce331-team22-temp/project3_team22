@@ -42,6 +42,9 @@
             <p class="info">Calories: <%= drink.calories || 'N/A' %></p>
             <p class="info">Allergens: <%= drink.allergens || 'None' %></p>
             <p class="price">$<%= drink.price %></p>
+            <a href="/menu/info/<%= drink.drinkid %>" class="info-icon" title="More Info">
+              <div class="info-circle">i</div>
+            </a>
           </div>
         <% }); %>
       </div>
