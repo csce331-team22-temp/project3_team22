@@ -5,7 +5,7 @@ const express = require('express');
 // Export functions for usage in other files. Use the require function to gain access to these objects.
 // OTO ADDED: Needed so I can talk to you and you can talk to me
 
-const {modifyPearls, resetCustomer, getCustomerID} = require('./SharedVariables');
+const {modifyPearls, resetCustomer, getCustomerID, getCurrentCustomer} = require('./SharedVariables');
 
 
 
@@ -72,7 +72,7 @@ router.post('/checkout/payment', async (req, res) => {
     }
 
     // check if customer is logged in and save customerid if so
-    if(getCustomerID() != null){
+    if(getCurrentCustomer() != null){
         customerID = getCustomerID();
     }
 
@@ -102,20 +102,19 @@ router.post('/checkout/payment', async (req, res) => {
             const formattedTime = currentTime.toISOString().slice(0, 19).replace('T', ' ');
 
             // query to insert order into orders table
-            const orderQuery = `INSERT INTO orders (customerid, staffid, drinkid, orderid, amountpaid, dateordered, paymentmethod) VALUES ($1, $2, $3, $4, $5, $6, $7);`;
-            const values = [customerID, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod];
+            const orderQuery = `INSERT INTO orders (customerid, staffid, drinkid, orderid, amountpaid, dateordered, paymentmethod, toppings) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+            const values = [customerID, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod, item.itemToppings ?? []];
             await db.query(orderQuery, values);
             console.log("Inserted order");
 
             // queries to update order toppings table and subtract toppings used from inventory
-            for (const topping of item.itemToppings) {
-                const toppingsQuery = `INSERT INTO ordertoppings ( orderid, topping, drinkid) VALUES ($1, $2, $3)`;
-                await db.query(toppingsQuery, [orderid, topping, drinkid]);
-
-                const inventoryQueryOne = `UPDATE inventory SET quantity = quantity - 1 WHERE itemname = $1`;
-                await db.query(inventoryQueryOne, [topping]);
+            if(item.itemToppings != null) {
+                for (const topping of item.itemToppings) {
+                    const inventoryQueryOne = `UPDATE inventory SET quantity = quantity - 1 WHERE itemname = $1`;
+                    await db.query(inventoryQueryOne, [topping]);
+                }
+                console.log("subtracted toppings from inventory");
             }
-            console.log("Inserted order toppings");
 
             // query to subtract ingredients used from inventory (but not toppings b/c they're handled earlier)
             const inventoryQueryTwo = `UPDATE inventory SET quantity = quantity - 1 WHERE itemid IN (SELECT itemid FROM recipes WHERE drinkid = $1)`;

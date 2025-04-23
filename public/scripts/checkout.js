@@ -11,28 +11,6 @@ function togglePaymentOptions() {
     }
 }
 
-// function clearOrder() {
-//     fetch('/checkout/clear', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({})
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         if (data.success) {
-//             window.location.href = '/customers';
-//         } else {
-//             alert('Error clearing order.');
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//         alert('Error clearing order.');
-//     });
-// }
-
 // Function to remove an item from the cart by sending a POST request to the server
 function removeFromCart(name, price, index) {
     fetch('/customers/remove-item', {

@@ -141,5 +141,26 @@ async function showBill(orderNum) {
 }
 
 function goToDashboard() {
-    window.location.href = "/user-access-page";
+    fetch('/orders/check-manager', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (data.isManager) {
+                window.location.href = '/user-access-page'; // manager dashboard
+            } else {
+                window.location.href = '/menu'; // employee dashboard
+            }
+        } else {
+            alert(data.error || 'Unable to verify your access.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong while checking access.');
+    });
 }
