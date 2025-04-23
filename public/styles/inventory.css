@@ -76,7 +76,7 @@ table button {
 }
 
 #goBackBtn {
-    background-color: #f44336;
+    background-color: #d9534f;
 }
 
 #addItemBtn {
@@ -102,70 +102,118 @@ table input {
 /*-------------------------------------New item form-------------------------------------*/
 
 #newItemPopup {
-    background-color: rgba(0, 0, 0, 0.6);
-    width: 100%;
-    height: 100%;
-    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
     top: 0;
+    left: 0;
     display: none;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 #newItemPopupContent {
-    width: fit-content;
-    padding: 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #FAEBD7;
-    position: sticky;
-    margin-left: auto;
-    margin-right: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff8f0;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    animation: slideUp 0.3s ease;
 }
 
 #newItemTitle {
     text-align: center;
     margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 24px;
+    color: #333;
 }
 
-#newItemName, #newItemQuantity, #newItemUsing {
+#newItemName, #newItemQuantity {
     display: flex;
-    flex-wrap: nowrap;
-    margin-bottom: 10px;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 #newItemUsing {
+    display: flex;
     flex-direction: row;
+    margin-bottom: 15px;
+    align-items: center;
 }
 
 #nameLabel, #quantityLabel, #usingItemLabel {
-    margin-right: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #444;
+}
+
+#newItemUsing label {
+    margin-right: 10px;
+    margin-bottom: 0;
 }
 
 #nameInput, #quantityInput {
-    border-color: black;
-    border-radius: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 16px;
+    transition: border-color 0.2s;
 }
 
-#addNewItemBtn, #cancelAddBtn {
-    border: none;
-    border-radius: 5px;
-    color: white;
-    margin: 5px;
-    font-size: larger;
-    padding: 5px;
-}
-
-#addNewItemBtn {
-    background-color: green;
-}
-
-#cancelAddBtn {
-    background-color: red;
+#nameInput:focus, #quantityInput:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
 }
 
 #submit {
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#addNewItemBtn, #cancelAddBtn {
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#addNewItemBtn {
+    background-color: #28a745;
+}
+
+#addNewItemBtn:hover {
+    background-color: #218838;
+    transform: scale(1.03);
+}
+
+#cancelAddBtn {
+    background-color: #dc3545;
+}
+
+#cancelAddBtn:hover {
+    background-color: #c82333;
+    transform: scale(1.03);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }

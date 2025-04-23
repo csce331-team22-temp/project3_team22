@@ -17,6 +17,7 @@ body {
     background-color: white;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
     padding: 20px;
+    background-color: #FFDEAD;
 }
 
 #filterorders h1 {
@@ -35,7 +36,6 @@ body {
 .filter-option {
     margin-bottom: 10px;
     padding: 10px;
-    border-radius: 5px;
 }
 
 .filter-option label {
@@ -57,8 +57,8 @@ body {
     box-sizing: border-box;
 }
 
-.filter-option.selected {
-    background-color: lightgray;
+input[type="radio"] {
+    accent-color: #A0522D;
 }
 
 .date-range-inputs label {
@@ -80,7 +80,7 @@ body {
 }
 
 #recentOrdersBtn {
-    background-color: #145da0;
+    background-color: #A0522D;
     margin-bottom: 20px;
 }
 
@@ -89,7 +89,7 @@ body {
 }
 
 #goBackBtn {
-    background-color: #f44336;
+    background-color: #d9534f;
 }
 
 #ordersdata {
