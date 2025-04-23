@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     try {
         const result = await db.query("SELECT DISTINCT category FROM menu");
         const categories = result.rows.map(row => row.category);
-        res.render("menu", { categories });
+        res.render("menu", { user: req.user, isLoggedIn: !!req.user, categories });
     } catch (err) {
         console.error(err);
         res.status(500).send("Error fetching menu categories");
