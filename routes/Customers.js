@@ -38,7 +38,7 @@ router.post('/remove-item', (req, res) => {
         res.json({ success: true, message: 'Item removed from the cart!' });
         
         // 🟡 OTO ADDED: Done so refunding can happen if person removes a rewards item from the cart
-        if ((price == 0) && (customerID != 0)) {
+        if (price == 0) {
             modifyPearls(10);
         }
     }
