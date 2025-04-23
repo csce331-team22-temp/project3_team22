@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= drink.drinkname %> | Nutrition Info</title>
+  <link rel="stylesheet" href="/styles/menu.css"/>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body>
+
+  <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+
+  <header>
+    <h1>🧋 <%= drink.drinkname %></h1>
+    <nav>
+      <ul class="category-header">
+        <li><a href="/menu/<%= encodeURIComponent(drink.category) %>">← Back to <%= drink.category %></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main role="main" style="max-width: 700px; margin: 40px auto; padding: 20px;">
+    <section aria-labelledby="drink-info-title">
+      <h2 id="drink-info-title">Nutrition & Ingredient Details</h2>
+
+      <div style="text-align: center;">
+        <img src="/images/<%= drink.image_url %>" alt="Photo of <%= drink.drinkname %>" style="max-width: 100%; border-radius: 12px; margin-bottom: 20px;"/>
+      </div>
+
+      <div style="font-size: 16px; color: #333;">
+        <p><strong>Calories:</strong> <%= drink.calories || 'N/A' %> kcal</p>
+        <p><strong>Ingredients:</strong> <%= drink.ingredients || 'Not listed' %></p>
+        <p><strong>Macros:</strong> <%= drink.macros || 'Protein, Carbs, Fat not provided' %></p>
+        <p><strong>Allergens:</strong> <%= drink.allergens || 'None' %></p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
