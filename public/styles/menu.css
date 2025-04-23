@@ -68,23 +68,40 @@ body {
     right: 20px;
     padding: 8px 14px;
     border: none;
+    border-radius: 8px;
     background: #D9A06C;
     color: white;
     font-size: 24px;
+    transition: all 0.3s ease-in-out;
   }
 
-  .home-btn {
+  .previous-orders-btn {
     position: fixed;
     bottom: 20px;
     right: 120px;
     padding: 8px 14px;
     border: none;
+    border-radius: 8px;
     background: #D9A06C;
     color: white;
     font-size: 24px;
+    transition: all 0.3s ease-in-out;
   }
 
-  .checkout-btn:hover, .home-btn:hover {
+  .home-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #D9A06C;
+    color: white;
+    font-size: 24px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .checkout-btn:hover, .home-btn:hover, .previous-orders-btn:hover {
     background: #B36B4F;
   }
   

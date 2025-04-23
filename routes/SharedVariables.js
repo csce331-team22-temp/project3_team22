@@ -22,9 +22,13 @@ exports.resetCustomer = function (orderData) {
 
     currentCustomer = null; 
 }
+// exports.getCustomerID = function () { 
+//     if (exports.currentCustomer == null) return 0;
+//     return exports.currentCustomer.customerid;
+// }
 exports.getCustomerID = function () { 
-    if (exports.currentCustomer == null) return 0;
-    return exports.currentCustomer.customerid;
+    if (currentCustomer == null) return 0;
+    return currentCustomer.customerid;
 }
 
 exports.setCurrentCustomer = function (cc) {currentCustomer = cc;}
