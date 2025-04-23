@@ -111,4 +111,20 @@ router.get('/view-bill/:orderid', isEmployeeLoggedIn, async (req, res) => {
     }
 });
 
+router.post('/check-manager', async (req, res) => {
+    if (req.user) {
+        const user_email = req.user.emails[0].value;
+        const query = `SELECT * FROM staffmembers WHERE email = $1 AND position = 'Manager';`;
+        const result = await db.query(query, [user_email]);
+
+        if (result.rowCount > 0) {
+            return res.json({ success: true, isManager: true });
+        } else {
+            return res.json({ success: true, isManager: false });
+        }
+    } else {
+        return res.status(401).json({ success: false, error: 'Something went wrong while checking the database' });
+    }
+});
+
 module.exports = router;

@@ -35,10 +35,8 @@
     <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
     <button onclick="window.location.href='/'" class="home-btn">Home Page</button>
     <% if (isLoggedIn) { %>
-        <button>button</button>
-      <% } else { %>
-        <p>Please log in to access features.</p>
-      <% } %>
+        <button onclick="window.location.href='/orders/recent'" class = previous-orders-btn>Previous Orders</button>
+    <% } %>
   </main>
   <script src="/scripts/speaktext.js"></script>
 </body>
