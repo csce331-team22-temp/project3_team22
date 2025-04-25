@@ -333,6 +333,114 @@ router.get('/reports/x', async (req, res) => {
     }
 });
 
+// displays the manager's dashboard page
+router.get('/manager-dashboard', isManagerLoggedIn, (req, res) => {
+    try {
+        res.render('managerdashboard');
+    } catch (error) {
+        console.error('Failed to load manager dashboard', error);
+        res.status(500).send('Internal Server Error'); // Make sure to send a response!
+    }
+});
+
+// New route to fetch categories
+router.get('/categories', isManagerLoggedIn, async (req, res) => {
+    try {
+        const categoryQuery = `SELECT DISTINCT category FROM menu ORDER BY category;`;
+        const categoryResult = await db.query(categoryQuery);
+        const categories = categoryResult.rows.map(row => row.category);
+        res.json(categories);
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).json({ message: 'Failed to fetch categories' });
+    }
+});
+
+
+// Route to handle adding a new drinks
+router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
+    try {
+        const { 
+            name, 
+            category, 
+            price, 
+            ingredients, 
+            calories, 
+            macros, 
+            allergens,
+            isNewCategory 
+        } = req.body;
+
+        const ingredientsArray = ingredients.split(',');
+
+        // 1. Get the next drink ID
+        const lastDrinkResult = await db.query("SELECT MAX(drinkid) AS maxID FROM menu;");
+        const newDrinkID = (lastDrinkResult.rows[0].maxid || 0) + 1;
+
+        // 2. Insert into menu with nutritional info and allergens
+        const menuQuery = `
+            INSERT INTO menu (
+                drinkid, 
+                drinkname, 
+                category, 
+                price, 
+                calories, 
+                allergens, 
+                ingredients, 
+                macros
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+            RETURNING drinkid;
+        `;
+        
+        await db.query(
+            menuQuery, 
+            [
+                newDrinkID, 
+                name, 
+                category, 
+                price, 
+                calories, 
+                allergens, 
+                ingredients, 
+                macros
+            ]
+        );
+
+        // 3. Process inventory items and insert into recipes
+        for (const item of ingredientsArray) {
+            const trimmedItem = item.trim();
+
+            // a. Check if the item exists in inventory
+            let itemResult = await db.query("SELECT itemid FROM inventory WHERE itemname = $1;", [trimmedItem]);
+
+            let itemID;
+
+            if (itemResult.rows.length > 0) {
+                // Item exists, get its itemID
+                itemID = itemResult.rows[0].itemid;
+            } else {
+                // b. Item doesn't exist, create it
+                const lastItemResult = await db.query("SELECT MAX(itemid) AS maxID FROM inventory;");
+                const newItemID = (lastItemResult.rows[0].maxid || 0) + 1;
+
+                // Note: Replace 'yes' with the correct value for your ENUM
+                await db.query(
+                    "INSERT INTO inventory (itemid, itemname, quantity, usingitem) VALUES ($1, $2, $3, $4);",
+                    [newItemID, trimmedItem, 1000, 'yes']  // Ensure 'yes' is a valid enum value or replace it
+                );
+                itemID = newItemID;
+            }
+
+            // c. Insert into recipes table
+            await db.query("INSERT INTO recipes (drinkid, itemid) VALUES ($1, $2);", [newDrinkID, itemID]);
+        }
+
+        res.status(200).json({ message: 'Drink added successfully!' });
+    } catch (error) {
+        console.error('Error adding drink:', error);
+        res.status(500).json({ message: 'Failed to add drink: ' + error.message });
+    }
+});
 
 router.get('/reports/sales-report/:startDate/:endDate', isManagerLoggedIn, async (req, res) => {
     try {

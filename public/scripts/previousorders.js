@@ -99,24 +99,26 @@ async function showBill(orderNum) {
     // order details in a table format
     let tableHTML = `
         <h1 id="orderTitle">Order ID: ${orderNum}</h1>
-        <table id="orderTable">
-            <thead>
-                <tr>
-                    <th>Drink</th>
-                    <th>Quantity</th>
-                    <th>Amount ($)</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${mydata.map(obj => `
+        <div id="orderList">
+            <table id="orderTable">
+                <thead>
                     <tr>
-                        <td>${obj.drink}</td>
-                        <td>${obj.drinkcount}</td>
-                        <td>${obj.totalamount}</td>
+                        <th>Drink</th>
+                        <th>Toppings</th>
+                        <th>Amount</th>
                     </tr>
-                `).join("")}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    ${mydata.map(obj => `
+                        <tr>
+                            <td>${obj.drink}</td>
+                            <td>${obj.chosentoppings && obj.chosentoppings.length ? obj.chosentoppings.join(", ") : "None"}</td>
+                            <td>${obj.totalamount == 0.00 ? "Redeemed" : "$" + obj.totalamount}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        </div>
         <div id="orderSummary">
             <p><strong>Total Amount Paid:</strong> $${totalAmount}</p>
             <p><strong>Payment Method:</strong> ${payMethod}</p>
@@ -141,5 +143,26 @@ async function showBill(orderNum) {
 }
 
 function goToDashboard() {
-    window.location.href = "/user-access-page";
+    fetch('/orders/check-manager', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (data.isManager) {
+                window.location.href = '/user-access-page'; // manager dashboard
+            } else {
+                window.location.href = '/menu'; // employee dashboard
+            }
+        } else {
+            alert(data.error || 'Unable to verify your access.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong while checking access.');
+    });
 }

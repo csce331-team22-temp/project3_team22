@@ -7,10 +7,6 @@ exports.modifyPearls = async function (amt) {
     if (amt == null) amt = 10; // Default for refunding
     db.query("UPDATE customers SET pearls = pearls + $1 WHERE customerid = $2", [amt, currentCustomer.customerid]);
 }
-exports.modifyPearls = async function (amt, id) {
-    if (amt == null) amt = 10; // Default for refunding
-    db.query("UPDATE customers SET pearls = pearls + $1 WHERE customerid = $2", [amt, id]);
-}
 
 exports.getCustomerID = function () { 
     if (currentCustomer == null) return 0;

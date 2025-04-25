@@ -97,7 +97,7 @@ router.get('/filter/cashier/:cashierid', isEmployeeLoggedIn, async (req, res) =>
 // fetches specified order's details
 router.get('/view-bill/:orderid', isEmployeeLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT menu.drinkname AS drink, COUNT(menu.drinkid) AS drinkcount, SUM(orders.amountpaid) AS totalamount, orders.paymentmethod AS paymethod FROM orders JOIN menu ON orders.drinkid = menu.drinkid WHERE orders.orderid = $1 GROUP BY menu.drinkid, orders.amountpaid, orders.paymentmethod ORDER BY menu.drinkid ASC;`;
+        const query = `SELECT menu.drinkname AS drink, orders.amountpaid AS totalamount, orders.paymentmethod AS paymethod, orders.toppings AS chosentoppings FROM orders JOIN menu ON orders.drinkid = menu.drinkid WHERE orders.orderid = $1 ORDER BY menu.drinkid ASC;`;
 
         const previousOrders = await db.query(query, [req.params.orderid]);
 
@@ -108,6 +108,22 @@ router.get('/view-bill/:orderid', isEmployeeLoggedIn, async (req, res) => {
     } catch (error) {
         console.error('Database query failed:', error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+router.post('/check-manager', async (req, res) => {
+    if (req.user) {
+        const user_email = req.user.emails[0].value;
+        const query = `SELECT * FROM staffmembers WHERE email = $1 AND position = 'Manager';`;
+        const result = await db.query(query, [user_email]);
+
+        if (result.rowCount > 0) {
+            return res.json({ success: true, isManager: true });
+        } else {
+            return res.json({ success: true, isManager: false });
+        }
+    } else {
+        return res.status(401).json({ success: false, error: 'Something went wrong while checking the database' });
     }
 });
 

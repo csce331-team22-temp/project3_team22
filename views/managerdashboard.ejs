@@ -25,7 +25,7 @@
             <button id="ordersBtn" onclick="viewPreviousOrders()">Previous Orders</button>
             <button id="inventoryBtn" onclick="goToInventory()">Inventory</button>
             <button id="staffBtn" onclick="goToStaff()">Staff</button>
-            
+            <button id="addDrinkBtn" onclick="openAddDrinkModal()">Add Drink</button>
             <button id="logoutBtn" onclick="goToMain()">Logout</button>
         </div>
 
@@ -49,9 +49,182 @@
             <input type="datetime-local" id="srEndDate" name="srEndDate">
             <button id="productUsageReportBtn" onclick="generateSalesReport()">Generate Sales Report</button>
         </div>
+
+        <!-- Add Drink Modal -->
+        <div id="addDrinkModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Add New Drink</h2>
+                <form id="addDrinkForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required><br><br>
+
+                    <!-- Category Selection with New Category Option -->
+                    <div id="categorySection">
+                        <label for="categorySelect">Category:</label>
+                        <select id="categorySelect" name="categorySelect" required>
+                            <option value="existing">Select Existing Category</option>
+                            <option value="new">Create New Category</option>
+                        </select><br><br>
+                        
+                        <div id="existingCategoryDiv">
+                            <label for="category">Select Category:</label>
+                            <select id="category" name="category" required>
+                                <!-- Categories will be populated here -->
+                            </select>
+                        </div>
+                        
+                        <div id="newCategoryDiv" style="display: none;">
+                            <label for="newCategory">New Category Name:</label>
+                            <input type="text" id="newCategory" name="newCategory">
+                        </div>
+                    </div><br>
+
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+                    <label for="ingredients">Ingredients (comma-separated):</label>
+                    <input type="text" id="ingredients" name="ingredients" required><br><br>
+                    
+                    <!-- Nutritional Information -->
+                    <h3>Nutritional Information</h3>
+                    
+                    <label for="calories">Calories:</label>
+                    <input type="number" id="calories" name="calories" required><br><br>
+                    
+                    <label for="macros">Macros (format: 'Protein: 2g, Carbs: 38g, Fat: 4g'):</label>
+                    <input type="text" id="macros" name="macros" required 
+                           placeholder="Protein: 2g, Carbs: 38g, Fat: 4g"><br><br>
+                    
+                    <!-- Allergen Information -->
+                    <h3>Allergens</h3>
+                    <label for="allergens">Allergens (comma-separated):</label>
+                    <input type="text" id="allergens" name="allergens" 
+                           placeholder="milk, wheat, etc."><br><br>
+
+                    <button type="submit">Add Drink</button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <script src="/scripts/managerdashboard.js"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("addDrinkModal");
+
+        // When the user clicks the button, open the modal
+        function openAddDrinkModal() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        document.getElementsByClassName("close")[0].onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Handle category selection change
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category selection logic
+            const categorySelect = document.getElementById('categorySelect');
+            const existingCategoryDiv = document.getElementById('existingCategoryDiv');
+            const newCategoryDiv = document.getElementById('newCategoryDiv');
+            const categoryDropdown = document.getElementById('category');
+            const newCategoryInput = document.getElementById('newCategory');
+            
+            categorySelect.addEventListener('change', function() {
+                if (this.value === 'new') {
+                    existingCategoryDiv.style.display = 'none';
+                    newCategoryDiv.style.display = 'block';
+                    categoryDropdown.removeAttribute('required');
+                    newCategoryInput.setAttribute('required', 'required');
+                } else {
+                    existingCategoryDiv.style.display = 'block';
+                    newCategoryDiv.style.display = 'none';
+                    categoryDropdown.setAttribute('required', 'required');
+                    newCategoryInput.removeAttribute('required');
+                }
+            });
+
+            // Fetch categories
+            fetch('/staff/categories')
+                .then(response => response.json())
+                .then(categories => {
+                    const categorySelect = document.getElementById('category');
+                    categories.forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category;
+                        option.textContent = category;
+                        categorySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching categories:', error));
+
+            // Form submission
+            const addDrinkForm = document.getElementById('addDrinkForm');
+            if (addDrinkForm) {
+                addDrinkForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+
+                    const name = document.getElementById('name').value;
+                    const categoryType = document.getElementById('categorySelect').value;
+                    let category;
+                    
+                    if (categoryType === 'new') {
+                        category = document.getElementById('newCategory').value;
+                    } else {
+                        category = document.getElementById('category').value;
+                    }
+                    
+                    const price = document.getElementById('price').value;
+                    const ingredients = document.getElementById('ingredients').value;
+                    const calories = document.getElementById('calories').value;
+                    const macros = document.getElementById('macros').value;
+                    const allergens = document.getElementById('allergens').value;
+                    const isNewCategory = categoryType === 'new';
+
+                    try {
+                        const response = await fetch('/staff/add-drink', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ 
+                                name, 
+                                category, 
+                                price, 
+                                ingredients,
+                                calories,
+                                macros,
+                                allergens,
+                                isNewCategory
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            alert(data.message);
+                            document.getElementById("addDrinkModal").style.display = "none";
+                            addDrinkForm.reset();
+                        } else {
+                            alert(data.message);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while adding the drink.');
+                    }
+                });
+            }
+        });
+    </script>
     <script src="/scripts/speaktext.js"></script>
+    <script src="/scripts/managerdashboard.js"></script>
 </body>
 </html>
