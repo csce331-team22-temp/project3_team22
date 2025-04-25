@@ -357,20 +357,54 @@ router.get('/categories', isManagerLoggedIn, async (req, res) => {
 });
 
 
-// Route to handle adding a new drink
+// Route to handle adding a new drinks
 router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
     try {
-        const { name, category, price, ingredients } = req.body;
+        const { 
+            name, 
+            category, 
+            price, 
+            ingredients, 
+            calories, 
+            macros, 
+            allergens,
+            isNewCategory 
+        } = req.body;
+
         const ingredientsArray = ingredients.split(',');
 
         // 1. Get the next drink ID
         const lastDrinkResult = await db.query("SELECT MAX(drinkid) AS maxID FROM menu;");
         const newDrinkID = (lastDrinkResult.rows[0].maxid || 0) + 1;
 
-        // 2. Insert into menu
-        const menuQuery = `INSERT INTO menu (drinkid, drinkname, category, price) VALUES ($1, $2, $3, $4) RETURNING drinkid;`;
-        await db.query(menuQuery, [newDrinkID, name, category, price]);
-
+        // 2. Insert into menu with nutritional info and allergens
+        const menuQuery = `
+            INSERT INTO menu (
+                drinkid, 
+                drinkname, 
+                category, 
+                price, 
+                calories, 
+                allergens, 
+                ingredients, 
+                macros
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+            RETURNING drinkid;
+        `;
+        
+        await db.query(
+            menuQuery, 
+            [
+                newDrinkID, 
+                name, 
+                category, 
+                price, 
+                calories, 
+                allergens, 
+                ingredients, 
+                macros
+            ]
+        );
 
         // 3. Process inventory items and insert into recipes
         for (const item of ingredientsArray) {
@@ -389,9 +423,10 @@ router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
                 const lastItemResult = await db.query("SELECT MAX(itemid) AS maxID FROM inventory;");
                 const newItemID = (lastItemResult.rows[0].maxid || 0) + 1;
 
+                // Note: Replace 'yes' with the correct value for your ENUM
                 await db.query(
                     "INSERT INTO inventory (itemid, itemname, quantity, usingitem) VALUES ($1, $2, $3, $4);",
-                    [newItemID, trimmedItem, 1000, 'yes']
+                    [newItemID, trimmedItem, 1000, 'yes']  // Ensure 'yes' is a valid enum value or replace it
                 );
                 itemID = newItemID;
             }
@@ -400,11 +435,12 @@ router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
             await db.query("INSERT INTO recipes (drinkid, itemid) VALUES ($1, $2);", [newDrinkID, itemID]);
         }
 
-        res.status(200).json({ message: 'Drink added successfully!' }); // Send success response
+        res.status(200).json({ message: 'Drink added successfully!' });
     } catch (error) {
         console.error('Error adding drink:', error);
-        res.status(500).json({ message: 'Failed to add drink.' }); // Send error response
+        res.status(500).json({ message: 'Failed to add drink: ' + error.message });
     }
 });
+
 
 module.exports = router;
