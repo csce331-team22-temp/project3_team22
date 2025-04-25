@@ -69,7 +69,7 @@
                 <th>Cashier Name</th>
                 <th>Order ID</th>
                 <th>Order Bill</th>
-                <th>Amount Paid ($)</th>
+                <th>Amount Paid</th>
                 <th>Date & Time Ordered</th>
             </tr>
 
@@ -89,7 +89,7 @@
                     
                     <td><%= previousOrdersList[i].ordernum %></td>
                     <td><button onclick="showBill('<%= previousOrdersList[i].ordernum %>')">View</button></td>
-                    <td><%= previousOrdersList[i].paidamount %></td>
+                    <td>$<%= previousOrdersList[i].paidamount %></td>
                     <td><%= previousOrdersList[i].orderdate.toLocaleString() %></td>
                 </tr>
             <% } %>
