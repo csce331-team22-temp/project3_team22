@@ -357,7 +357,7 @@ router.get('/categories', isManagerLoggedIn, async (req, res) => {
 });
 
 
-// Route to handle adding a new drink
+// Route to handle adding a new drinks
 router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
     try {
         const { 
