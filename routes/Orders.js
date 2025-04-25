@@ -97,7 +97,7 @@ router.get('/filter/cashier/:cashierid', isEmployeeLoggedIn, async (req, res) =>
 // fetches specified order's details
 router.get('/view-bill/:orderid', isEmployeeLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT menu.drinkname AS drink, COUNT(menu.drinkid) AS drinkcount, SUM(orders.amountpaid) AS totalamount, orders.paymentmethod AS paymethod FROM orders JOIN menu ON orders.drinkid = menu.drinkid WHERE orders.orderid = $1 GROUP BY menu.drinkid, orders.amountpaid, orders.paymentmethod ORDER BY menu.drinkid ASC;`;
+        const query = `SELECT menu.drinkname AS drink, orders.amountpaid AS totalamount, orders.paymentmethod AS paymethod, orders.toppings AS chosentoppings FROM orders JOIN menu ON orders.drinkid = menu.drinkid WHERE orders.orderid = $1 ORDER BY menu.drinkid ASC;`;
 
         const previousOrders = await db.query(query, [req.params.orderid]);
 
