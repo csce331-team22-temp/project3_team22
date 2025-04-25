@@ -147,3 +147,25 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Modal styling */
+.modal-content {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+#categorySection {
+  margin-bottom: 10px;
+}
+
+#newCategoryDiv, #existingCategoryDiv {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
