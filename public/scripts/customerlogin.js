@@ -58,12 +58,6 @@ d.getElementById('cart-btn').addEventListener('click', () => {
 
 
 
-
-
-
-
-
-
 })
 
 
