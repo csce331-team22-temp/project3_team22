@@ -115,42 +115,44 @@ window.addEventListener("load", () => {
       const styleElement = document.createElement('style');
       styleElement.textContent = `
         #text-zoom-container {
-            position: sticky;
-            top: 40%;
+            all: unset;
+            font-family : inherit;
+            position: fixed;
+            bottom : 50%;
+            left : 0.1%;
             z-index: 100;
-            height: 0;
             width: min-content;
         }
         #text-zoom-box {
-            font-family: 'Poppins', sans-serif;
-            background-color: #5C4033;
+            font-family: sans-serif;
+            background-color:rgb(217, 160, 108);
             color: white;
-            width: 20rem;
-            height: 9rem;
-            padding: 0.5rem 1rem;
-            border: 0.1rem solid black;
+            width: 18rem;
+            height: 8rem;
+            padding: 1rem 0.9rem;
+            border: 0.15rem solid black;
             box-shadow: 0.5rem 0.5rem 0.2rem black;
             border-radius: 0.3rem;
             display: flex;
             flex-direction: column;
-            font-size: 1.4em;
+            font-size: 1.3em;
+            font-weight : bolder;
         }
-        #text-zoom-box p {text-align: center; margin: 0; font-weight: bold; }
+        #text-zoom-box p {text-align: center; margin: 0;}
         #text-zoom-close {
             width: 5rem;
-            height: 3rem;
+            height: 2.5rem;
             margin-left: auto;
-            border: 0.15rem solid gray;
-            color:  white;
-            background-color: black;
-            box-shadow: none;
-            font-weight: bolder;
-            border-radius: 3%;
-            font-family: inherit;
+            border: 0.1rem solid gray;
+            background-color : #FFF8F0;
+            color : #5C4033;
+            font-family : sans-serif;
+            font-weight : bolder;
+            border-radius: 0.3rem;
             cursor: pointer;
         }
         #text-zoom-minimized {
-            background-color: rgba(75, 54, 33, 0.75);
+            background-color: rgba(217, 160, 108, 0.9);
             width: fit-content;
             height: fit-content;
             padding: 0.6rem;
@@ -224,4 +226,12 @@ window.addEventListener("load", () => {
   document.getElementById("text-zoom-min").addEventListener("click", () => {
     ZoomHandler.decreaseZoom();
   });
-})
+});
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  textZoomContainer = document.getElementById("#text-zoom-container");
+  let textStyle = window.getComputedStyle(textZoomContainer);
+
+  textZoomContainer.style.top = (parseFloat(textStyle.top) + scrollY) + 'px';
+});
