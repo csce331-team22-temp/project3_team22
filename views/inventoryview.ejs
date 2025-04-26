@@ -24,7 +24,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Quantity</th>
-                <th>Using Item</th>
+                <th></th>
             </tr>
 
             <% for (var i in inventoryItems) {%>
@@ -32,7 +32,7 @@
                     <td><%= inventoryItems[i].itemid %></td>
                     <td><input id="itemname-<%= inventoryItems[i].itemid %>" type="text" value='<%= inventoryItems[i].itemname %>' disabled></td>
                     <td><input id="itemquantity-<%= inventoryItems[i].itemid %>" type="number" value='<%= inventoryItems[i].quantity %>' disabled></td>
-                    <td><button id="usingitem-<%= inventoryItems[i].itemid %>" onclick="changeUsingItem('<%= inventoryItems[i].itemid %>')" disabled><%= inventoryItems[i].usingitem %></button></td>
+                    <td><button class="deleteItems" onclick="deleteItem('<%= inventoryItems[i].itemid %>')">Delete</button></td>
                 </tr>
             <% } %>
         </table>
@@ -60,18 +60,6 @@
             <div id="newItemQuantity">
                 <label id="quantityLabel">Quantity:</label>
                 <input id="quantityInput" type="number">
-            </div>
-
-            <div id="newItemUsing">
-
-                <label id="usingItemLabel">Using Item?:</label>
-
-                <input type="radio" id="yesoption" name="usingItemOptions" value="Yes" checked>
-                <label for="yesoption">Yes</label>
-
-                <input type="radio" id="nooption" name="usingItemOptions" value="No">
-                <label for="nooption">No</label>
-
             </div>
 
             <div id="submit">

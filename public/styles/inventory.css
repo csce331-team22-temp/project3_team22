@@ -45,13 +45,19 @@ tr:hover {
     background-color: lightgray;
 }
 
-table button {
-    background-color: darkgray;
-    color: white;
-    width: 100%;
-    border: none;
+table .deleteItems {
+    background-color: white;
+    color: #d9534f;
+    border: solid #d9534f 1px;
     border-radius: 5px;
     padding: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+table .deleteItems:hover {
+    background-color: #d9534f;
+    color: white;
 }
 
 #buttons {
@@ -140,22 +146,10 @@ table input {
     margin-bottom: 15px;
 }
 
-#newItemUsing {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 15px;
-    align-items: center;
-}
-
-#nameLabel, #quantityLabel, #usingItemLabel {
+#nameLabel, #quantityLabel {
     margin-bottom: 5px;
     font-weight: bold;
     color: #444;
-}
-
-#newItemUsing label {
-    margin-right: 10px;
-    margin-bottom: 0;
 }
 
 #nameInput, #quantityInput {
@@ -207,7 +201,6 @@ table input {
     transform: scale(1.03);
 }
 
-/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
