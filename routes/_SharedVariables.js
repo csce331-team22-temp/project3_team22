@@ -4,8 +4,10 @@ const db = require('../database');
 var currentCustomer = null;
 
 exports.modifyPearls = async function (amt) {
+    var customerid = 0;
+    if (currentCustomer != null) customerid = currentCustomer.customerid;
     if (amt == null) amt = 10; // Default for refunding
-    db.query("UPDATE customers SET pearls = pearls + $1 WHERE customerid = $2", [amt, currentCustomer.customerid]);
+    await db.query("UPDATE customers SET pearls = pearls + $1 WHERE customerid = $2", [amt, customerid]);
 }
 
 exports.getCustomerID = function () { 

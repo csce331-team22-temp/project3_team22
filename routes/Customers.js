@@ -127,6 +127,7 @@ router.post('/checkout/payment', async (req, res) => {
         
         // 🟡 OTO ADDED: Done for adding pearls to the account and reseting the customer variable in my code
         resetCustomer(orderData);
+        customerID = 0;
 
 
     } catch (error) {
