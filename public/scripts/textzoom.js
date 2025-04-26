@@ -28,7 +28,6 @@ class ZoomHandler {
 
   static _modifyElementFontSize(el) {
     if (!ZoomHandler.hasVisibleText(el)) return;
-    console.log(el);
 
     const style = window.getComputedStyle(el);
     const fontSize = parseFloat(style.fontSize);
@@ -99,8 +98,9 @@ var callback = function(mutationsList) {
 
 window.addEventListener("load", () => {
 
-  document.body.innerHTML = `
-    <div id="text-zoom-container">
+  const zoomContainer = document.createElement('div');
+  zoomContainer.id = "text-zoom-container";
+  zoomContainer.innerHTML = `
         <div id="text-zoom-box">
             <button id="text-zoom-close">Close (X)</button>
             <p>Text Font Zoom</p>
@@ -110,10 +110,10 @@ window.addEventListener("load", () => {
                 <button id="text-zoom-max">+</button>
             </div>
         </div>
-        <button id="text-zoom-minimized">&#128269</button>
-    </div>
-    
-    <style>
+        <button id="text-zoom-minimized">&#128269</button>`;
+
+      const styleElement = document.createElement('style');
+      styleElement.textContent = `
         #text-zoom-container {
             position: sticky;
             top: 40%;
@@ -184,10 +184,11 @@ window.addEventListener("load", () => {
             color:  #4b3621;
             font-family: inherit;
             cursor: pointer;
-        }
-    </style>
-  `+ document.body.innerHTML;
+        }`;
 
+  
+  document.head.appendChild(styleElement); 
+  document.body.appendChild(zoomContainer);
 
   var observer = new MutationObserver(callback);
   observer.observe(document.body, {attributes: false, childList: true, subtree: true, characterData : false});
