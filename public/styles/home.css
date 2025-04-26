@@ -6,23 +6,24 @@ body {
     height: 100vh;
     margin: 0;
     position: relative;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    overflow: auto;
 }
 
+/* Google Sign-In Button */
 #google-sign-in-button {
     cursor: pointer;
-    transition: background-color .3s, box-shadow .3s;
-        
+    transition: all 0.3s ease;
     padding: 12px 16px 12px 42px;
     border: none;
     border-radius: 3px;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
     color: #757575;
     font-size: 14px;
     font-weight: 500;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
     
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=); /* same image */
     background-color: white;
     background-repeat: no-repeat;
     background-position: 12px 11px;
@@ -33,91 +34,138 @@ body {
     margin: 10px;
 }
 
-#google-sign-in-button:hover {
-    cursor: pointer;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
-
-
 #center-content {
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: #FFDEAD;
     height: 100%;
+    
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+        url("/images/homeimage.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: zoomIn 30s ease-in-out infinite alternate;
+}
+
+@keyframes zoomIn {
+    0% { background-size: 100%; }
+    100% { background-size: 110%; }
 }
 
 h1 {
-    font-size: 80px;
+    font-size: 150px;
     margin: 0;
     margin-bottom: 20px;
-    color: #A0522D;
+    font-weight: bold;
+    font-family: cursive;
+    color: cornsilk;
+    text-align: center;
+    letter-spacing: 5px;
 }
 
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 #startOrderingBtn, #menuBoardBtn {
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 30px;
-    background-color: #FFDEAD;
-    color: #A0522D;
-    border-radius: 5px;
-    border: solid #A0522D 2px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 28px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+}
+
+#startOrderingBtn {
+    background-color: #FF6B2D;
+    color: white;
+    animation-delay: 0.3s;
+}
+
+#startOrderingBtn:hover {
+    background-color: #FF914D;
+    transform: scale(1.07);
 }
 
 #menuBoardBtn {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 22px;
+    background-color: #D6BFA8;
+    color: #4B3621;
+    animation-delay: 0.6s;
 }
 
-#startOrderingBtn:hover, #menuBoardBtn:hover {
-    cursor: pointer;
-    background-color: #A0522D;
-    color: white;
+#menuBoardBtn:hover {
+    background-color: #C2A890;
+    transform: scale(1.07);
 }
 
 #weatherDisplay {
-    background-color: #fff8dc;
-    margin: 40px;
-    padding: 20px 25px;
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    text-align: center;
+    padding: 20px 25px;
+    margin: 40px;
     max-width: 300px;
-    font-size: 17px;
-    color: #4b3621;
+    color: white;
+    font-size: 16px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+    text-align: center;
+    border: 1px solid #d2ccc5;
   
-  #weatherDisplay p {
-    margin: 5px 0;
-  }
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInSoft 1.2s ease-out forwards;
+}
 
-  #accessibilities {
+#weatherDisplay p {
+    margin: 6px 0;
+}
+
+
+@keyframes fadeInSoft {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+#accessibilities {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     column-gap: 25px;
-  }
+}
 
-  #speaktextBtn {
-    padding: 5px 10px;
+#speaktextBtn {
+    padding: 8px 15px;
     border-radius: 6px;
     border: none;
     font-weight: bold;
-    cursor: pointer;
     background-color: #eee;
     color: #333;
     transition: all 0.3s ease;
-  }
-  
-  #speaktextBtn.active {
-    background-color: #4CAF50;
-    color: white;
-  }
+    cursor: pointer;
+}
+
+#speaktextBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+

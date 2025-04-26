@@ -74,6 +74,26 @@ router.post('/add', isManagerLoggedIn, async (req, res) => {
     }
 });
 
+// delete a staff member
+router.delete('/delete', isManagerLoggedIn, async (req, res) => {
+    try {
+
+        const {
+            staffid
+        } = req.body;
+        
+        await db.query(`DELETE FROM orders WHERE staffid = $1;`, [staffid]);
+
+        await db.query(`DELETE FROM staffmembers WHERE staffid = $1;`, [staffid]);
+
+        res.status(200).json({ message: `Staff member with an ID of ${staffid} is successfully deleted.`});
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.put('/update', isManagerLoggedIn, async (req, res) => {
     try {
 
@@ -133,13 +153,12 @@ router.put('/inventory/update', isManagerLoggedIn, async (req, res) => {
         const {
             itemid,
             itemname,
-            quantity,
-            usingitem
+            quantity
         } = req.body;
 
-        const query = `UPDATE inventory SET itemname = $2, quantity = $3, usingitem = $4 WHERE itemid = $1;`;
+        const query = `UPDATE inventory SET itemname = $2, quantity = $3 WHERE itemid = $1;`;
 
-        await db.query(query, [itemid, itemname, quantity, usingitem]);
+        await db.query(query, [itemid, itemname, quantity]);
 
         res.status(200).json({ message: 'Inventory details updated.'});
 
@@ -155,19 +174,38 @@ router.post('/inventory/add', isManagerLoggedIn, async (req, res) => {
         // parameters passed using JSON format
         const {
             itemname,
-            quantity,
-            usingitem
+            quantity
         } = req.body;
 
-        const query = `INSERT INTO inventory VALUES ($1, $2, $3, $4);`;
+        const query = `INSERT INTO inventory VALUES ($1, $2, $3);`;
 
         const getMaxItemID = await db.query(`SELECT MAX(itemid) AS maxid FROM inventory;`);
 
         const newItemID = (getMaxItemID.rows[0].maxid || 0) + 1; // if no rows exist, then starting value is 0
 
-        await db.query(query, [newItemID, itemname, quantity, usingitem]);
+        await db.query(query, [newItemID, itemname, quantity]);
 
         res.status(200).json({ message: 'New inventory item successfully added.'});
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// delete an inventory item
+router.delete('/inventory/delete', isManagerLoggedIn, async (req, res) => {
+    try {
+
+        const {
+            itemid
+        } = req.body;
+        
+        await db.query(`DELETE FROM recipes WHERE itemid = $1;`, [itemid]);
+
+        await db.query(`DELETE FROM inventory WHERE itemid = $1;`, [itemid]);
+
+        res.status(200).json({ message: `Inventory item with an ID of ${itemid} is successfully deleted.`});
 
     } catch (error) {
         console.error('Database query failed:', error);
@@ -196,7 +234,7 @@ router.get('/inventory/report/:startdate/:endate', isManagerLoggedIn, async (req
 
 
 // generate reports for staff members
-router.get('/reports', async (req, res) => {
+router.get('/reports', isManagerLoggedIn, async (req, res) => {
     try {
       
         res.render('reports');
@@ -208,7 +246,7 @@ router.get('/reports', async (req, res) => {
 });
 
 // gets data for the z report
-router.get('/reports/z', async (req, res) => {
+router.get('/reports/z', isManagerLoggedIn, async (req, res) => {
     try {
         const paymentQuery = `
             SELECT 
@@ -271,7 +309,7 @@ router.get('/reports/z', async (req, res) => {
 });
 
 // gets data for the x report
-router.get('/reports/x', async (req, res) => {
+router.get('/reports/x', isManagerLoggedIn, async (req, res) => {
     try {
         const paymentQuery = `
             SELECT 
@@ -425,8 +463,8 @@ router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
 
                 // Note: Replace 'yes' with the correct value for your ENUM
                 await db.query(
-                    "INSERT INTO inventory (itemid, itemname, quantity, usingitem) VALUES ($1, $2, $3, $4);",
-                    [newItemID, trimmedItem, 1000, 'yes']  // Ensure 'yes' is a valid enum value or replace it
+                    "INSERT INTO inventory (itemid, itemname, quantity) VALUES ($1, $2, $3);",
+                    [newItemID, trimmedItem, 1000]
                 );
                 itemID = newItemID;
             }
