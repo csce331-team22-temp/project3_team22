@@ -52,6 +52,11 @@ function makeDrinkGridItem(name, url) {
     return drink;
 }
 
+function drinkSpeechActivate(el) {
+    if (localStorage.getItem('textspeech') === 'true') {
+            el.addEventListener('mouseover', () => speakText(el.innerText || el.value));
+    }
+}
 
 async function getDrinks() {
     let res = await fetch('/customers/rewards/get-drinks', {
@@ -72,6 +77,7 @@ async function getDrinks() {
         let url = "/images/" + drinks[i]['image_url'];
         let drinkItem = makeDrinkGridItem(dn, url);
         drinkItem.style.display = 'none';
+        drinkSpeechActivate(drinkItem);
         allDrinks[page].push(drinkItem);
     }
 }
@@ -138,7 +144,6 @@ function setupPage() {
 
     d.getElementById('cart-btn').addEventListener('click', () => { 
         window.location.href = '/customers/checkout';
-        console.log("I was clicked")
     });
 
 
@@ -155,7 +160,7 @@ function setupPage() {
         }
     });
 
-    getDrinks().then(() => {selectPage(currentPage); console.log(pageCount);});
+    getDrinks().then(() => {selectPage(currentPage);});
 
 }
 

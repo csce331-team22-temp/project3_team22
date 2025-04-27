@@ -17,6 +17,7 @@ class ZoomHandler {
     if (this.zoomVal >= this.MAX_ZOOM || this.zoomVal < this.MIN_ZOOM) return;
     this.zoomVal += .1;
     this.zoomModification(this.zoomVal);
+    this.updateZoomVal();
   }
   
   
@@ -24,16 +25,21 @@ class ZoomHandler {
     if (this.zoomVal > this.MAX_ZOOM || this.zoomVal <= this.MIN_ZOOM) return;
     this.zoomVal -= .1;
     this.zoomModification(this.zoomVal);
+    this.updateZoomVal();
   }
 
 
   static _modifyElementFontSize(el) {
     if (!ZoomHandler.hasVisibleText(el)) return;
-    const style = window.getComputedStyle(el);
-    const fontSize = parseFloat(style.fontSize);
+
     let elementZoomVal = el.getAttribute("ZoomValue");
     if (elementZoomVal === null) elementZoomVal = 1;
     elementZoomVal = Number(elementZoomVal);
+    if (elementZoomVal === this.zoomVal) return;
+
+    const style = window.getComputedStyle(el);
+    const fontSize = parseFloat(style.fontSize);
+
     
     if (!isNaN(fontSize)) {
       let scalar = this.zoomVal / elementZoomVal;
@@ -42,33 +48,45 @@ class ZoomHandler {
       const currentWidth = parseFloat(style.width);
       const currentHeight = parseFloat(style.height);
 
-      console.log(`Old width: ${el.clientHeight}`);
       if (el.scrollHeight > el.clientHeight || scalar < 1)
         el.style.minHeight = (Math.round(100 * currentHeight * scalar) / 100) + "px"; 
       if (el.scrollWidth > el.clientWidth || scalar < 1)
         el.style.minWidth = (Math.round(100 * currentWidth * scalar) / 100) + "px";  
-      console.log(`New width: ${el.style.minWidth}`)
     }
 
 
     el.setAttribute("ZoomValue", this.zoomVal);
   }
   
-
-  static zoomModification(zoom_amt) {
-    this.zoomVal = Math.round(zoom_amt * 10) / 10;
+  static updateZoomVal() {
     document.getElementById("input-scalar").value = this.zoomVal;
     localStorage.setItem("zoomVal", this.zoomVal);
 
+  }
+  static async zoomModification(zoom_amt) {
+    this.zoomVal = Math.round(zoom_amt * 10) / 10;
+    
     const allElements = document.querySelectorAll('*');
     const excluded = document.querySelector('#text-zoom-container');
     
-    Array.from(allElements).filter(el => !excluded.contains(el)).forEach(el => {
-      if (ZoomHandler.hasVisibleText(el)) {
-        this._modifyElementFontSize(el);
-      }
-    });
+    let elements = Array.from(allElements).filter(el => !excluded.contains(el));
+    var elementChunks = [], size = 5;    
+    while (elements.length > 0)
+      elementChunks.push(elements.splice(0, size));
+    for (let i = 0; i < elementChunks.length; ++i) {
+      setTimeout(() => {
+        elementChunks[i].forEach(el => {
+          if (ZoomHandler.hasVisibleText(el)) 
+            this._modifyElementFontSize(el);
+        });
+
+      }, 300);
+
+
+    }
+
   }
+
 }
 
 
@@ -84,16 +102,6 @@ function toggleZoomBox() {
     tZoomIcon.style.display = 'flex';
   }
 }
-
-
-var callback = function(mutationsList) {
-  for (var mutation of mutationsList) {
-    if (mutation.type == 'childList') {
-      ZoomHandler.zoomModification(ZoomHandler.zoomVal);
-    }
-  }
-};
-
 
 window.addEventListener("load", () => {
 
@@ -191,9 +199,6 @@ window.addEventListener("load", () => {
   document.head.appendChild(styleElement); 
   document.body.appendChild(zoomContainer);
 
-  var observer = new MutationObserver(callback);
-  observer.observe(document.body, {attributes: false, childList: true, subtree: true, characterData : false});
-
   document.getElementById("text-zoom-box").style.display = 'none';
   document.getElementById("text-zoom-minimized").style.display = 'flex';
 
@@ -214,6 +219,7 @@ window.addEventListener("load", () => {
       return;
     };
     ZoomHandler.zoomModification(scale_val);
+    ZoomHandler.updateZoomVal();
   }
   document.getElementById("input-scalar").addEventListener("blur", inputScalarFunction);
   document.getElementById("input-scalar").addEventListener("keydown", inputScalarFunction);
@@ -226,6 +232,8 @@ window.addEventListener("load", () => {
     ZoomHandler.decreaseZoom();
   });
 
-
+  setInterval(
+    () => ZoomHandler.zoomModification(ZoomHandler.zoomVal), 100
+  );
 });
 
