@@ -448,25 +448,3 @@ h1 {
      font-size: 18px;
      font-weight: bold;
  }
- .boba-animation-container {
-  margin-top: 30px;
-  text-align: center;
-}
-
-#boba-animation {
-  width: 150px; /* Adjust size as needed */
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-  animation: animateBoba 5s infinite steps(6); /* Adjust duration and steps based on your images */
-}
-
-@keyframes animateBoba {
-  0% { content: url('/images/boba_step_1.jpg'); }
-  16.66% { content: url('/images/boba_step_2.jpg'); }
-  33.32% { content: url('/images/boba_step_3.jpg'); }
-  49.98% { content: url('/images/boba_step_4.jpg'); }
-  66.64% { content: url('/images/boba_step_5.jpg'); }
-  83.3% { content: url('/images/boba_step_6.jpg'); }
-  100% { content: url('/images/boba_step_1.jpg'); } /* Loop back to the start */
-}
