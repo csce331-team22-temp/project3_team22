@@ -169,3 +169,28 @@ h3 {
   margin-left: 20px;
 }
 
+/* Ingredients Selector Styles */
+#ingredientSelect {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#newIngredientInput {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+#selectedIngredients button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #d9534f;
+    font-weight: bold;
+}
+
+#selectedIngredients button:hover {
+    color: #c9302c;
+}

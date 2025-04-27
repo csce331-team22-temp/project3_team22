@@ -7,12 +7,17 @@ const router = express.Router();
 // redirects page to staff page with staff details
 router.get('/page', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM staffmembers WHERE staffid > 0 ORDER BY staffid;`;
+        const query = `
+            SELECT *
+            FROM staffmembers
+            WHERE staffid > 0
+            ORDER BY staffid;
+        `;
         const staffInfo = await db.query(query);
 
         const staffMembers = staffInfo.rows;
 
-        res.render('staffview', { staffMembers }); 
+        res.render('staffview', { staffMembers });
 
     } catch (error) {
         console.error('Database query failed:', error);
@@ -23,7 +28,12 @@ router.get('/page', isManagerLoggedIn, async (req, res) => {
 // gets staff details
 router.get('/info', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM staffmembers WHERE staffid > 0 ORDER BY staffid;`;
+        const query = `
+            SELECT *
+            FROM staffmembers
+            WHERE staffid > 0
+            ORDER BY staffid;
+        `;
         const staffInfo = await db.query(query);
 
         const staffMembers = staffInfo.rows;
@@ -58,9 +68,12 @@ router.post('/add', isManagerLoggedIn, async (req, res) => {
             email
         } = req.body;
 
-        const query = `INSERT INTO staffmembers(staffid, name, position, email, datejoined) VALUES ($1, $2, $3, $4, NOW());`;
+        const query = `
+            INSERT INTO staffmembers(staffid, name, position, email, datejoined)
+            VALUES ($1, $2, $3, $4, NOW());
+        `;
 
-        const getMaxStaffID = await db.query(`SELECT MAX(staffid) AS maxid FROM staffmembers;`);
+        const getMaxStaffID = await db.query("SELECT MAX(staffid) AS maxid FROM staffmembers;");
 
         const newStaffID = (getMaxStaffID.rows[0].maxid || 11819) + 1; // if no rows exist, then starting value is 11819
 
@@ -83,7 +96,11 @@ router.put('/update', isManagerLoggedIn, async (req, res) => {
             email
         } = req.body;
 
-        const query = `UPDATE staffmembers SET position = $2, email = $3 WHERE staffid = $1;`;
+        const query = `
+            UPDATE staffmembers
+            SET position = $2, email = $3
+            WHERE staffid = $1;
+        `;
 
         await db.query(query, [staffid, position, email]);
 
@@ -97,12 +114,16 @@ router.put('/update', isManagerLoggedIn, async (req, res) => {
 // redirects page to inventory page with inventory details
 router.get('/inventory/page', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM inventory ORDER BY itemid;`;
+        const query = `
+            SELECT *
+            FROM inventory
+            ORDER BY itemid;
+        `;
         const inventoryInfo = await db.query(query);
 
         const inventoryItems = inventoryInfo.rows;
 
-        res.render('inventoryview', { inventoryItems }); 
+        res.render('inventoryview', { inventoryItems });
 
     } catch (error) {
         console.error('Database query failed:', error);
@@ -113,7 +134,11 @@ router.get('/inventory/page', isManagerLoggedIn, async (req, res) => {
 // gets inventory details
 router.get('/inventory/info', isManagerLoggedIn, async (req, res) => {
     try {
-        const query = `SELECT * FROM inventory ORDER BY itemid;`;
+        const query = `
+            SELECT *
+            FROM inventory
+            ORDER BY itemid;
+        `;
         const inventoryInfo = await db.query(query);
 
         const inventoryItems = inventoryInfo.rows;
@@ -133,13 +158,16 @@ router.put('/inventory/update', isManagerLoggedIn, async (req, res) => {
         const {
             itemid,
             itemname,
-            quantity,
-            usingitem
+            quantity
         } = req.body;
 
-        const query = `UPDATE inventory SET itemname = $2, quantity = $3, usingitem = $4 WHERE itemid = $1;`;
+        const query = `
+            UPDATE inventory
+            SET itemname = $2, quantity = $3
+            WHERE itemid = $1;
+        `;
 
-        await db.query(query, [itemid, itemname, quantity, usingitem]);
+        await db.query(query, [itemid, itemname, quantity]);
 
         res.status(200).json({ message: 'Inventory details updated.'});
 
@@ -155,17 +183,19 @@ router.post('/inventory/add', isManagerLoggedIn, async (req, res) => {
         // parameters passed using JSON format
         const {
             itemname,
-            quantity,
-            usingitem
+            quantity
         } = req.body;
 
-        const query = `INSERT INTO inventory VALUES ($1, $2, $3, $4);`;
+        const query = `
+            INSERT INTO inventory (itemid, itemname, quantity)
+            VALUES ($1, $2, $3);
+        `;
 
-        const getMaxItemID = await db.query(`SELECT MAX(itemid) AS maxid FROM inventory;`);
+        const getMaxItemID = await db.query("SELECT MAX(itemid) AS maxid FROM inventory;");
 
         const newItemID = (getMaxItemID.rows[0].maxid || 0) + 1; // if no rows exist, then starting value is 0
 
-        await db.query(query, [newItemID, itemname, quantity, usingitem]);
+        await db.query(query, [newItemID, itemname, quantity]);
 
         res.status(200).json({ message: 'New inventory item successfully added.'});
 
@@ -179,8 +209,18 @@ router.post('/inventory/add', isManagerLoggedIn, async (req, res) => {
 router.get('/inventory/report/:startdate/:endate', isManagerLoggedIn, async (req, res) => {
     try {
 
-        const query = `SELECT i.itemname AS iname, COUNT(*) AS amountused FROM orders o JOIN recipes r ON o.drinkid = r.drinkid JOIN inventory i ON i.itemid = r.itemid WHERE o.dateordered BETWEEN $1 AND $2 GROUP BY i.itemid ORDER BY i.itemid ASC;`;
-        
+        const query = `
+            SELECT
+                i.itemname AS iname,
+                COUNT(*) AS amountused
+            FROM orders o
+            JOIN recipes r ON o.drinkid = r.drinkid
+            JOIN inventory i ON i.itemid = r.itemid
+            WHERE o.dateordered BETWEEN $1 AND $2
+            GROUP BY i.itemid
+            ORDER BY i.itemid ASC;
+        `;
+
         const inventoryItemUsage = await db.query(query, [req.params.startdate, req.params.endate]);
 
         const inventoryItemUsageData = inventoryItemUsage.rows;
@@ -198,7 +238,7 @@ router.get('/inventory/report/:startdate/:endate', isManagerLoggedIn, async (req
 // generate reports for staff members
 router.get('/reports', async (req, res) => {
     try {
-      
+
         res.render('reports');
 
     } catch (error) {
@@ -211,7 +251,7 @@ router.get('/reports', async (req, res) => {
 router.get('/reports/z', async (req, res) => {
     try {
         const paymentQuery = `
-            SELECT 
+            SELECT
                 SUM(CASE WHEN paymentmethod ILIKE 'Cash' THEN amountpaid ELSE 0 END)::NUMERIC AS cash,
                 SUM(CASE WHEN paymentmethod ILIKE 'Credit' THEN amountpaid ELSE 0 END)::NUMERIC AS credit,
                 SUM(CASE WHEN paymentmethod ILIKE 'Debit' THEN amountpaid ELSE 0 END)::NUMERIC AS debit,
@@ -219,9 +259,8 @@ router.get('/reports/z', async (req, res) => {
             FROM orders
             WHERE DATE(dateordered) = CURRENT_DATE;
         `;
-
         const drinkSalesQuery = `
-            SELECT 
+            SELECT
                 m.drinkname,
                 COUNT(*) AS quantity_sold,
                 SUM(o.amountpaid)::NUMERIC AS total_sales
@@ -231,29 +270,6 @@ router.get('/reports/z', async (req, res) => {
             GROUP BY m.drinkname
             ORDER BY quantity_sold DESC;
         `;
-
-        // const paymentQuery = `
-        //     SELECT 
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Cash' THEN amountpaid ELSE 0 END)::NUMERIC AS cash,
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Credit' THEN amountpaid ELSE 0 END)::NUMERIC AS credit,
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Debit' THEN amountpaid ELSE 0 END)::NUMERIC AS debit,
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Gift Card' THEN amountpaid ELSE 0 END)::NUMERIC AS giftcard
-        //     FROM orders
-        //     WHERE DATE(dateordered) = '2025-03-04';
-        // `;
-
-        // const drinkSalesQuery = `
-        //     SELECT 
-        //         m.drinkname,
-        //         COUNT(*) AS quantity_sold,
-        //         SUM(o.amountpaid)::NUMERIC AS total_sales
-        //     FROM orders o
-        //     JOIN menu m ON o.drinkid = m.drinkid
-        //     WHERE DATE(o.dateordered) = '2025-03-04'
-        //     GROUP BY m.drinkname
-        //     ORDER BY quantity_sold DESC;
-        // `;
-
         const paymentResult = await db.query(paymentQuery);
         const drinkSalesResult = await db.query(drinkSalesQuery);
 
@@ -274,7 +290,7 @@ router.get('/reports/z', async (req, res) => {
 router.get('/reports/x', async (req, res) => {
     try {
         const paymentQuery = `
-            SELECT 
+            SELECT
                 SUM(CASE WHEN paymentmethod ILIKE 'Cash' THEN amountpaid ELSE 0 END)::NUMERIC AS cash,
                 SUM(CASE WHEN paymentmethod ILIKE 'Credit' THEN amountpaid ELSE 0 END)::NUMERIC AS credit,
                 SUM(CASE WHEN paymentmethod ILIKE 'Debit' THEN amountpaid ELSE 0 END)::NUMERIC AS debit,
@@ -282,9 +298,8 @@ router.get('/reports/x', async (req, res) => {
             FROM orders
             WHERE DATE(dateordered) = CURRENT_DATE;
         `;
-
         const drinkSalesQuery = `
-            SELECT 
+            SELECT
                 m.drinkname,
                 COUNT(*) AS quantity_sold,
                 SUM(o.amountpaid)::NUMERIC AS total_sales
@@ -294,29 +309,6 @@ router.get('/reports/x', async (req, res) => {
             GROUP BY m.drinkname
             ORDER BY quantity_sold DESC;
         `;
-
-        // const paymentQuery = `
-        //     SELECT 
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Cash' THEN amountpaid ELSE 0 END)::NUMERIC AS cash,
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Credit' THEN amountpaid ELSE 0 END)::NUMERIC AS credit,
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Debit' THEN amountpaid ELSE 0 END)::NUMERIC AS debit,
-        //         SUM(CASE WHEN paymentmethod ILIKE 'Gift Card' THEN amountpaid ELSE 0 END)::NUMERIC AS giftcard
-        //     FROM orders
-        //     WHERE DATE(dateordered) = '2025-03-04';
-        // `;
-
-        // const drinkSalesQuery = `
-        //     SELECT 
-        //         m.drinkname,
-        //         COUNT(*) AS quantity_sold,
-        //         SUM(o.amountpaid)::NUMERIC AS total_sales
-        //     FROM orders o
-        //     JOIN menu m ON o.drinkid = m.drinkid
-        //     WHERE DATE(o.dateordered) = '2025-03-04'
-        //     GROUP BY m.drinkname
-        //     ORDER BY quantity_sold DESC;
-        // `;
-
         const paymentResult = await db.query(paymentQuery);
         const drinkSalesResult = await db.query(drinkSalesQuery);
 
@@ -346,7 +338,11 @@ router.get('/manager-dashboard', isManagerLoggedIn, (req, res) => {
 // New route to fetch categories
 router.get('/categories', isManagerLoggedIn, async (req, res) => {
     try {
-        const categoryQuery = `SELECT DISTINCT category FROM menu ORDER BY category;`;
+        const categoryQuery = `
+            SELECT DISTINCT category
+            FROM menu
+            ORDER BY category;
+        `;
         const categoryResult = await db.query(categoryQuery);
         const categories = categoryResult.rows.map(row => row.category);
         res.json(categories);
@@ -360,15 +356,15 @@ router.get('/categories', isManagerLoggedIn, async (req, res) => {
 // Route to handle adding a new drinks
 router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
     try {
-        const { 
-            name, 
-            category, 
-            price, 
-            ingredients, 
-            calories, 
-            macros, 
+        const {
+            name,
+            category,
+            price,
+            ingredients,
+            calories,
+            macros,
             allergens,
-            isNewCategory 
+            isNewCategory
         } = req.body;
 
         const ingredientsArray = ingredients.split(',');
@@ -380,28 +376,27 @@ router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
         // 2. Insert into menu with nutritional info and allergens
         const menuQuery = `
             INSERT INTO menu (
-                drinkid, 
-                drinkname, 
-                category, 
-                price, 
-                calories, 
-                allergens, 
-                ingredients, 
+                drinkid,
+                drinkname,
+                category,
+                price,
+                calories,
+                allergens,
+                ingredients,
                 macros
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING drinkid;
         `;
-        
         await db.query(
-            menuQuery, 
+            menuQuery,
             [
-                newDrinkID, 
-                name, 
-                category, 
-                price, 
-                calories, 
-                allergens, 
-                ingredients, 
+                newDrinkID,
+                name,
+                category,
+                price,
+                calories,
+                allergens,
+                ingredients,
                 macros
             ]
         );
@@ -423,10 +418,9 @@ router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
                 const lastItemResult = await db.query("SELECT MAX(itemid) AS maxID FROM inventory;");
                 const newItemID = (lastItemResult.rows[0].maxid || 0) + 1;
 
-                // Note: Replace 'yes' with the correct value for your ENUM
                 await db.query(
-                    "INSERT INTO inventory (itemid, itemname, quantity, usingitem) VALUES ($1, $2, $3, $4);",
-                    [newItemID, trimmedItem, 1000, 'yes']  // Ensure 'yes' is a valid enum value or replace it
+                    "INSERT INTO inventory (itemid, itemname, quantity) VALUES ($1, $2, $3);",
+                    [newItemID, trimmedItem, 1000]
                 );
                 itemID = newItemID;
             }
