@@ -33,3 +33,9 @@ function generateProductUsageReport() {
         alert('Invalid input date(s)!');
     }
 }
+function generateSalesReport() {
+    const startDateTime = document.getElementById('srStartDate').value;
+    const endDateTime = document.getElementById('srEndDate').value;
+    
+    window.location.href = `/staff/reports/sales-report/${startDateTime}/${endDateTime}`
+}

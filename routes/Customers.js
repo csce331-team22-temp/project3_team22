@@ -5,7 +5,7 @@ const express = require('express');
 // Export functions for usage in other files. Use the require function to gain access to these objects.
 // OTO ADDED: Needed so I can talk to you and you can talk to me
 
-const {modifyPearls, resetCustomer, getCustomerID, getCurrentCustomer} = require('./SharedVariables');
+const {modifyPearls, resetCustomer, getCustomerID, getCurrentCustomer} = require('./_SharedVariables');
 
 
 

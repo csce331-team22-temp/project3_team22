@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 1rem;
+            height: auto;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            background-color: #fff;
+        }
+
+        #content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: fixed;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #500000;
+            color: white;
+        }
+        th:hover{cursor: pointer;}
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        #exitBtn {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+      </style>
+    <style>
+        .timestamp-div {display: flex; flex-direction: row; }
+        .timestamps {
+            margin: 2vw auto 0; width: 60vw; justify-content: space-between;
+            display: flex; flex-direction: row;
+        }
+
+        .dtime {margin-left: 2vw;}
+        #submit-btn {width: 10vw; height: 5vh;}
+    </style>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</head>
+<body>
+    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+
+    <div style="display: flex; justify-content: right;">
+        <button id="exitBtn" onclick="window.location.href = `/staff/manager-dashboard`">Back to Manager Dashboard</button>
+    </div>
+    <div id="title" style="text-align: center; margin-bottom: 0;">
+        <h1>Sales Report</h1>
+        <p>A sales report provides a detailed sumamry of sales transactions within a specified time period. Use the start and stop datetimes to display all relevant sales data between the two date periods.</p>
+    </div>
+
+
+    <div class="timestamps">
+        <div class="timestamp-div">
+            <h2>Start Timestamp:</h2>
+            <input class="dtime" type="datetime-local" id="start-timestamp">
+        </div>
+        <div class="timestamp-div">
+            <h2>End Timestamp:</h2>
+            <input  class="dtime" type="datetime-local" id="end-timestamp">
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 1vh;"><button id="submit-btn">Submit</button></div>
+ 
+    <div style="margin: auto; width: 70%; margin-top: 3vh;">
+        <p style="font-weight: bold; text-align: center;">Click on table headers to sort by that column. Empty rows indicate no results.</p>
+        <table id="salesReportTable">
+            <thead>
+                <tr align="center">
+                    <th onclick="sortTable(0)">Drink Name</th>
+                    <th onclick="sortTable(1)">Total Orders</th>
+                    <th onclick="sortTable(2)">Total $ Earned</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (const item of salesReportData) {%>
+                    <tr align="center">
+                        <td><%= item.drinkname %></td>
+                        <td><%= item.total_orders %></td>
+                        <td>$<%= item.total_earned.toFixed(2) %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var d = document;
+        d.getElementById('submit-btn').addEventListener('click', () => {
+            let start_time = d.getElementById('start-timestamp').value;
+            let end_time = d.getElementById('end-timestamp').value;
+            if (start_time == '' || end_time == '') alert("Empty start or end date.");
+            else window.location.href = `/staff/reports/sales-report/${start_time}/${end_time}`;
+        })
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById("salesReportTable");
+            const tbody = table.tBodies[0];
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const isNumeric = columnIndex !== 0;
+        
+            const currentlySorted = table.getAttribute('data-sorted-column') == columnIndex;
+            const sortDirection = currentlySorted && table.getAttribute('data-sort-direction') === 'asc' ? 'desc' : 'asc';
+        
+            rows.sort((a, b) => {
+                let valA = a.cells[columnIndex].innerText.replace(/[$,]/g, '').trim();
+                let valB = b.cells[columnIndex].innerText.replace(/[$,]/g, '').trim();
+        
+                if (isNumeric) {
+                    valA = parseFloat(valA);
+                    valB = parseFloat(valB);
+                }
+        
+                return sortDirection === 'asc' ? valA > valB ? 1 : -1 : valA < valB ? 1 : -1;
+            });
+        
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        
+            table.setAttribute('data-sorted-column', columnIndex);
+            table.setAttribute('data-sort-direction', sortDirection);
+        }
+    </script>
+        
+    <!-- Link to your external script file -->
+    <script src="/scripts/speaktext.js"></script>
+    <script src="/scripts/textzoom.js"></script>
+</body>
+</html>

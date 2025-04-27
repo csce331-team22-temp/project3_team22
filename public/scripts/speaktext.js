@@ -45,3 +45,17 @@ window.addEventListener('DOMContentLoaded', () => {
     if (accessibilityEnabled) applySpeechEvents();
     updateToggleButtonUI();
 });
+
+
+
+
+window.addEventListener('load', () => {
+    var observer = new MutationObserver((mutationsList) => {
+        for (var mutation of mutationsList) {
+            if (mutation.type == 'childList') {
+                applySpeechEvents();
+            }
+        }
+    });
+    observer.observe(document.body, {attributes: false, childList: true, subtree: true, characterData : false});
+});
