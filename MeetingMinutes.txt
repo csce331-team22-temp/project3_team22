@@ -21,3 +21,15 @@ Features that need to be connected during the ordering process, such as customer
 Date: 04/12/2025
 
 We decided to push every team member's latest code to the main branch. Most of the team's code was pushed to the main without any merge conflicts. The main challenge for the team was to connect the API routes when the user places an order. The implementation of all the basic functionalities, several sales reports, and external APIs were completed by the team with decent frontend design. For the upcoming week, we planned to start working on the remaining accessibility features like changing the overall font size and finish remaining tasks.
+
+Date: 04/22/2025
+
+Every team shared their work progress by running their code and showing how the current results with minimal page design. Some of the team members were facing syntax or compile error issues when trying to run their code. After spending some time to look for the root cause, we noticed that those team members didn’t have some of the necessary environment variables in their .env file. Then, after resolving such issues, we estimated the required time duration to complete our assigned tasks to stay on track and finish up with the development before the final deadline.
+
+Date: 04/24/2025
+
+Every team member shared their work progress by the running their code while receiving feedback what can be improved. Although, the assigned tasks weren’t fully completed, the work progress of every team member was on track. Then, we discussed about the accessibility features, whether or not each of them should be available for all types of users or only specific users. Since the implementation of keeping the feature consistent across all the pages wasn’t as difficult and not take lot of time, we decided to have it available for all types of users. 
+
+Date: 04/26/2025
+
+Every team member shared their current work progress. Around 90% of the work was completed and some finish touches to the website remained. The team faced a challenge of figuring out how to store the toppings details for every order as it would need to showed in the order history page. We had to make some changes to database, specifically to the orders table. We decided to add a new column named toppings that would store a list of the chosen toppings for every order item placed in an order. In addition, everyone will start shifting the focus on making the webpage design more intuitive and user friendly since the functionalities were working properly. Every team member also showed how to use their newly implemented features.
