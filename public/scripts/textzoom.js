@@ -1,6 +1,7 @@
 class ZoomHandler {
   static zoomVal = 1;
-
+  static MAX_ZOOM = 2;
+  static MIN_ZOOM = 0.1;
 
   static hasVisibleText(el) {
     let cond1 = el.childNodes.length > 0 && Array.from(el.childNodes).some(node => {    
@@ -13,14 +14,14 @@ class ZoomHandler {
 
 
   static increaseZoom() {
-    if (this.zoomVal >= 3 || this.zoomVal <= 0.1) return;
+    if (this.zoomVal >= this.MAX_ZOOM || this.zoomVal < this.MIN_ZOOM) return;
     this.zoomVal += .1;
     this.zoomModification(this.zoomVal);
   }
   
   
   static decreaseZoom() {
-    if (this.zoomVal >= 3 || this.zoomVal <= 0.1) return;
+    if (this.zoomVal > this.MAX_ZOOM || this.zoomVal <= this.MIN_ZOOM) return;
     this.zoomVal -= .1;
     this.zoomModification(this.zoomVal);
   }
@@ -28,7 +29,6 @@ class ZoomHandler {
 
   static _modifyElementFontSize(el) {
     if (!ZoomHandler.hasVisibleText(el)) return;
-
     const style = window.getComputedStyle(el);
     const fontSize = parseFloat(style.fontSize);
     let elementZoomVal = el.getAttribute("ZoomValue");
@@ -41,12 +41,13 @@ class ZoomHandler {
       el.style.fontSize = newFontSize;
       const currentWidth = parseFloat(style.width);
       const currentHeight = parseFloat(style.height);
+
+      console.log(`Old width: ${el.clientHeight}`);
       if (el.scrollHeight > el.clientHeight || scalar < 1)
-        el.style.minHeight = (Math.round(100 * currentHeight * scalar) / 100) + "px";
-      
+        el.style.minHeight = (Math.round(100 * currentHeight * scalar) / 100) + "px"; 
       if (el.scrollWidth > el.clientWidth || scalar < 1)
         el.style.minWidth = (Math.round(100 * currentWidth * scalar) / 100) + "px";  
-    
+      console.log(`New width: ${el.style.minWidth}`)
     }
 
 
@@ -88,9 +89,7 @@ function toggleZoomBox() {
 var callback = function(mutationsList) {
   for (var mutation of mutationsList) {
     if (mutation.type == 'childList') {
-      mutation.addedNodes.forEach(el => {
-        ZoomHandler._modifyElementFontSize(el);
-      })
+      ZoomHandler.zoomModification(ZoomHandler.zoomVal);
     }
   }
 };
@@ -130,8 +129,8 @@ window.addEventListener("load", () => {
             width: 18rem;
             height: 8rem;
             padding: 1rem 0.9rem;
-            border: 0.15rem solid black;
-            box-shadow: 0.5rem 0.5rem 0.2rem black;
+            border : none;
+            box-shadow: 0.5rem 0.5rem 0.2rem rgba(0, 0, 0, 0.1);
             border-radius: 0.3rem;
             display: flex;
             flex-direction: column;
@@ -143,7 +142,7 @@ window.addEventListener("load", () => {
             width: 5rem;
             height: 2.5rem;
             margin-left: auto;
-            border: 0.1rem solid gray;
+            border: none;
             background-color : #FFF8F0;
             color : #5C4033;
             font-family : sans-serif;
@@ -156,8 +155,8 @@ window.addEventListener("load", () => {
             width: fit-content;
             height: fit-content;
             padding: 0.6rem;
-            border: 0.1rem solid black;
             border-radius: 0.3rem;
+            border: none;
             font-size: large;
             box-shadow: 0.3rem 0.3rem 0.2rem rgba(0, 0, 0, 0.1);
             cursor: pointer;
@@ -210,7 +209,7 @@ window.addEventListener("load", () => {
     if (noEnterPressed || closeClicked) return;
     let scale_val = Number(document.getElementById("input-scalar").value);
     if (scale_val === NaN) return;
-    else if (scale_val >= 5 || scale_val <= 0.1) {
+    else if (scale_val > ZoomHandler.MAX_ZOOM || scale_val < ZoomHandler.MIN_ZOOM) {
       document.getElementById("input-scalar").value = ZoomHandler.zoomVal;
       return;
     };
@@ -226,12 +225,7 @@ window.addEventListener("load", () => {
   document.getElementById("text-zoom-min").addEventListener("click", () => {
     ZoomHandler.decreaseZoom();
   });
+
+
 });
 
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  textZoomContainer = document.getElementById("#text-zoom-container");
-  let textStyle = window.getComputedStyle(textZoomContainer);
-
-  textZoomContainer.style.top = (parseFloat(textStyle.top) + scrollY) + 'px';
-});
