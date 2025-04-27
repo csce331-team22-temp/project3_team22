@@ -1,43 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Tea Menu</title>
-    <link rel="stylesheet" href="/styles/menu.css">
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Bubble Tea Menu</title>
+     <link rel="stylesheet" href="/styles/menu.css">
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-        }
-    </script>
+     <script type="text/javascript">
+         function googleTranslateElementInit() {
+             new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+         }
+     </script>
 
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</head>
-<body>
-    
-    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+ </head>
+ <body>
 
-    <header>
-        <h1>🧋 ShareTea</h1>
-        <nav>
-            <ul class="category-header">
-                <% categories.forEach(category => { %>
-                    <li><a href="/menu/<%= encodeURIComponent(category) %>"><%= category %></a></li>
-                <% }); %>
-            </ul>
-        </nav>
-    </header>
+     <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
 
-  <main class="welcome-section">
-    <h2>Welcome to ShareTea!</h2>
-    <p>Select a category from the menu above to view our drinks.</p>
-    <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
-    <button onclick="window.location.href='/'" class="home-btn">Home Page</button>
-    <% if (isLoggedIn) { %>
-        <button onclick="window.location.href='/orders/recent'" class = previous-orders-btn>Previous Orders</button>
-    <% } %>
-  </main>
-  <script src="/scripts/speaktext.js"></script>
-</body>
-</html>
+     <header>
+         <h1>🧋 ShareTea</h1>
+         <nav>
+             <ul class="category-header">
+                 <% categories.forEach(category => { %>
+                     <li><a href="/menu/<%= encodeURIComponent(category) %>"><%= category %></a></li>
+                 <% }); %>
+             </ul>
+         </nav>
+     </header>
+
+   <main class="welcome-section">
+     <h2>Welcome to ShareTea!</h2>
+     <p>Select a category from the menu above to view our drinks.</p>
+     <div class="boba-animation-container">
+       <img id="boba-animation" src="/images/boba_step_1.jpg" alt="Making Boba Tea">
+     </div>
+     <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
+     <button onclick="window.location.href='/'" class="home-btn">Home Page</button>
+     <% if (isLoggedIn) { %>
+         <button onclick="window.location.href='/orders/recent'" class = "previous-orders-btn">Previous Orders</button>
+     <% } %>
+   </main>
+   <script src="/scripts/speaktext.js"></script>
+ </body>
+ </html>
