@@ -2,449 +2,473 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle, #FAF3E0 0%, #D9A06C 100%); /* Radial gradient for a spotlight effect */
+  background: #FAF3E0;
   color: #5C4033;
   text-align: center;
-  overflow-x: hidden;
 }
 
 header {
-  background: linear-gradient(to bottom, rgba(217, 160, 108, 0.95), rgba(217, 160, 108, 0.8)); /* Layered gradient */
-  padding: 30px 0;
+  background: #D9A06C;
+  padding: 20px 0;
   text-align: center;
-  box-shadow: 0px 8px 16px rgba(92, 64, 51, 0.4); /* Deeper shadow */
-  position: relative;
-  overflow: hidden; /* Clip potential header animations */
-}
-
-header::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 5px,
-      rgba(255, 255, 255, 0.05) 5px,
-      rgba(255, 255, 255, 0.05) 10px
-  );
-  transform: rotate(30deg);
-  animation: shimmer 5s linear infinite; /* Subtle shimmering animation */
-  z-index: 0; /* Behind the text */
-}
-
-@keyframes shimmer {
-  0% {
-      transform: translate(-50%, -50%) rotate(30deg) translateX(0);
-  }
-  100% {
-      transform: translate(-50%, -50%) rotate(30deg) translateX(200%);
-  }
+  box-shadow: 0px 4px 8px rgba(92, 64, 51, 0.2);
 }
 
 h1 {
   margin: 0;
-  font-size: 42px; /* Even larger title */
+  font-size: 30px;
   color: white;
-  font-weight: 900; /* Extra bold */
-  letter-spacing: 2px;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); /* More pronounced text shadow */
-  position: relative; /* Above the shimmer */
-  z-index: 1;
+  font-weight: bold;
 }
 
 .category-header {
   display: flex;
   justify-content: center;
   list-style: none;
-  padding: 18px 0;
-  margin: 25px auto 0;
-  background: linear-gradient(to right, rgba(217, 160, 108, 0.85), rgba(179, 107, 79, 0.85)); /* Gradient for categories */
-  border-radius: 20px;
-  box-shadow: 0px 4px 10px rgba(92, 64, 51, 0.3);
-  position: relative;
-}
-
-.category-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.1); /* Subtle overlay */
-  border-radius: inherit;
-  opacity: 0.6;
+  padding: 12px 0;
+  margin: 15px 0 0;
+  background: rgba(217, 160, 108, 0.85);
+  border-radius: 10px;
 }
 
 .category-header li {
-  margin: 0 35px;
+  margin: 0 25px;
 }
 
 .category-header a {
   text-decoration: none;
   color: white;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
-  padding: 14px 22px;
-  border-radius: 12px;
-  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Removed bouncy transition */
-  position: relative;
-  overflow: hidden; /* Still keep overflow hidden for potential future effects */
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
 }
 
 .category-header a:hover {
-  background: #B36B4F; /* Basic background change */
-  transform: translateY(-3px); /* Subtle lift */
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Remove the oval effect */
-.category-header a::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: none; /* Remove the transition for the oval effect */
-  z-index: -1;
-}
-
-.category-header a:hover::before {
-  width: 0; /* Ensure it doesn't appear on hover */
-  height: 0;
-  opacity: 0;
+  background: #B36B4F;
+  transform: scale(1.1);
 }
 
 .welcome-section {
   text-align: center;
-  padding: 70px 40px;
+  padding: 50px 20px;
   color: #5C4033;
-  animation: fadeIn 1s ease-out; /* Fade-in animation on load */
-}
-
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: translateY(20px);
-  }
-  to {
-      opacity: 1;
-      transform: translateY(0);
-  }
 }
 
 .welcome-section h2 {
-  font-size: 38px;
-  margin-bottom: 25px;
-  text-shadow: 1.5px 1.5px 3px rgba(0, 0, 0, 0.15);
+  font-size: 28px;
+  margin-bottom: 15px;
 }
 
-/* Enhanced Floating Action Buttons */
-.checkout-btn, .previous-orders-btn, .home-btn {
-  position: fixed;
-  padding: 14px 20px;
+.checkout-btn, .previous-orders-btn, .manager-view-btn, .home-btn {
+  padding: 8px 14px;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   background: #D9A06C;
   color: white;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 24px;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
-  box-shadow: 0px 6px 12px rgba(92, 64, 51, 0.4);
-  z-index: 100;
 }
 
 .checkout-btn {
-  bottom: 40px;
-  right: 40px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 .previous-orders-btn {
-  bottom: 40px;
-  right: 170px;
+  position: fixed;
+  bottom: 20px;
+  right: 150px;
+}
+
+.manager-view-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 400px;
 }
 
 .home-btn {
-  bottom: 40px;
-  left: 40px;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
 }
 
-.checkout-btn:hover, .home-btn:hover, .previous-orders-btn:hover {
+.checkout-btn:hover, .home-btn:hover, .previous-orders-btn:hover, .manager-view-btn:hover {
   background: #B36B4F;
-  transform: scale(1.1) translateY(-3px);
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .drinks-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Slightly wider cards */
-  gap: 40px;
-  margin-top: 50px;
-  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .drink-item {
   background: #FFF8F0;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0px 8px 16px rgba(179, 107, 79, 0.3);
+  border-radius: 12px;
+  margin: 20px;
+  padding: 20px;
+  width: 260px;
+  box-shadow: 0px 4px 10px rgba(179, 107, 79, 0.2);
   text-align: center;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative; /* For the preview overlay */
-  overflow: hidden; /* Clip the overlay */
-}
-
-.drink-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: #D9A06C; /* Highlight color */
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease-in-out;
-}
-
-.drink-item:hover::before {
-  transform: scaleX(1);
+  transition: all 0.3s ease-in-out;
 }
 
 .drink-item:hover {
-  transform: translateY(-8px);
-  box-shadow: 0px 12px 24px rgba(179, 107, 79, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(179, 107, 79, 0.35);
 }
 
 .drink-item img {
   width: 100%;
   height: auto;
-  max-height: 220px;
-  border-radius: 15px;
-  object-fit: cover;
+  max-height: 180px;
+  border-radius: 10px;
+  object-fit: contain;
   background-color: #FAF3E0;
-  padding: 10px;
-  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease-in-out;
-}
-
-.drink-item:hover img {
-  transform: scale(1.05);
+  padding: 5px;
 }
 
 .drink-item h3 {
-  margin: 20px 0 12px;
-  font-size: 24px;
+  margin: 15px 0;
+  font-size: 20px;
   color: #B36B4F;
-  font-weight: bold;
-  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1);
 }
 
 .price {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: bold;
   color: #D9A06C;
 }
 
 .no-drinks {
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
   color: #B36B4F;
-  margin-top: 60px;
+  margin-top: 40px;
   font-weight: bold;
-  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1);
 }
 
-/* Enhanced Modal Styling */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.8); /* Darker backdrop */
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease-in-out, visibility 0s linear 0.4s;
+  z-index: 999;
 }
 
-.modal.open {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.4s ease-in-out;
+.modal.hidden {
+  display: none;
 }
 
 .modal-content {
-  background: linear-gradient(135deg, #FFF8F0 70%, #D9A06C 100%); /* Gradient modal background */
-  padding: 35px;
-  border-radius: 20px;
-  max-width: 500px;
-  width: 95%;
+  background: #FFF8F0;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  position: relative;
-  transform: scale(0.9);
-  opacity: 0;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease-in-out;
-}
-
-.modal.open .modal-content {
-  transform: scale(1);
-  opacity: 1;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
 .close-button {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 30px;
+  float: right;
+  font-size: 24px;
   cursor: pointer;
-  color: #B36B4F;
-  background: none;
-  border: none;
-  outline: none;
-  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.close-button:hover {
-  color: #602406;
-  transform: scale(1.1);
 }
 
 .custom-section {
-  margin: 30px 0;
+  margin: 20px 0;
 }
 
 .options {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .option-btn {
-  padding: 12px 18px;
-  border: 2px solid #D9A06C; /* Added border */
-  background: white; /* White background */
-  color: #D9A06C; /* Primary color text */
-  border-radius: 10px;
+  padding: 8px 14px;
+  border: none;
+  background: #D9A06C;
+  color: white;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition: background 0.2s;
 }
 
 .option-btn:hover {
-  background: #D9A06C;
-  color: white;
-  transform: scale(1.08);
-  border-color: #B36B4F;
-}
-
-.option-btn.selected {
-  background-color: #602406;
-  color: #fff;
-  transform: scale(1.1);
-  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.2);
-  border-color: #602406;
+  background: #B36B4F;
 }
 
 .confirm-btn {
   background-color: #B36B4F;
   color: white;
-  padding: 14px 24px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 25px;
-  transition: background 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 15px;
 }
 
-.confirm-btn:hover {
+.option-btn.selected {
   background-color: #602406;
+  color: #fff;
   transform: scale(1.05);
-  box-shadow: 0px 7px 12px rgba(0, 0, 0, 0.3);
 }
 
 .calories, .allergens {
-  font-size: 16px;
+  font-size: 14px;
   color: #B36B4F;
-  margin: 7px 0;
-  font-style: italic; /* Subtle italic styling */
+  margin: 5px 0;
 }
 
 .info-icon {
   display: inline-block;
-  margin-top: 12px;
+  margin-top: 8px;
   text-align: center;
   text-decoration: none;
-  animation: pulse 1.5s infinite alternate; /* Subtle pulsing animation */
-}
-
-@keyframes pulse {
-  from {
-      transform: scale(1);
-      opacity: 0.8;
-  }
-  to {
-      transform: scale(1.1);
-      opacity: 1;
-  }
 }
 
 .info-circle {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   background-color: #48A6A7;
   color: white;
   font-weight: bold;
   border-radius: 50%;
-  font-size: 17px;
-  line-height: 26px;
+  font-size: 16px;
+  line-height: 22px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s;
 }
 
-/* Hover Preview (Needs JavaScript to implement) */
-.drink-item .preview-container {
+.info-circle:hover {
+  background-color: #2C3A3B;
+}
+
+/* Featured Drinks Carousel Styles (added cleanly) */
+.featured-drinks-section {
+  margin: 60px 0;
+}
+
+.featured-carousel {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.featured-carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.drink-slide {
+  flex: 0 0 auto;
+  width: 250px;
+  scroll-snap-align: center;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FFF8F0;
+  box-shadow: 0 4px 8px rgba(92, 64, 51, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.drink-slide img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.drink-slide:hover {
+  transform: scale(1.05);
+}
+
+.drink-info-overlay {
   position: absolute;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     background-color: rgba(0, 0, 0, 0.7);
-     border-radius: 20px;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     opacity: 0;
-     transition: opacity 0.3s ease-in-out;
-     cursor: pointer;
- }
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(92, 64, 51, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
 
- .drink-item:hover .preview-container {
-     opacity: 1;
- }
+.drink-slide:hover .drink-info-overlay {
+  opacity: 1;
+}
 
- .preview-text {
-     color: white;
-     font-size: 18px;
-     font-weight: bold;
- }
+.drink-info-overlay h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.drink-info-overlay p {
+  margin-top: 8px;
+  font-size: 18px;
+}
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Keep carousel flex scroll working inside wrapper */
+.featured-carousel {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.featured-carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* --- Carousel wrapper with fade --- */
+.carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+  height: 350px; /* Adjust height based on drink-slide size */
+}
+
+
+.featured-carousel {
+  position: relative;
+  height: 100%;
+}
+
+
+.moving-carousel {
+  animation: scrollCarousel 5s linear infinite;
+}
+
+.moving-carousel:hover {
+  animation-play-state: paused;
+}
+
+/* Updated keyframes for left -> right */
+@keyframes scrollCarousel {
+  0% {
+    transform: translateX(-100%); /* Start completely off the left */
+  }
+  100% {
+    transform: translateX(0); /* Move fully into view */
+  }
+}
+
+/* --- Fading edges --- */
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 120px; /* wider fade */
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.carousel-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #FAF3E0 0%, rgba(250, 243, 224, 0) 70%);
+}
+
+.carousel-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #FAF3E0 0%, rgba(250, 243, 224, 0) 70%);
+}
+
+/* --- Drink slide styles (already in your project) --- */
+.drink-slide {
+  position: absolute;
+  top: 0;
+  width: 250px; /* Same width as your image */
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.drink-slide img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.drink-slide:hover {
+  transform: scale(1.05);
+}
+
+.drink-info-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(92, 64, 51, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.drink-slide:hover .drink-info-overlay {
+  opacity: 1;
+}
+
+.drink-info-overlay h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.drink-info-overlay p {
+  margin-top: 8px;
+  font-size: 18px;
+}
+.drink-category {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #FAF3E0;
+  font-style: italic;
+}
+.featured-carousel {
+  display: flex;
+  gap: 20px;
+  will-change: transform;
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.featured-carousel:hover {
+  animation-play-state: paused;
+}

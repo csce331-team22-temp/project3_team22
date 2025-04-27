@@ -3,24 +3,37 @@ const db = require('../database');
 const express = require('express');
 const router = express.Router();
 
-// Route to display menu categories
+// Route to display menu categories + featured drinks
 router.get('/', async (req, res) => {
     try {
+        // Fetch categories
         const result = await db.query("SELECT DISTINCT category FROM menu");
         const categories = result.rows.map(row => row.category);
-        res.render("menu", { user: req.user, isLoggedIn: !!req.user, categories });
+
+        // Fetch featured drinks
+        const featuredResult = await db.query("SELECT * FROM menu ORDER BY RANDOM() LIMIT 20");
+        const featuredDrinks = featuredResult.rows;
+
+        // Render both
+        res.render("menu", { 
+            user: req.user, 
+            isLoggedIn: !!req.user, 
+            isManager: req.user?.position === 'Manager', 
+            categories,
+            featuredDrinks
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send("Error fetching menu categories");
     }
 });
 
-// Route to display drinks in a category
+// Route to display drinks by category
 router.get('/:category', async (req, res) => {
     try {
         const category = req.params.category;
-
         const drinkQuery = await db.query("SELECT * FROM menu WHERE category = $1", [category]);
+        
         if (drinkQuery.rows.length === 0) {
             return res.status(404).send("Category not found");
         }
@@ -39,7 +52,7 @@ router.get('/:category', async (req, res) => {
     }
 });
 
-// Nutritional info page
+// Route to show drink info
 router.get('/info/:drinkid', async (req, res) => {
     try {
         const drinkid = req.params.drinkid;
@@ -55,5 +68,6 @@ router.get('/info/:drinkid', async (req, res) => {
         console.error(err);
         res.status(500).send("Error loading drink info");
     }
-})
+});
+
 module.exports = router;
