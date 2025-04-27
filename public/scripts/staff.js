@@ -90,13 +90,13 @@ async function editStaff(staffMembers) {
         editBtn.style.border = 'solid black 2px'
 
         addNewMemberBtn.disabled = true;
-        addNewMemberBtn.style.backgroundColor = "darkgray";
+        addNewMemberBtn.style.backgroundColor = "lightgray";
 
         cancelEditBtn.disabled = false;
         cancelEditBtn.style.backgroundColor = "red";
 
         goBackBtn.disabled = true;
-        goBackBtn.style.backgroundColor = "darkgray";
+        goBackBtn.style.backgroundColor = "lightgray";
 
         // allows the user to change position of every staff member
         jsonArray.forEach(obj => {
@@ -115,7 +115,7 @@ async function editStaff(staffMembers) {
         editBtn.style.border = 'none';
 
         addNewMemberBtn.disabled = false;
-        addNewMemberBtn.style.backgroundColor = "green";
+        addNewMemberBtn.style.backgroundColor = "#009879";
 
         cancelEditBtn.disabled = false;
         cancelEditBtn.style.backgroundColor = "darkgray";
@@ -188,7 +188,7 @@ async function cancelEditing(staffMembers) {
     editBtn.style.border = "none";
 
     addNewMemberBtn.disabled = false;
-    addNewMemberBtn.style.backgroundColor = "green";
+    addNewMemberBtn.style.backgroundColor = "#009879";
 
     goBackBtn.disabled = false;
     goBackBtn.style.backgroundColor = "#f44336";

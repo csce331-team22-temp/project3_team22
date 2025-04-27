@@ -14,6 +14,10 @@ document.getElementById("reportsBtn").addEventListener("click", async function (
     window.location.href = "/staff/reports";
 });
 
+function placeOrder() {
+    window.location.href = "/menu";
+}
+
 function goToMain() {
     localStorage.removeItem('reloadedOnce');
     window.location.href = "/logout?loginMessage=";

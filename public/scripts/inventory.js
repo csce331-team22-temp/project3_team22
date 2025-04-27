@@ -23,8 +23,6 @@ async function submitNewItem() {
     // requires the user to fill in his/her necessary information before being added to the database
     if (inputName.value.length > 0 && inputQuantity.value.length > 0) {
 
-        const usingItemSelection = document.querySelector('input[name="usingItemOptions"]:checked');
-
         await fetch('/staff/inventory/add', {
             method: 'POST',
             headers: {
@@ -92,13 +90,6 @@ async function editInventory(inventoryItems) {
             const itemQuantityInput = document.getElementById(`itemquantity-${obj['itemid']}`)
             itemQuantityInput.disabled = false;
 
-            if (itemUsingBtn.innerText == "Yes") {
-                itemUsingBtn.style.backgroundColor = 'green';
-            }
-            else {
-                itemUsingBtn.style.backgroundColor = 'red';
-            }
-
         });
     }
     else {
@@ -109,7 +100,7 @@ async function editInventory(inventoryItems) {
         editBtn.style.border = 'none';
 
         addNewItemBtn.disabled = false;
-        addNewItemBtn.style.backgroundColor = "green";
+        addNewItemBtn.style.backgroundColor = "#009879";
 
         cancelEditBtn.disabled = false;
         cancelEditBtn.style.backgroundColor = "darkgray";
@@ -177,7 +168,7 @@ async function cancelEditing(inventoryItems) {
     editBtn.style.border = "none";
 
     addNewItemBtn.disabled = false;
-    addNewItemBtn.style.backgroundColor = "green";
+    addNewItemBtn.style.backgroundColor = "#009879";
 
     goBackBtn.disabled = false;
     goBackBtn.style.backgroundColor = "#f44336";
