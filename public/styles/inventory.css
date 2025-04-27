@@ -33,12 +33,8 @@ th input {
     width: 100%;
 }
 
-tr {
-    border-bottom: solid darkgray 1px;
-}
-
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f3f3f3;
 }
 
 tr:hover {
@@ -86,7 +82,7 @@ table .deleteItems:hover {
 }
 
 #addItemBtn {
-    background-color: green;
+    background-color: #009879;
 }
 
 #editItemsBtn {
