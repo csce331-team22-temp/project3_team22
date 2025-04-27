@@ -3,14 +3,16 @@ let accessibilityEnabled = false;
 function updateToggleButtonUI() {
     const btn = document.getElementById("speaktextBtn");
 
-    if (accessibilityEnabled) {
-        btn.style.backgroundColor = "#4CAF50";
-        btn.style.color = "white";
-        btn.innerText = "Text Voice On";
-    } else {
-        btn.style.backgroundColor = "#eee";
-        btn.style.color = "#333";
-        btn.innerText = "Text Voice Off";
+    if (btn) {
+        if (accessibilityEnabled) {
+            btn.style.backgroundColor = "#4CAF50";
+            btn.style.color = "white";
+            btn.innerText = "Text Voice On";
+        } else {
+            btn.style.backgroundColor = "#eee";
+            btn.style.color = "#333";
+            btn.innerText = "Text Voice Off";
+        }
     }
 
 }
