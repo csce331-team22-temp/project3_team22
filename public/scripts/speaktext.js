@@ -21,7 +21,7 @@ function speakText(text) {
 }
 
 function applySpeechEvents() {
-    const elements = document.querySelectorAll('button, a, p, h1, h2, h3, label, span, th, td, input, li');
+    const elements = document.querySelectorAll('button, a, p, h1, h2, h3, h4, label, span, th, td, input, li, summary');
 
     elements.forEach(el => {
         el.addEventListener('mouseover', () => speakText(el.innerText || el.value));

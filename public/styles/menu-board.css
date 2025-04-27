@@ -1,12 +1,44 @@
+/* Animated Background */
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    45deg,
+    #FAF3E0,
+    #FFF8F0,
+    #D9A06C,
+    #F7E8C1
+  );
+  background-size: 600% 600%;
+  z-index: -1;
+  animation: gradientBG 20s ease infinite;
+}
+
+/* Center the main subtitle */
+.welcome-section h2 {
+  text-align: center;
+}
+
+/* Center all category titles */
+.menu-board h3 {
+  text-align: center;
+  font-size: 2rem;
+  color: #B36B4F;
+  margin: 2.5rem 0 1.5rem;
+}
+
+/* --- Existing styles below --- */
+
 .menu-board {
   margin-top: 40px;
   padding: 0 20px;
-}
-
-.menu-board h3 {
-  font-size: 24px;
-  color: #B36B4F;
-  margin: 30px 0 20px;
 }
 
 .menu-category {
@@ -42,9 +74,79 @@
   padding: 5px;
 }
 
+.menu-item h4 {
+  margin: 12px 0 6px;
+  font-size: 1.2rem;
+  color: #5C4033;
+}
+
+.menu-item .price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #D9A06C;
+}
+
 .menu-item p {
   margin-top: 10px;
   font-size: 16px;
   color: #5C4033;
   font-weight: 600;
+}
+
+.menu-item details {
+  margin-top: 8px;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #5C4033;
+}
+
+.menu-item details summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.menu-item details[open] {
+  background: #FFF2E5;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+/* 1) Gradient animation (sent to back) */
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;  /* behind dots */
+  background: linear-gradient(
+    45deg,
+    #faf3e0,
+    #fff8f0,
+    #d9a06c,
+    #f7e8c1
+  );
+  background-size: 600% 600%;
+  animation: gradientBG 20s ease infinite;
+}
+
+/* 2) Floating dot pattern (in front of gradient) */
+@keyframes floatDots {
+  from { background-position: 0 0; }
+  to   { background-position: 0 -25px; }
+}
+
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;  /* above gradient, behind content */
+  background-image: radial-gradient(rgba(255,255,255,0.2) 2px, transparent 2px);
+  background-size: 30px 30px;
+  animation: floatDots 15s linear infinite;
 }
