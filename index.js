@@ -103,6 +103,8 @@ app.get('/auth/google/callback', passport.authenticate('google', {failureRedirec
 
     if (staffMemberInfo.rowCount > 0) {
 
+        req.user.position = staffMemberInfo.rows[0].position;
+
         if(staffMemberInfo.rows[0].position == 'Manager') {
             res.redirect('/staff/manager-dashboard');
         } 

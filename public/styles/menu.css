@@ -62,10 +62,7 @@ body {
     margin-bottom: 15px;
   }
 
-  .checkout-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+  .checkout-btn, .previous-orders-btn, .manager-view-btn, .home-btn {
     padding: 8px 14px;
     border: none;
     border-radius: 8px;
@@ -73,35 +70,34 @@ body {
     color: white;
     font-size: 24px;
     transition: all 0.3s ease-in-out;
+  }
+
+  .checkout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    
   }
 
   .previous-orders-btn {
     position: fixed;
     bottom: 20px;
     right: 150px;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    background: #D9A06C;
-    color: white;
-    font-size: 24px;
-    transition: all 0.3s ease-in-out;
+  }
+
+  .manager-view-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 400px;
   }
 
   .home-btn {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    background: #D9A06C;
-    color: white;
-    font-size: 24px;
-    transition: all 0.3s ease-in-out;
   }
 
-  .checkout-btn:hover, .home-btn:hover, .previous-orders-btn:hover {
+  .checkout-btn:hover, .home-btn:hover, .previous-orders-btn:hover, .manager-view-btn:hover {
     background: #B36B4F;
   }
   
