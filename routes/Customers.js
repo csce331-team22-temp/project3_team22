@@ -47,6 +47,18 @@ router.post('/remove-item', (req, res) => {
     }
 });
 
+// Route to remove item from the list
+router.post('/clear-cart', (req, res) => {
+    // 🟡 OTO ADDED: Refund pearls for every rewards item removed
+    orderItems.forEach(item => {
+        if (item.price === 0) {
+            modifyPearls(10);
+        }
+    });
+    orderItems = [];
+
+    res.json({ success: true, message: 'Cart has been completely cleared!' });
+});
 
 // Route for proceeding to checkout and passing orderItems to checkout.ejs
 router.get('/checkout', (req, res) => {

@@ -33,11 +33,15 @@
     <h2>Welcome to ShareTea!</h2>
     <p>Select a category from the menu above to view our drinks.</p>
     <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
-    <button onclick="window.location.href='/'" class="home-btn">Home Page</button>
+    <button onclick="clearCartAndRedirect()" class="home-btn">Home Page</button>
     <% if (isLoggedIn) { %>
         <button onclick="window.location.href='/orders/recent'" class = previous-orders-btn>Previous Orders</button>
     <% } %>
+    <% if (isManager) { %>
+        <button onclick="window.location.href='/staff/manager-dashboard'" class = manager-view-btn>Manager View</button>
+    <% } %>
   </main>
+  <script src="/scripts/checkout.js"></script>
   <script src="/scripts/speaktext.js"></script>
 </body>
 </html>

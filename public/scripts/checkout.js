@@ -33,18 +33,40 @@ function removeFromCart(name, price, index) {
             
             console.log('Updated cart:', data.cart);
             alert('Item removed from the cart!');
-            
-            // check if item removed was a reward item and send some garbage to rewards to notify that pearls need to be refunded
-            if(price == 0.0) {
-                fetch('customers/rewards/refund-pearls', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, price })
-                })
-            }
+
+            updatePaymentButtons();
 
         } else {
             alert('Error removing item.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Function to clear the cart by sending a POST request to the server
+function clearCartAndRedirect() {
+    fetch('/customers/clear-cart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const cartItems = document.querySelectorAll('.textBesideButton');
+            cartItems.forEach(item => item.remove());
+
+            const totalElement = document.getElementById('cartTotal');
+            if (totalElement) {
+                totalElement.textContent = '0.00';
+            } else {
+                console.error('cartTotal element not found.');
+            }
+
+            window.location.href='/'
+
+        } else {
+            alert('Error clearing cart.');
         }
     })
     .catch(error => console.error('Error:', error));
@@ -62,7 +84,7 @@ function pay(method) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Order successfully inserted into the database!');
+            // alert('Order successfully inserted into the database!');
             togglePaymentOptions();
             window.location.href = '/';
         } else {
@@ -75,3 +97,23 @@ function pay(method) {
     });
     
 }
+
+// Function to enable/disable payment buttons depending on if an item is in the cart
+function updatePaymentButtons() {
+    const totalElement = document.getElementById('cartTotal');
+    const cardCheckoutButton = document.getElementById('cardCheckout');
+    const cashCheckoutButton = document.getElementById('cashCheckout');
+    
+    const total = parseFloat(totalElement.textContent);
+
+    // If the total is greater than 0, enable the buttons; otherwise, disable them.
+    if (total > 0) {
+        cardCheckoutButton.disabled = false;
+        cashCheckoutButton.disabled = false;
+    } else {
+        cardCheckoutButton.disabled = true;
+        cashCheckoutButton.disabled = true;
+    }
+}
+
+window.onload = updatePaymentButtons;
