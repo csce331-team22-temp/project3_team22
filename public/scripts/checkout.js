@@ -1,3 +1,4 @@
+// function to toggle whether credit card payment buttons are dispayed
 function togglePaymentOptions() {
     const paymentOptionsDiv = document.getElementById('paymentOptions');
     const checkoutOptionsDiv = document.getElementById('checkoutButtons');
@@ -21,11 +22,13 @@ function removeFromCart(name, price, index) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            // remove the element from the frontend
             const itemElement = document.getElementById(`item-${index}`);
             if (itemElement) {
                 itemElement.remove();
             }
 
+            // update the displayed total on the frontend
             const totalElement = document.getElementById('cartTotal');
             const currentTotal = parseFloat(totalElement.textContent);
             const newTotal = (currentTotal - parseFloat(price)).toFixed(2);
@@ -34,6 +37,7 @@ function removeFromCart(name, price, index) {
             console.log('Updated cart:', data.cart);
             alert('Item removed from the cart!');
 
+            // disable payment buttons if nothing in cart, otherwise keep enabled
             updatePaymentButtons();
 
         } else {
@@ -53,9 +57,11 @@ function clearCartAndRedirect() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            // remove all cart items from the frontend
             const cartItems = document.querySelectorAll('.textBesideButton');
             cartItems.forEach(item => item.remove());
 
+            // set the total to zero on the frontend
             const totalElement = document.getElementById('cartTotal');
             if (totalElement) {
                 totalElement.textContent = '0.00';
@@ -63,6 +69,7 @@ function clearCartAndRedirect() {
                 console.error('cartTotal element not found.');
             }
 
+            // log out the user and redirect to the home page
             localStorage.removeItem('reloadedOnce');
             window.location.href = "/logout?loginMessage=";
 
@@ -85,7 +92,8 @@ function pay(method) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // alert('Order successfully inserted into the database!');
+            // reset the credit card payment options to hidden and redirect to the home page
+            alert('Order placed!');
             togglePaymentOptions();
             window.location.href = '/';
         } else {

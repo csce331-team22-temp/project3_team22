@@ -60,6 +60,15 @@
       <h3 id="selected-drink-name">Customize Your Drink</h3>
 
       <div class="custom-section">
+        <label>Size:</label>
+        <div class="options">
+          <% ["Small", "Medium", "Large"].forEach(level => { %>
+            <button class="option-btn size-btn"><%= level %></button>
+          <% }); %>
+        </div>
+      </div>
+
+      <div class="custom-section">
         <label>Sugar:</label>
         <div class="options">
           <% [0, 20, 40, 60, 80, 100].forEach(level => { %>
@@ -118,6 +127,13 @@
       }
     });
 
+    document.querySelectorAll(".size-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".size-btn").forEach(btn => btn.classList.remove("selected"));
+        button.classList.add("selected");
+      });
+    });
+
     document.querySelectorAll(".sugar-btn, .ice-btn").forEach(button => {
       button.addEventListener("click", () => {
         const group = button.classList.contains("sugar-btn") ? ".sugar-btn" : ".ice-btn";
@@ -133,14 +149,17 @@
     });
 
     document.querySelector(".confirm-btn").addEventListener("click", async () => {
+      const sizeBtn = document.querySelector(".size-btn.selected");
+      const size = sizeBtn && sizeBtn.textContent;
+
       const sugarBtn = document.querySelector(".sugar-btn.selected");
       const sugarPercent = sugarBtn && sugarBtn.textContent;
 
       const iceBtn = document.querySelector(".ice-btn.selected");
       const icePercent = iceBtn && iceBtn.textContent;
 
-      if (!sugarPercent || !icePercent) {
-        alert("You must select both a sugar level and an ice level");
+      if (!sugarPercent || !icePercent || !size) {
+        alert("You must select a sugar level, ice level, and size");
         return;
       }
 
@@ -155,6 +174,7 @@
       const orderData = {
         name: selectedDrink.drinkName,
         price: totalPrice,
+        size: size,
         sugar: sugarNum,
         ice: iceNum,
         toppings
