@@ -63,7 +63,8 @@ function clearCartAndRedirect() {
                 console.error('cartTotal element not found.');
             }
 
-            window.location.href='/'
+            localStorage.removeItem('reloadedOnce');
+            window.location.href = "/logout?loginMessage=";
 
         } else {
             alert('Error clearing cart.');
