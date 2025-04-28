@@ -27,7 +27,7 @@
             <% orderItems.forEach((item, index) => { %>
                 <div id="item-<%= index %>" class = "textBesideButton">
                     <p class = "coloredText"><%= item.name %> - $<%= item.price.toFixed(2) %></p>
-                    <button onclick="removeFromCart('<%= item.name %>', '<%= item.price %>', '<%= index %>')">Remove</button>
+                    <button id = 'removeButton' onclick="removeFromCart('<%= item.name %>', '<%= item.price %>', '<%= index %>')">Remove</button>
                 </div>
                 <% total += item.price; %>
             <% }) %>
@@ -39,8 +39,8 @@
     <div class = "container">
         <!-- Checkout and back buttons (Shown by default, hidden when cardCheckout button pressed) -->
         <div id = checkoutButtons>
-            <button id="cardCheckout" class = "button" onclick="togglePaymentOptions()">Card Checkout</button>
-            <button id="cashCheckout" class = "button" onclick="pay('cash')">Cash Checkout</button>
+            <button id="cardCheckout" class = "button" onclick="togglePaymentOptions()" disabled>Card Checkout</button>
+            <button id="cashCheckout" class = "button" onclick="pay('cash')" disabled>Cash Checkout</button>
             <button id="backToOrder" class = "button" onclick="window.location.href='/menu'">Back to Menu</button>
         </div>
 
@@ -59,5 +59,7 @@
     <!-- Link to your external script file -->
     <script src="/scripts/checkout.js"></script>
     <script src="/scripts/speaktext.js"></script>
+    <script src="/scripts/textzoom.js"></script>
+
 </body>
 </html>

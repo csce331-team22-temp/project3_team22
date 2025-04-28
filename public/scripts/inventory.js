@@ -12,19 +12,6 @@ const addItemPopup = document.getElementById("newItemPopup");
 const inputName = document.getElementById("nameInput");
 const inputQuantity = document.getElementById("quantityInput");
 
-// change specified item's usability
-async function changeUsingItem(itemid) {
-    const usingItemBtn = document.getElementById(`usingitem-${itemid}`);
-
-    if (usingItemBtn.innerText == "Yes") {
-        usingItemBtn.innerText = "No";
-        usingItemBtn.style.backgroundColor = 'red';
-    } else {
-        usingItemBtn.innerText = "Yes";
-        usingItemBtn.style.backgroundColor = 'green';
-    }
-}
-
 // displays a form/popup that asks for new member required information
 async function newItemInput() {
     addItemPopup.style.display = "flex";
@@ -36,8 +23,6 @@ async function submitNewItem() {
     // requires the user to fill in his/her necessary information before being added to the database
     if (inputName.value.length > 0 && inputQuantity.value.length > 0) {
 
-        const usingItemSelection = document.querySelector('input[name="usingItemOptions"]:checked');
-
         await fetch('/staff/inventory/add', {
             method: 'POST',
             headers: {
@@ -45,8 +30,7 @@ async function submitNewItem() {
             },
             body: JSON.stringify({
                 itemname: inputName.value,
-                quantity: inputQuantity.value,
-                usingitem: usingItemSelection.value
+                quantity: inputQuantity.value
             })
         });
 
@@ -106,16 +90,6 @@ async function editInventory(inventoryItems) {
             const itemQuantityInput = document.getElementById(`itemquantity-${obj['itemid']}`)
             itemQuantityInput.disabled = false;
 
-            const itemUsingBtn = document.getElementById(`usingitem-${obj['itemid']}`);
-            itemUsingBtn.disabled = false;
-
-            if (itemUsingBtn.innerText == "Yes") {
-                itemUsingBtn.style.backgroundColor = 'green';
-            }
-            else {
-                itemUsingBtn.style.backgroundColor = 'red';
-            }
-
         });
     }
     else {
@@ -126,7 +100,7 @@ async function editInventory(inventoryItems) {
         editBtn.style.border = 'none';
 
         addNewItemBtn.disabled = false;
-        addNewItemBtn.style.backgroundColor = "green";
+        addNewItemBtn.style.backgroundColor = "#009879";
 
         cancelEditBtn.disabled = false;
         cancelEditBtn.style.backgroundColor = "darkgray";
@@ -143,10 +117,6 @@ async function editInventory(inventoryItems) {
             const itemQuantityInput = document.getElementById(`itemquantity-${obj['itemid']}`)
             itemQuantityInput.disabled = true;
 
-            const itemUsingBtn = document.getElementById(`usingitem-${obj['itemid']}`);
-            itemUsingBtn.disabled = true;
-            itemUsingBtn.style.backgroundColor = 'darkgray';
-
 
             fetch('/staff/inventory/update', {
                 method: 'PUT',
@@ -156,8 +126,7 @@ async function editInventory(inventoryItems) {
                 body: JSON.stringify({
                     itemid: obj['itemid'],
                     itemname: itemNameInput.value,
-                    quantity: itemQuantityInput.value,
-                    usingitem: itemUsingBtn.innerText
+                    quantity: itemQuantityInput.value
                 })
             });
         });
@@ -183,16 +152,11 @@ async function cancelEditing(inventoryItems) {
         const itemQuantityInput = document.getElementById(`itemquantity-${obj['itemid']}`)
         itemQuantityInput.disabled = true;
 
-        const itemUsingBtn = document.getElementById(`usingitem-${obj['itemid']}`);
-        itemUsingBtn.disabled = true;
-        itemUsingBtn.style.backgroundColor = 'darkgray'
-
         const item = inventoryData.find(item => item.itemid == obj.itemid);
 
         if (item) {
             itemNameInput.value = item.itemname;
             itemQuantityInput.value = item.quantity;
-            itemUsingBtn.innerText = item.usingitem;
         }
 
     });
@@ -204,10 +168,33 @@ async function cancelEditing(inventoryItems) {
     editBtn.style.border = "none";
 
     addNewItemBtn.disabled = false;
-    addNewItemBtn.style.backgroundColor = "green";
+    addNewItemBtn.style.backgroundColor = "#009879";
 
     goBackBtn.disabled = false;
     goBackBtn.style.backgroundColor = "#f44336";
+}
+
+async function deleteItem(itemToBeDeleted) {
+    const confirmDeleteItem = window.confirm(`Warning: Deleting this item will also remove it from any drinks that include it in their recipes! Click OK to confirm delete.`);
+
+    if (confirmDeleteItem) {
+        const response = await fetch('/staff/inventory/delete', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+              itemid: itemToBeDeleted
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        window.location.href = `/staff/inventory/page`;
+    }
 }
 
 // redirects to the manager dashboard

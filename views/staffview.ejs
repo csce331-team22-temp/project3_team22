@@ -28,15 +28,17 @@
                     <th>Position</th>
                     <th>Email</th>
                     <th>Date Joined</th>
+                    <th></th>
                 </tr>
 
                 <% for (var i in staffMembers) {%>
                     <tr align="center">
                         <td><%= staffMembers[i].staffid %></td>
                         <td><%= staffMembers[i].name %></td>
-                        <td><button id="positionBtn-<%= staffMembers[i].staffid %>" onclick="changePosition('<%= staffMembers[i].staffid %>')" disabled><%= staffMembers[i].position %></button></td>
+                        <td><button id="positionBtn-<%= staffMembers[i].staffid %>" class="staffMemberPositionBtn" onclick="changePosition('<%= staffMembers[i].staffid %>')" disabled><%= staffMembers[i].position %></button></td>
                         <td><input id="emailInput-<%= staffMembers[i].staffid %>" type="text" value="<%= staffMembers[i].email %>" disabled></td>
                         <td><%= staffMembers[i].datejoined.toLocaleString() %></td>
+                        <td><button class="deleteStaffBtn" onclick="deleteStaffMember('<%= staffMembers[i].staffid %>')">Delete</button></td>
                     </tr>
                 <% } %>
             </table>
@@ -87,8 +89,9 @@
             </div>
 
         </div>
-
-        <script src="/scripts/staff.js"></script>
+        <!-- Link to your external script file -->
         <script src="/scripts/speaktext.js"></script>
+        <script src="/scripts/textzoom.js"></script>
+        <script src="/scripts/staff.js"></script>
     </body>
 </html>

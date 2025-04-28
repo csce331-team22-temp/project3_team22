@@ -6,7 +6,7 @@ const router = express.Router();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Export functions for usage in other files. Use the require function to gain access to these objects.
-const {getCurrentCustomer, modifyPearls} = require('./SharedVariables');
+const {getCurrentCustomer, modifyPearls} = require('./_SharedVariables');
 const {addItem} = require('./Customers');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

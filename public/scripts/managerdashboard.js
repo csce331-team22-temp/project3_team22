@@ -14,6 +14,10 @@ document.getElementById("reportsBtn").addEventListener("click", async function (
     window.location.href = "/staff/reports";
 });
 
+function placeOrder() {
+    window.location.href = "/menu";
+}
+
 function goToMain() {
     localStorage.removeItem('reloadedOnce');
     window.location.href = "/logout?loginMessage=";
@@ -28,4 +32,10 @@ function generateProductUsageReport() {
     } else {
         alert('Invalid input date(s)!');
     }
+}
+function generateSalesReport() {
+    const startDateTime = document.getElementById('srStartDate').value;
+    const endDateTime = document.getElementById('srEndDate').value;
+    
+    window.location.href = `/staff/reports/sales-report/${startDateTime}/${endDateTime}`
 }

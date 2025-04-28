@@ -5,7 +5,7 @@ const express = require('express');
 // Export functions for usage in other files. Use the require function to gain access to these objects.
 // OTO ADDED: Needed so I can talk to you and you can talk to me
 
-const {modifyPearls, resetCustomer, getCustomerID, getCurrentCustomer} = require('./SharedVariables');
+const {modifyPearls, resetCustomer, getCustomerID, getCurrentCustomer} = require('./_SharedVariables');
 
 
 
@@ -47,6 +47,18 @@ router.post('/remove-item', (req, res) => {
     }
 });
 
+// Route to remove item from the list
+router.post('/clear-cart', (req, res) => {
+    // 🟡 OTO ADDED: Refund pearls for every rewards item removed
+    orderItems.forEach(item => {
+        if (item.price === 0) {
+            modifyPearls(10);
+        }
+    });
+    orderItems = [];
+
+    res.json({ success: true, message: 'Cart has been completely cleared!' });
+});
 
 // Route for proceeding to checkout and passing orderItems to checkout.ejs
 router.get('/checkout', (req, res) => {
@@ -127,6 +139,7 @@ router.post('/checkout/payment', async (req, res) => {
         
         // 🟡 OTO ADDED: Done for adding pearls to the account and reseting the customer variable in my code
         resetCustomer(orderData);
+        customerID = 0;
 
 
     } catch (error) {

@@ -12,51 +12,42 @@
             new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
         }
     </script>
-
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-
-    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
-    
-    <!--Title block-->
-    <div style="display: grid; grid-template-columns: 15% 70% 15%;">
-        <div></div>
+    <header style="display: grid; grid-template-columns: 15% 70% 15%;">
+        <button id="cart-btn">CART</button>
         <h1 id="title" style="text-align: center;">Customer Login</h1>
-        <button id="cart-btn">CART (0)</button>
-    </div>
-
+        <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+    </header>
 
     <!--LOGIN GRID. This is default displayed.-->
     <div class='signup-login' id="customer-login">
-        <h2>Phone Number &#8658</h2>
+        <h2 style="padding-left:2vw;">Phone Number</h2>
         <div style="display: flex; justify-content: right;">
-            <input id="phone-input" placeholder="EX: 1234567890"><button id="submit-btn">Submit!</button>
+            <input id="phone-input" placeholder="EX: 1234567890"><button id="submit-btn">Login</button>
         </div>
-        <h2>Want to Sign Up? &#8658</h2>
-        <button id="make-account-button" >Make an Account!</button>
+        <h2 style="padding-left:2vw;">Want to Sign Up?</h2>
+        <button id="make-account-button">Click Here to Make an Account!</button>
     </div>
 
 
     <!--SIGNUP GRID, Display none. Switches with JS between this and Login-->
     <div class="signup-login" id="customer-signup" style="display: none;">
-        <h2>Phone Number &#8658</h2>
+        <h2 style="padding-left:2vw;">Phone Number</h2>
         <input id="s-phone-input" placeholder="1234567890">
-        <h2>Full Name &#8658</h2>
+        <h2 style="padding-left:2vw;">Full Name</h2>
         <div style="display: flex; justify-content: right;">
             <input id="name-input" placeholder="John Doe"><button id="register-btn">Register!</button>
         </div>
 
         <!--Manually put extra margin here for login return-->
-        <h2 style="margin-top: 8vh;">Already Have an Account? &#8658</h2>
-        <button style="margin-top: 8vh;" id="login-account-button">Login!</button>
-    </div>
-    
-    <!--TODO: Push to bottom of page -->
-    <div style="height: inherit; border: 1px solid red;">
-        <img src="/images/accessibility-logo.svg" id="accessibility-img"/>
-    </div>
+        <h2 style="margin-top: 8vh; padding-left: 2vw;">Already Have an Account?</h2>
+        <button style="margin-top: 8vh;" id="login-account-button">Click Here to Login!</button>
 
-    <script src="/scripts/speaktext.js"></script>
+        <!-- Link to your external script file -->
+        <script src="/scripts/speaktext.js"></script>
+        <script src="/scripts/textzoom.js"></script>
+    </div>
 </body>
 </html>

@@ -3,14 +3,13 @@ window.onload = (() => {
 
 const d = document;
 
-
 let swapDisplays = (signup_display, login_display, title_name) => {
     d.getElementById("customer-signup").style.display = signup_display;
     d.getElementById("customer-login").style.display = login_display;
     d.getElementById("title").innerHTML = title_name;
 };
 
-async function perform_login(phone_number) {
+function perform_login(phone_number) {
     fetch('/customers/login/login-request', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -26,8 +25,6 @@ async function perform_login(phone_number) {
         }
     });  
 }
-
-
 
 d.getElementById("make-account-button").addEventListener("click", ()=>swapDisplays("grid", "none", "Customer Signup"));
 d.getElementById("login-account-button").addEventListener("click", () => swapDisplays("none", "grid", "Customer Login"));
@@ -57,14 +54,7 @@ d.getElementById("register-btn").addEventListener("click", (event) => {
 
 d.getElementById('cart-btn').addEventListener('click', () => { 
     window.location.href = '/customers/checkout';
-    console.log("I was clicked")
 });
-
-
-
-
-
-
 
 
 

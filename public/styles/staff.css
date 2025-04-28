@@ -48,7 +48,22 @@ tr:hover {
     background-color: lightgray;
 }
 
-#content table button {
+.deleteStaffBtn {
+    background-color: white;
+    color: #d9534f;
+    border: solid #d9534f 1px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.deleteStaffBtn:hover {
+    background-color: #d9534f;
+    color: white;
+}
+
+.staffMemberPositionBtn {
     background-color: darkgray;
     color: white;
     border: none;
@@ -88,7 +103,7 @@ button:hover {
 }
 
 #addMemberBtn {
-    background-color: green;
+    background-color: #009879;
 }
 
 #editStaffBtn {

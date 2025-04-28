@@ -87,6 +87,26 @@ router.post('/add', isManagerLoggedIn, async (req, res) => {
     }
 });
 
+// delete a staff member
+router.delete('/delete', isManagerLoggedIn, async (req, res) => {
+    try {
+
+        const {
+            staffid
+        } = req.body;
+        
+        await db.query(`DELETE FROM orders WHERE staffid = $1;`, [staffid]);
+
+        await db.query(`DELETE FROM staffmembers WHERE staffid = $1;`, [staffid]);
+
+        res.status(200).json({ message: `Staff member with an ID of ${staffid} is successfully deleted.`});
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.put('/update', isManagerLoggedIn, async (req, res) => {
     try {
 
@@ -161,11 +181,9 @@ router.put('/inventory/update', isManagerLoggedIn, async (req, res) => {
             quantity
         } = req.body;
 
-        const query = `
-            UPDATE inventory
-            SET itemname = $2, quantity = $3
-            WHERE itemid = $1;
-        `;
+
+        const query = `UPDATE inventory SET itemname = $2, quantity = $3 WHERE itemid = $1;`;
+
 
         await db.query(query, [itemid, itemname, quantity]);
 
@@ -186,10 +204,12 @@ router.post('/inventory/add', isManagerLoggedIn, async (req, res) => {
             quantity
         } = req.body;
 
+
         const query = `
             INSERT INTO inventory (itemid, itemname, quantity)
             VALUES ($1, $2, $3);
         `;
+
 
         const getMaxItemID = await db.query("SELECT MAX(itemid) AS maxid FROM inventory;");
 
@@ -198,6 +218,26 @@ router.post('/inventory/add', isManagerLoggedIn, async (req, res) => {
         await db.query(query, [newItemID, itemname, quantity]);
 
         res.status(200).json({ message: 'New inventory item successfully added.'});
+
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// delete an inventory item
+router.delete('/inventory/delete', isManagerLoggedIn, async (req, res) => {
+    try {
+
+        const {
+            itemid
+        } = req.body;
+        
+        await db.query(`DELETE FROM recipes WHERE itemid = $1;`, [itemid]);
+
+        await db.query(`DELETE FROM inventory WHERE itemid = $1;`, [itemid]);
+
+        res.status(200).json({ message: `Inventory item with an ID of ${itemid} is successfully deleted.`});
 
     } catch (error) {
         console.error('Database query failed:', error);
@@ -236,7 +276,7 @@ router.get('/inventory/report/:startdate/:endate', isManagerLoggedIn, async (req
 
 
 // generate reports for staff members
-router.get('/reports', async (req, res) => {
+router.get('/reports', isManagerLoggedIn, async (req, res) => {
     try {
 
         res.render('reports');
@@ -248,7 +288,7 @@ router.get('/reports', async (req, res) => {
 });
 
 // gets data for the z report
-router.get('/reports/z', async (req, res) => {
+router.get('/reports/z', isManagerLoggedIn, async (req, res) => {
     try {
         const paymentQuery = `
             SELECT
@@ -287,7 +327,7 @@ router.get('/reports/z', async (req, res) => {
 });
 
 // gets data for the x report
-router.get('/reports/x', async (req, res) => {
+router.get('/reports/x', isManagerLoggedIn, async (req, res) => {
     try {
         const paymentQuery = `
             SELECT
@@ -433,6 +473,25 @@ router.post('/add-drink', isManagerLoggedIn, async (req, res) => {
     } catch (error) {
         console.error('Error adding drink:', error);
         res.status(500).json({ message: 'Failed to add drink: ' + error.message });
+    }
+});
+
+router.get('/reports/sales-report/:startDate/:endDate', isManagerLoggedIn, async (req, res) => {
+    try {
+        let startDate = new Date(req.params.startDate);
+        let endDate = new Date(req.params.endDate);
+        if (isNaN(startDate.getTime())|| isNaN(endDate.getTime())) {
+            res.status(400).send("Bad start or end time for timestamp");
+        };
+
+        let query = "SELECT drinkname, COUNT(drinkname) as total_orders, SUM(price) as total_earned from Orders";
+        query += " LEFT JOIN Menu using(drinkid)";     
+        query += " WHERE dateordered >= $1 and dateordered <= $2 GROUP BY drinkname ORDER BY drinkname asc";  
+        let salesReportData = (await db.query(query, [req.params.startDate, req.params.endDate])).rows;
+        res.render('salesreport', {salesReportData});
+    }
+    catch {
+        res.status(400).send("Issue retrieving data or bad timestamp.");
     }
 });
 

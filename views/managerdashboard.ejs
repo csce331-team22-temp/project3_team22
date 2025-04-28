@@ -26,20 +26,28 @@
             <button id="inventoryBtn" onclick="goToInventory()">Inventory</button>
             <button id="staffBtn" onclick="goToStaff()">Staff</button>
             <button id="addDrinkBtn" onclick="openAddDrinkModal()">Add Drink</button>
+            <button id="placeOrderBtn" onclick="placeOrder()">Place An Order</button>
             <button id="logoutBtn" onclick="goToMain()">Logout</button>
         </div>
 
         <div class="report-section">
-            <h2>Reports</h2>
+            <!--X & Z Reports-->
+            <h2>Generate Reports</h2>
             <button id="reportsBtn">X/Z Reports</button>
 
+            <!--Product Usage Report-->
             <label for="startDateInput">Start Date & Time:</label>
             <input type="datetime-local" id="startDateInput" name="startDateInput">
-
             <label for="endDateInput">End Date & Time:</label>
             <input type="datetime-local" id="endDateInput" name="endDateInput">
+            <button id="productUsageReportBtn" onclick="generateProductUsageReport()">Product Usage Report</button>
 
-            <button id="productUsageReportBtn" onclick="generateProductUsageReport()">Generate Product Usage Report</button>
+            <!--Sales Report-->
+            <label for="startDateInput">Start Date & Time:</label>
+            <input type="datetime-local" id="srStartDate" name="srStartDate">
+            <label for="endDateInput">End Date & Time:</label>
+            <input type="datetime-local" id="srEndDate" name="srEndDate">
+            <button id="salesReportBtn" onclick="generateSalesReport()">Sales Report</button>
         </div>
 
         <!-- Add Drink Modal -->
@@ -298,6 +306,9 @@
             }
         });
     </script>
+
+    <!-- Link to your external script file -->
+    <script src="/scripts/textzoom.js"></script>
     <script src="/scripts/speaktext.js"></script>
     <script src="/scripts/managerdashboard.js"></script>
 </body>

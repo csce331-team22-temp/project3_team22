@@ -115,7 +115,7 @@ async function editStaff(staffMembers) {
         editBtn.style.border = 'none';
 
         addNewMemberBtn.disabled = false;
-        addNewMemberBtn.style.backgroundColor = "green";
+        addNewMemberBtn.style.backgroundColor = "#009879";
 
         cancelEditBtn.disabled = false;
         cancelEditBtn.style.backgroundColor = "darkgray";
@@ -188,10 +188,33 @@ async function cancelEditing(staffMembers) {
     editBtn.style.border = "none";
 
     addNewMemberBtn.disabled = false;
-    addNewMemberBtn.style.backgroundColor = "green";
+    addNewMemberBtn.style.backgroundColor = "#009879";
 
     goBackBtn.disabled = false;
     goBackBtn.style.backgroundColor = "#f44336";
+}
+
+async function deleteStaffMember(staffMemberToBeDeleted) {
+    const confirmDeleteStaffMember = window.confirm(`Warning: Deleting this staff member with ID of ${staffMemberToBeDeleted} will also delete the previous orders that are placed by this staff member which will affect report analysis! Click OK to confirm delete!`);
+
+    if (confirmDeleteStaffMember) {
+        const response = await fetch('/staff/delete', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+              staffid: staffMemberToBeDeleted
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        window.location.href = `/staff/page`;
+    }
 }
 
 // redirects to manager dashboard

@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
         const result = await db.query("SELECT DISTINCT category FROM menu");
         const categories = result.rows.map(row => row.category);
 
+
         // Fetch featured drinks
         const featuredResult = await db.query("SELECT * FROM menu ORDER BY RANDOM() LIMIT 20");
         const featuredDrinks = featuredResult.rows;
@@ -22,6 +23,7 @@ router.get('/', async (req, res) => {
             categories,
             featuredDrinks
         });
+
     } catch (err) {
         console.error(err);
         res.status(500).send("Error fetching menu categories");

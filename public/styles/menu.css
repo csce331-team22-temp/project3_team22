@@ -14,6 +14,7 @@ header {
   box-shadow: 0px 4px 8px rgba(92, 64, 51, 0.2);
 }
 
+
 h1 {
   margin: 0;
   font-size: 30px;
@@ -44,6 +45,175 @@ h1 {
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
 }
+
+  .checkout-btn, .previous-orders-btn, .manager-view-btn, .home-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #D9A06C;
+    color: white;
+    font-size: 24px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .checkout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    
+  }
+
+  .previous-orders-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 150px;
+  }
+
+  .manager-view-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 520px;
+  }
+
+  .home-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .checkout-btn:hover, .home-btn:hover, .previous-orders-btn:hover, .manager-view-btn:hover {
+    background: #B36B4F;
+  }
+  
+  .drinks-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .drink-item {
+    background: #FFF8F0;
+    border-radius: 12px;
+    margin: 20px;
+    padding: 20px;
+    width: 260px;
+    box-shadow: 0px 4px 10px rgba(179, 107, 79, 0.2);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .drink-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(179, 107, 79, 0.35);
+  }
+  
+  .drink-item img {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+    border-radius: 10px;
+    object-fit: contain;
+    background-color: #FAF3E0;
+    padding: 5px;
+  }
+  
+  .drink-item h3 {
+    margin: 15px 0;
+    font-size: 20px;
+    color: #B36B4F;
+  }
+  
+  .price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #D9A06C;
+  }
+  
+  .no-drinks {
+    text-align: center;
+    font-size: 18px;
+    color: #B36B4F;
+    margin-top: 40px;
+    font-weight: bold;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal.hidden {
+    display: none;
+  }
+  
+  .modal-content {
+    background: #FFF8F0;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  
+  .close-button {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .custom-section {
+    margin: 20px 0;
+  }
+  
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .option-btn {
+    padding: 8px 14px;
+    border: none;
+    background: #D9A06C;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  
+  .option-btn:hover {
+    background: #B36B4F;
+  }
+  
+  .confirm-btn {
+    background-color: #B36B4F;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  .option-btn.selected {
+    background-color: #602406;
+    color: #fff;
+    transform: scale(1.05);
+  }
+
 
 .category-header a:hover {
   background: #B36B4F;

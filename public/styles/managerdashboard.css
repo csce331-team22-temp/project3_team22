@@ -21,7 +21,7 @@ body {
   
   h1 {
     margin-bottom: 30px;
-    font-size: 2.2rem;
+    font-size: 50px;
     color: #333;
   }
   
@@ -67,13 +67,14 @@ body {
     width: 100%;
     max-width: 400px;
     text-align: left;
-    border-top: dashed darkgray 2px;
+    border-top: solid #A0522D 2px;
+    padding: 30px;
   }
   
   .report-section h2 {
     color: #444;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+    font-size: 30px;
+    margin-bottom: 50px;
     text-align: center;
   }
   
@@ -93,8 +94,8 @@ body {
     background-color: #fff;
   }
   
-  #productUsageReportBtn, #reportsBtn {
-    margin-top: 25px;
+  #productUsageReportBtn, #reportsBtn, #salesReportBtn {
+    margin-bottom: 50px;
     padding: 12px 24px;
     font-size: 16px;
     background-color: #28a745;
@@ -105,9 +106,9 @@ body {
     transition: background-color 0.3s ease;
     width: 100%;
   }
-  
-  #productUsageReportBtn:hover {
-    background-color: #218838;
+
+  #productUsageReportBtn, #salesReportBtn {
+    margin-top: 10px;
   }
 
   /* The Modal (background) */
