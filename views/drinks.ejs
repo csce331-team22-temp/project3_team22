@@ -61,6 +61,7 @@
 
       <div class="custom-section">
         <label>Size:</label>
+        <p>Large has a $0.50 upcharge and Small has a $0.50 discount</p>
         <div class="options">
           <% ["Small", "Medium", "Large"].forEach(level => { %>
             <button class="option-btn size-btn"><%= level %></button>
@@ -169,7 +170,14 @@
 
       const basePrice = parseFloat(selectedDrink.price);
       const toppingPrice = toppings.length * 0.75;
-      const totalPrice = basePrice + toppingPrice;
+      let totalPrice = basePrice + toppingPrice;
+      if (sizeBtn.textContent == "Large") {
+        totalPrice += 0.5;
+      }
+      else if (sizeBtn.textContent == "Small") {
+        totalPrice -= 0.5;
+      }
+      
 
       const orderData = {
         name: selectedDrink.drinkName,
