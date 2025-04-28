@@ -22,11 +22,11 @@
         <h1>Manager Dashboard</h1>
 
         <div class="dashboard-actions">
-            <button id="ordersBtn" onclick="viewPreviousOrders()">Previous Orders</button>
-            <button id="inventoryBtn" onclick="goToInventory()">Inventory</button>
-            <button id="staffBtn" onclick="goToStaff()">Staff</button>
-            <button id="addDrinkBtn" onclick="openAddDrinkModal()">Add Drink</button>
-            <button id="placeOrderBtn" onclick="placeOrder()">Place An Order</button>
+            <button id="ordersBtn" class="actionBtn" onclick="viewPreviousOrders()">Previous Orders</button>
+            <button id="inventoryBtn" class="actionBtn" onclick="goToInventory()">Inventory</button>
+            <button id="staffBtn" class="actionBtn" onclick="goToStaff()">Staff</button>
+            <button id="addDrinkBtn" class="actionBtn" onclick="openAddDrinkModal()">Add Drink</button>
+            <button id="placeOrderBtn" class="actionBtn" onclick="placeOrder()">Place Order(s)</button>
             <button id="logoutBtn" onclick="goToMain()">Logout</button>
         </div>
 
@@ -83,7 +83,7 @@
                     <label for="price">Price:</label>
                     <input type="number" id="price" name="price" step="0.01" required><br><br>
 
-                    <label for="ingredients">Ingredients:</label>
+                    <label for="ingredients">Ingredients (Press Ctrl C when selecting):</label>
                     <div style="display: flex; gap: 10px;">
                         <select id="ingredientSelect" multiple style="width: 200px; height: 150px;">
                             <!-- Ingredients will be populated here -->
