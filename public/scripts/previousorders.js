@@ -105,6 +105,7 @@ async function showBill(orderNum) {
                     <tr>
                         <th>Drink</th>
                         <th>Toppings</th>
+                        <th>Drink Size</th>
                         <th>Amount</th>
                     </tr>
                 </thead>
@@ -113,6 +114,7 @@ async function showBill(orderNum) {
                         <tr>
                             <td>${obj.drink}</td>
                             <td>${obj.chosentoppings && obj.chosentoppings.length ? obj.chosentoppings.join(", ") : "None"}</td>
+                            <td>${obj.sizeofdrink}</td>
                             <td>${obj.totalamount == 0.00 ? "Redeemed" : "$" + obj.totalamount}</td>
                         </tr>
                     `).join("")}
