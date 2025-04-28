@@ -1,49 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bubble Tea Menu</title>
-    <link rel="stylesheet" href="/styles/menu.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bubble Tea Menu</title>
+  <link rel="stylesheet" href="/styles/menu.css">
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-        }
-    </script>
-
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
-    
-    <div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
 
-    <header>
-        <h1>🧋 ShareTea</h1>
-        <nav>
-            <ul class="category-header">
-                <% categories.forEach(category => { %>
-                    <li><a href="/menu/<%= encodeURIComponent(category) %>"><%= category %></a></li>
-                <% }); %>
-            </ul>
-        </nav>
-    </header>
 
-  <main class="welcome-section">
-    <h2>Welcome to ShareTea!</h2>
-    <p>Select a category from the menu above to view our drinks.</p>
-    <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
-    <button onclick="clearCartAndRedirect()" class="home-btn">Home Page</button>
-    <% if (isLoggedIn) { %>
-        <button onclick="window.location.href='/orders/recent'" class = previous-orders-btn>Previous Orders</button>
-    <% } %>
-    <% if (isManager) { %>
-        <button onclick="window.location.href='/staff/manager-dashboard'" class = manager-view-btn>Manager View</button>
-    <% } %>
-  </main>
-    <!-- Link to your external script file -->
-    <script src="/scripts/speaktext.js"></script>
-    <script src="/scripts/textzoom.js"></script>
-    <script src="/scripts/checkout.js"></script>
-</body>
+<div id="google_translate_element" style="position: absolute; top: 10px; right: 10px;"></div>
+
+<header>
+  <h1> ShareTea</h1>
+  <nav>
+    <ul class="category-header">
+      <% categories.forEach(category => { %>
+        <li><a href="/menu/<%= encodeURIComponent(category) %>"><%= category %></a></li>
+      <% }); %>
+    </ul>
+  </nav>
+</header>
+
+<main class="welcome-section">
+  <h2>Welcome to ShareTea!</h2>
+  <p>Select a category from the menu above to view our drinks.</p>
+
+  <section class="featured-drinks-section">
+    <h2> Featured Drinks </h2>
+ 
+    <div class="carousel-wrapper">
+      <div class="featured-carousel">
+        <% featuredDrinks.forEach(drink => { %>
+          <div class="drink-slide">
+            <img src="/images/<%= drink.image_url || 'default-drink.png' %>" alt="<%= drink.drinkname %>">
+            <div class="drink-info-overlay">
+              <h3><%= drink.drinkname %></h3>
+              <p class="price">$<%= drink.price %></p>
+              <p class="drink-category">Where to find: <%= drink.category %></p>
+            </div>
+          </div>
+        <% }); %>
+ 
+        <% featuredDrinks.forEach(drink => { %> <!-- duplicate drinks for continuous scrolling -->
+          <div class="drink-slide">
+            <img src="/images/<%= drink.image_url || 'default-drink.png' %>" alt="<%= drink.drinkname %>">
+            <div class="drink-info-overlay">
+              <h3><%= drink.drinkname %></h3>
+              <p class="price">$<%= drink.price %></p>
+              <p class="drink-category">Where to find: <%= drink.category %></p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- Navigation Buttons -->
+  <button onclick="window.location.href='/customers/checkout'" class="checkout-btn">Cart</button>
+  <button onclick="window.location.href='/'" class="home-btn">Home Page</button>
+  <% if (isLoggedIn) { %>
+    <button onclick="window.location.href='/orders/recent'" class="previous-orders-btn">Previous Orders</button>
+  <% } %>
+  <% if (isManager) { %>
+    <button onclick="window.location.href='/staff/manager-dashboard'" class="manager-view-btn">Manager View</button>
+  <% } %>
+</main>
+
+<!-- External Scripts -->
+<script src="/scripts/speaktext.js"></script>
+<script src="/scripts/textzoom.js"></script>
+<script src="/scripts/checkout.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const carousel = document.querySelector('.featured-carousel');
+      const slides = Array.from(carousel.children);
+      const gap = 20; // Gap between drinks
+      const slideWidth = 250; // Must match your CSS width
+      const totalSlideWidth = slideWidth + gap;
+      let positions = [];
+   
+      // Initialize positions spaced horizontally
+      slides.forEach((slide, index) => {
+        const startX = index * totalSlideWidth;
+        slide.style.transform = `translateX(${startX}px)`;
+        positions.push(startX);
+      });
+   
+      let scrollSpeed = 0.5; // speed (pixels per frame)
+      let isPaused = false;
+   
+      function moveSlides() {
+        if (!isPaused) {
+          slides.forEach((slide, index) => {
+            positions[index] += scrollSpeed;
+   
+            // Move to left if it fully exits the right side
+            if (positions[index] > carousel.offsetWidth) {
+              // Find minimum leftmost position
+              const minPosition = Math.min(...positions);
+              positions[index] = minPosition - totalSlideWidth;
+            }
+   
+            slide.style.transform = `translateX(${positions[index]}px)`;
+          });
+        }
+        requestAnimationFrame(moveSlides);
+      }
+   
+      carousel.addEventListener('mouseenter', () => {
+        isPaused = true;
+      });
+   
+      carousel.addEventListener('mouseleave', () => {
+        isPaused = false;
+      });
+   
+      moveSlides();
+    });
+    </script>
+    </body>
+
 </html>
+

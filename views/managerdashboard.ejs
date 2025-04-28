@@ -83,8 +83,20 @@
                     <label for="price">Price:</label>
                     <input type="number" id="price" name="price" step="0.01" required><br><br>
 
-                    <label for="ingredients">Ingredients (comma-separated):</label>
-                    <input type="text" id="ingredients" name="ingredients" required><br><br>
+                    <label for="ingredients">Ingredients:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="ingredientSelect" multiple style="width: 200px; height: 150px;">
+                            <!-- Ingredients will be populated here -->
+                        </select>
+                        <div>
+                            <input type="text" id="newIngredientInput" placeholder="New ingredient">
+                            <button type="button" onclick="addNewIngredient()">Add</button>
+                        </div>
+                    </div>
+                    <div id="selectedIngredients" style="margin-top: 10px;">
+                        <!-- Selected ingredients will appear here -->
+                    </div>
+                    <input type="hidden" id="ingredients" name="ingredients" required><br><br>
                     
                     <!-- Nutritional Information -->
                     <h3>Nutritional Information</h3>
@@ -166,6 +178,75 @@
                 })
                 .catch(error => console.error('Error fetching categories:', error));
 
+            // Fetch ingredients
+            async function fetchIngredients() {
+                try {
+                    const response = await fetch('/staff/inventory/info');
+                    const ingredients = await response.json();
+                    const select = document.getElementById('ingredientSelect');
+                    
+                    ingredients.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.itemname;
+                        option.textContent = item.itemname;
+                        select.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Error fetching ingredients:', error);
+                }
+            }
+
+            function updateSelectedIngredients() {
+                const select = document.getElementById('ingredientSelect');
+                const selectedDiv = document.getElementById('selectedIngredients');
+                const hiddenInput = document.getElementById('ingredients');
+                
+                const selected = Array.from(select.selectedOptions).map(opt => opt.value);
+                hiddenInput.value = selected.join(',');
+                
+                selectedDiv.innerHTML = selected.map(item => 
+                    `<span style="display: inline-block; margin: 2px; padding: 4px; background: #eee; border-radius: 4px;">
+                        ${item}
+                        <button type="button" onclick="removeIngredient('${item}')" style="margin-left: 5px;">×</button>
+                    </span>`
+                ).join('');
+            }
+
+            window.addNewIngredient = function() {
+                const input = document.getElementById('newIngredientInput');
+                const newIngredient = input.value.trim();
+                
+                if (newIngredient) {
+                    const select = document.getElementById('ingredientSelect');
+                    const optionExists = Array.from(select.options).some(opt => opt.value === newIngredient);
+                    
+                    if (!optionExists) {
+                        const option = document.createElement('option');
+                        option.value = newIngredient;
+                        option.textContent = newIngredient;
+                        select.appendChild(option);
+                    }
+                    
+                    // Select the new ingredient
+                    select.querySelector(`option[value="${newIngredient}"]`).selected = true;
+                    updateSelectedIngredients();
+                    input.value = '';
+                }
+            };
+
+            window.removeIngredient = function(item) {
+                const select = document.getElementById('ingredientSelect');
+                const option = select.querySelector(`option[value="${item}"]`);
+                if (option) {
+                    option.selected = false;
+                }
+                updateSelectedIngredients();
+            };
+
+            // Initialize ingredients
+            fetchIngredients();
+            document.getElementById('ingredientSelect').addEventListener('change', updateSelectedIngredients);
+
             // Form submission
             const addDrinkForm = document.getElementById('addDrinkForm');
             if (addDrinkForm) {
@@ -213,6 +294,7 @@
                             alert(data.message);
                             document.getElementById("addDrinkModal").style.display = "none";
                             addDrinkForm.reset();
+                            document.getElementById('selectedIngredients').innerHTML = '';
                         } else {
                             alert(data.message);
                         }
