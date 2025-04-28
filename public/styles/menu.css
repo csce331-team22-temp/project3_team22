@@ -56,24 +56,6 @@ h1 {
     transition: all 0.3s ease-in-out;
   }
 
-  .checkout-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    
-  }
-
-  .previous-orders-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 150px;
-  }
-
-  .manager-view-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 520px;
-  }
 
   .home-btn {
     position: fixed;
@@ -430,6 +412,11 @@ h1 {
   background-color: #2C3A3B;
 }
 
+button:hover {
+    cursor: pointer;
+    background-color: #a0522d;
+}
+
 /* Featured Drinks Carousel Styles (added cleanly) */
 .featured-drinks-section {
   margin: 60px 0;
@@ -550,6 +537,7 @@ h1 {
   100% {
     transform: translateX(0); /* Move fully into view */
   }
+
 }
 
 /* --- Fading edges --- */
@@ -642,3 +630,4 @@ h1 {
 .featured-carousel:hover {
   animation-play-state: paused;
 }
+
