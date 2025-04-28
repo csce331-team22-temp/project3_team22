@@ -224,24 +224,6 @@ h1 {
   cursor: pointer;
 }
 
-.checkout-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-.previous-orders-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 150px;
-}
-
-.manager-view-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 400px;
-}
-
 .home-btn {
   position: fixed;
   bottom: 20px;
