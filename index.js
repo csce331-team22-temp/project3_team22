@@ -49,7 +49,7 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: 'http://localhost:3000/auth/google/callback'
+            callbackURL: 'https://project3-team22.onrender.com/auth/google/callback'
         },
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile);
