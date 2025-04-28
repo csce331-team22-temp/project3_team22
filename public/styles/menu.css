@@ -72,24 +72,6 @@ body {
     transition: all 0.3s ease-in-out;
   }
 
-  .checkout-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    
-  }
-
-  .previous-orders-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 150px;
-  }
-
-  .manager-view-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 520px;
-  }
 
   .home-btn {
     position: fixed;
@@ -258,5 +240,10 @@ body {
   
   .info-circle:hover {
     background-color: #2C3A3B;
+  }
+
+  button:hover {
+    cursor: pointer;
+    background-color: #a0522d;
   }
   
