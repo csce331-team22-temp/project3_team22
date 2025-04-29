@@ -136,7 +136,7 @@ router.post('/checkout/payment', async (req, res) => {
         }
 
         orderItems = [];
-        res.json({ success: true, message: "Order successfully inserted into the database!" });
+        res.json({ success: true, message: "Order successfully inserted into the database!", staffID: staffID });
         
         // 🟡 OTO ADDED: Done for adding pearls to the account and reseting the customer variable in my code
         resetCustomer(orderData);
