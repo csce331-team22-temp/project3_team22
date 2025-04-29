@@ -146,6 +146,10 @@ h1 {
     text-align: center;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
   }
+
+  .modal-content p {
+    font-size: 10px;
+  }
   
   .close-button {
     float: right;
@@ -399,7 +403,6 @@ button:hover {
     background-color: #a0522d;
 }
 
-/* Featured Drinks Carousel Styles (added cleanly) */
 .featured-drinks-section {
   margin: 60px 0;
 }
@@ -411,11 +414,11 @@ button:hover {
   gap: 20px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none; 
 }
 
 .featured-carousel::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+  display: none; 
 }
 
 .drink-slide {
@@ -474,7 +477,6 @@ button:hover {
   overflow: hidden;
 }
 
-/* Keep carousel flex scroll working inside wrapper */
 .featured-carousel {
   display: flex;
   overflow-x: auto;
@@ -482,18 +484,17 @@ button:hover {
   gap: 20px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none; 
 }
 
 .featured-carousel::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+  display: none; 
 }
 
-/* --- Carousel wrapper with fade --- */
 .carousel-wrapper {
   overflow: hidden;
   position: relative;
-  height: 350px; /* Adjust height based on drink-slide size */
+  height: 350px;
 }
 
 
@@ -511,24 +512,23 @@ button:hover {
   animation-play-state: paused;
 }
 
-/* Updated keyframes for left -> right */
 @keyframes scrollCarousel {
   0% {
-    transform: translateX(-100%); /* Start completely off the left */
+    transform: translateX(-100%); /* -100 = Completely left */
   }
   100% {
-    transform: translateX(0); /* Move fully into view */
+    transform: translateX(0); /* Moving from left all the way to right */
   }
 
 }
 
-/* --- Fading edges --- */
+/* Edges should have a faded effect so it looks like they are falling off the screen*/
 .carousel-wrapper::before,
 .carousel-wrapper::after {
   content: '';
   position: absolute;
   top: 0;
-  width: 120px; /* wider fade */
+  width: 120px; 
   height: 100%;
   z-index: 2;
   pointer-events: none;
@@ -544,11 +544,10 @@ button:hover {
   background: linear-gradient(to left, #FAF3E0 0%, rgba(250, 243, 224, 0) 70%);
 }
 
-/* --- Drink slide styles (already in your project) --- */
 .drink-slide {
   position: absolute;
   top: 0;
-  width: 250px; /* Same width as your image */
+  width: 250px; 
   height: 100%;
   transition: transform 0.3s ease;
 }

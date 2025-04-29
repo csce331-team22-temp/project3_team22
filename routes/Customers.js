@@ -21,9 +21,9 @@ router.get('/', (req, res) => {
 
 // Route to add items to the order list
 router.post('/add-item', (req, res) => {
-    const {name, price, sugar = 5, ice = 5, toppings = []} = req.body;
-    console.log('Item received:', name, price, sugar, ice, toppings);
-    orderItems.push({ name, price, sugar, ice, toppings });
+    const {name, price, size = "Large", sugar = 5, ice = 5, toppings = []} = req.body;
+    console.log('Item received:', name, price, size, sugar, ice, toppings);
+    orderItems.push({ name, price, size, sugar, ice, toppings });
     res.json({ success: true, message: 'Item added to the cart!' });
 });
 
@@ -92,6 +92,7 @@ router.post('/checkout/payment', async (req, res) => {
     const orderData = orderItems.map(item => ({
         itemName: item.name,
         itemPrice: item.price,
+        itemSize: item.size,
         itemSugarLevel: item.sugar,
         itemIceLevel: item.ice,
         itemToppings: item.toppings,
@@ -114,8 +115,8 @@ router.post('/checkout/payment', async (req, res) => {
             const formattedTime = currentTime.toISOString().slice(0, 19).replace('T', ' ');
 
             // query to insert order into orders table
-            const orderQuery = `INSERT INTO orders (customerid, staffid, drinkid, orderid, amountpaid, dateordered, paymentmethod, toppings) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
-            const values = [customerID, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod, item.itemToppings ?? []];
+            const orderQuery = `INSERT INTO orders (customerid, staffid, drinkid, orderid, amountpaid, dateordered, paymentmethod, toppings, drinksize) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+            const values = [customerID, staffID, drinkid, orderid, item.itemPrice, formattedTime, item.paymentMethod, item.itemToppings ?? [], item.itemSize];
             await db.query(orderQuery, values);
             console.log("Inserted order");
 
