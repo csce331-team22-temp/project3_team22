@@ -115,7 +115,6 @@
     const drinkNameDisplay = document.getElementById("selected-drink-name");
     let selectedDrink = {};
 
-    // Make entire drink-item clickable except info icon
     document.querySelectorAll(".drink-item").forEach(item => {
       item.addEventListener("click", (event) => {
         if (event.target.closest('.info-icon')) return;
