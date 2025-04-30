@@ -46,6 +46,7 @@ h1 {
   transition: all 0.3s ease-in-out;
 }
 
+
   .checkout-btn, .previous-orders-btn, .manager-view-btn, .home-btn {
     padding: 8px 14px;
     border: none;
@@ -200,6 +201,7 @@ h1 {
   }
 
 
+
 .category-header a:hover {
   background: #B36B4F;
   transform: scale(1.1);
@@ -231,6 +233,7 @@ h1 {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  z-index: 3;
 }
 
 .checkout-btn:hover, .home-btn:hover, .previous-orders-btn:hover, .manager-view-btn:hover {
