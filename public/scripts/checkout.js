@@ -95,7 +95,14 @@ function pay(method) {
             // reset the credit card payment options to hidden and redirect to the home page
             alert('Order placed!');
             togglePaymentOptions();
-            window.location.href = '/';
+            
+            const staffID = data.staffID;
+            if (staffID == 0) {
+                window.location.href = '/';
+            }
+            else {
+                window.location.href = '/menu';
+            }
         } else {
             alert('Error inserting order.');
         }
