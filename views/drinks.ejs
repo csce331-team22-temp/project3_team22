@@ -12,6 +12,16 @@
     }
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <style>
+    .drink-item {
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .drink-item:hover {
+      transform: scale(1.02);
+    }
+  </style>
 </head>
 <body>
 
@@ -34,8 +44,8 @@
     <% } else { %>
       <div class="drinks-container">
         <% drinks.forEach(drink => { %>
-          <div class="drink-item">
-            <div class="drink-click" data-drink="<%= drink.drinkname %>" data-price="<%= drink.price %>">
+          <div class="drink-item" data-drink="<%= drink.drinkname %>" data-price="<%= drink.price %>">
+            <div class="drink-image-container">
               <img src="/images/<%= drink.image_url %>" alt="<%= drink.drinkname %>"/>
             </div>
             <h3><%= drink.drinkname %></h3>
@@ -105,13 +115,16 @@
     const drinkNameDisplay = document.getElementById("selected-drink-name");
     let selectedDrink = {};
 
-    document.querySelectorAll(".drink-click").forEach(item => {
-      item.addEventListener("click", () => {
+    // Make entire drink-item clickable except info icon
+    document.querySelectorAll(".drink-item").forEach(item => {
+      item.addEventListener("click", (event) => {
+        if (event.target.closest('.info-icon')) return;
+
         const drinkName = item.dataset.drink;
         const price = item.dataset.price;
         selectedDrink = { drinkName, price };
 
-        drinkNameDisplay.textContent = "Customize: " + item.dataset.drink;
+        drinkNameDisplay.textContent = "Customize: " + drinkName;
         document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
         modal.classList.remove("hidden");
       });
@@ -199,7 +212,7 @@
       }
     });
   </script>
-  <!-- Link to your external script file -->
+
   <script src="/scripts/speaktext.js"></script>
   <script src="/scripts/textzoom.js"></script>
 </body>
