@@ -116,14 +116,12 @@ function pay(method) {
 
 // Function to enable/disable payment buttons depending on if an item is in the cart
 function updatePaymentButtons() {
-    const totalElement = document.getElementById('cartTotal');
     const cardCheckoutButton = document.getElementById('cardCheckout');
     const cashCheckoutButton = document.getElementById('cashCheckout');
     
-    const total = parseFloat(totalElement.textContent);
-
+    const amtItems = document.getElementById("cartItems").childElementCount;
     // If the total is greater than 0, enable the buttons; otherwise, disable them.
-    if (total > 0) {
+    if (amtItems > 0) {
         cardCheckoutButton.disabled = false;
         cashCheckoutButton.disabled = false;
     } else {
