@@ -154,4 +154,4 @@ module.exports = router;
 // OTO ADDED: By nature of module.exports, if i dont put this after the previous line the function gets overriden
 // The other exports.[...] gets overriden by it too. The only other solution would be to move the cart over to shared variables,
 // But to make it easier for Justin to work how he did before gonna just add this here
-module.exports.addItem = async function (name, price) { orderItems.push({ name, price }); };
+module.exports.addItem = async function (name, price) { orderItems.push({name, price, size: "Medium", sugar: 10, ice: 10, toppings: []}); };
