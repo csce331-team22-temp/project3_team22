@@ -22,39 +22,55 @@
         <h1>Finalize the Bill</h1>
 
         <div id="cartItems">
-            <% let total = 0; %>
-            <% orderItems.forEach((item, index) => { %>
-              <div id="item-<%= index %>" class="textBesideButton">
-                <p class="coloredText"><%= item.name %> - $<%= item.price.toFixed(2) %></p>
-                
-                <!-- Base price -->
-                <p>Base price: $<%= item.basePrice?.toFixed(2) || (item.price - (item.toppings?.length || 0) * 0.75 - (item.size === 'Large' ? 0.5 : item.size === 'Small' ? -0.5 : 0)).toFixed(2) %></p>
-          
-                <!-- Size and modifier -->
-                <p>Size: <%= item.size %>
-                  <% if (item.size === 'Small') { %>
-                    (-$0.50)
-                  <% } else if (item.size === 'Large') { %>
-                    (+$0.50)
-                  <% } else { %>
-                    (No price change)
-                  <% } %>
-                </p>
-          
-                <!-- Toppings -->
-                <% if (item.toppings && item.toppings.length > 0) { %>
-                  <p>Toppings (<%= item.toppings.length %> x $0.75): 
-                    <%= item.toppings.join(", ") %>
-                  </p>
-                <% } else { %>
-                  <p>No Toppings</p>
-                <% } %>
-          
-                <button id="removeButton" onclick="removeFromCart('<%= item.name %>', '<%= item.price %>', '<%= index %>')">Remove</button>
-              </div>
-              <% total += item.price; %>
-            <% }); %>
-          </div>
+          <% let total = 0; %>
+          <% if (orderItems.length > 0) { %>
+          <table class="cart-table">
+            <tbody>
+              <% orderItems.forEach((item, index) => { %>
+                <tr id="item-<%= index %>">
+                  <!-- Name + Price -->
+                  <td>
+                    <strong class="coloredText"><%= item.name %></strong><br>
+                  </td>
+        
+                  <!-- Base Price -->
+                  <td>
+                    $<%= item.price.toFixed(2) %>
+                  </td>
+        
+                  <!-- Size and Modifier -->
+                  <td>
+                    <%= item.size %><br>
+                    <% if (item.size === 'Small') { %>
+                      (-$0.50)
+                    <% } else if (item.size === 'Large') { %>
+                      (+$0.50)
+                    <% } else { %>
+                      (No price change)
+                    <% } %>
+                  </td>
+        
+                  <!-- Toppings -->
+                  <td>
+                    <% if (item.toppings && item.toppings.length > 0) { %>
+                      <%= item.toppings.length %> x $0.75<br>
+                      <%= item.toppings.join(", ") %>
+                    <% } else { %>
+                      No Toppings
+                    <% } %>
+                  </td>
+        
+                  <!-- Remove Button -->
+                  <td>
+                    <button onclick="removeFromCart('<%= item.name %>', '<%= item.price %>', '<%= index %>')">Remove</button>
+                  </td>
+                </tr>
+                <% total += item.price; %>
+              <% }); %>
+            </tbody>
+          </table>
+          <% } %>
+        </div>
 
         <h3>Total: $<span id="cartTotal"><%= total.toFixed(2) %></span></h3>
     </div>
